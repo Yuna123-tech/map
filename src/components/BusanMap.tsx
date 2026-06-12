@@ -213,8 +213,8 @@ export default function BusanMap({
         {/* 돋보기 행정구역 특화 필터 판넬 (장소감 형성 최대치) */}
         <div className="bg-white rounded-3xl p-4.5 shadow-xs border border-slate-100 space-y-3.5">
           <div className="space-y-1.5">
-            <span className="text-[11px] font-black text-slate-500 block">🔍 우리 동네나 관심있는 행정구역 모아보기 (구별 돋보기 필터):</span>
-            <div className="flex flex-wrap gap-1.5 max-h-[75px] overflow-y-auto p-1 bg-slate-50 rounded-xl border border-slate-100">
+            <span className="text-xs sm:text-sm font-black text-slate-700 block">🔍 우리 동네나 관심있는 행정구역 모아보기 (구별 돋보기 필터):</span>
+            <div className="flex flex-wrap gap-1.5 max-h-[100px] overflow-y-auto p-1.5 bg-slate-50 rounded-xl border border-slate-100">
               {districts.map((dist, idx) => {
                 const currentRegion = REGIONS[selectedRegion] || REGIONS['all'];
                 const isDistInRegion = selectedRegion === 'all' || dist === 'all' || currentRegion.districts.includes(dist);
@@ -227,7 +227,7 @@ export default function BusanMap({
                       setActiveSpot(null);
                     }}
                     title={!isDistInRegion ? '우리 모둠의 관심 조사 범위가 아닙니다.' : ''}
-                    className={`px-3 py-1 rounded-lg text-[10px] font-bold transition-all cursor-pointer ${
+                    className={`px-3 py-1.5 rounded-lg text-xs md:text-sm font-bold transition-all cursor-pointer ${
                       !isDistInRegion 
                         ? 'opacity-25 line-through cursor-not-allowed text-slate-400 border border-slate-100'
                         : selectedDistrict === dist 
@@ -276,7 +276,7 @@ export default function BusanMap({
           </div>
 
           <div className="relative">
-            <Search className="absolute left-4 top-3 w-4 h-4 text-slate-400" />
+            <Search className="absolute left-4 top-3.5 w-4.5 h-4.5 text-slate-400" />
             <input
               type="text"
               placeholder="장소 이름이나 동네 명칭을 검색하여 실시간 가이드해 보세요..."
@@ -285,7 +285,7 @@ export default function BusanMap({
                 setSearchQuery(e.target.value);
                 setActiveSpot(null);
               }}
-              className="w-full pl-11 pr-4 py-2 bg-slate-50 border border-slate-150 rounded-2xl text-xs focus:outline-none focus:ring-2 focus:ring-sky-400 focus:bg-white transition-all text-slate-700 font-bold"
+              className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-150 rounded-2xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-sky-400 focus:bg-white transition-all text-slate-700 font-bold placeholder:text-slate-400"
             />
           </div>
         </div>
@@ -293,8 +293,8 @@ export default function BusanMap({
         {/* 인터랙티브 줌 & 패닝 축척 정밀 백지도 가든 */}
         <div className="relative bg-teal-50/10 rounded-3xl border-4 border-white shadow-md overflow-hidden select-none" onWheel={handleWheel}>
           {/* 드래그 줌 슬라이더 제어 패널 */}
-          <div className="absolute top-4 left-4 z-25 flex items-center bg-white/95 backdrop-blur-md px-2.5 py-1.5 rounded-2xl border border-slate-200/80 shadow-md gap-1.5">
-            <span className="text-[8px] font-black text-slate-500">🔍 드래그 축척:</span>
+          <div className="absolute top-4 left-4 z-25 flex items-center bg-white/95 backdrop-blur-md px-3 py-2 rounded-2xl border border-slate-200/80 shadow-md gap-2">
+            <span className="text-[10px] sm:text-xs font-black text-slate-600">🔍 드래그 축척:</span>
             <input
               type="range"
               min="1"
@@ -311,33 +311,33 @@ export default function BusanMap({
               }}
               className="w-16 sm:w-24 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-sky-500"
             />
-            <span className="text-[8px] font-mono font-black text-slate-650">{zoom.toFixed(1)}x</span>
+            <span className="text-[10px] sm:text-xs font-mono font-black text-slate-750">{zoom.toFixed(1)}x</span>
           </div>
 
           {/* 줌인 줌아웃 축척 조작 플로팅 버튼바 */}
-          <div className="absolute top-4 right-4 z-20 flex flex-col gap-1 bg-white/95 backdrop-blur-md px-1.5 py-2 rounded-2xl border border-slate-200/80 shadow-md">
+          <div className="absolute top-4 right-4 z-20 flex flex-col gap-1.5 bg-white/95 backdrop-blur-md px-2 py-2.5 rounded-2xl border border-slate-200/80 shadow-md">
             <button
               onClick={handleZoomIn}
               className="p-1.5 hover:bg-slate-100 text-slate-700 rounded-lg transition-colors cursor-pointer"
               title="축척 확대"
             >
-              <ZoomIn className="w-4 h-4" />
+              <ZoomIn className="w-5 h-5" />
             </button>
             <button
               onClick={handleZoomOut}
               className="p-1.5 hover:bg-slate-100 text-slate-700 rounded-lg transition-colors cursor-pointer"
               title="축척 축소"
             >
-              <ZoomOut className="w-4 h-4" />
+              <ZoomOut className="w-5 h-5" />
             </button>
             <button
               onClick={handleResetNavigation}
               className="p-1.5 hover:bg-slate-100 text-slate-700 rounded-lg transition-colors cursor-pointer border-t border-slate-100 mt-1"
               title="지도 위치 초기화"
             >
-              <Maximize2 className="w-3.5 h-3.5" />
+              <Maximize2 className="w-4 h-4" />
             </button>
-            <div className="text-[8px] font-black text-slate-400 text-center border-t border-slate-100 mt-1 pt-0.5">
+            <div className="text-[10px] font-black text-slate-500 text-center border-t border-slate-100 mt-1 pt-1">
               {zoom.toFixed(1)}x
             </div>
           </div>
@@ -400,18 +400,18 @@ export default function BusanMap({
             </svg>
 
             {/* 지리 지형 보조 라벨 */}
-            <div className="absolute top-[8%] left-[8%] text-[8px] font-black text-emerald-800 bg-emerald-100/50 px-1 py-0.5 rounded pointer-events-none">서부산 낙동강 본류</div>
-            <div className="absolute top-[8%] left-[45%] text-[8px] font-black text-yellow-800 bg-yellow-100/50 px-1 py-0.5 rounded pointer-events-none">금정산맥 지대</div>
-            <div className="absolute top-[48%] left-[45%] text-[8px] font-black text-purple-850 bg-purple-100/50 px-1 py-0.5 rounded pointer-events-none">산복도로 원도심</div>
-            <div className="absolute top-[20%] left-[80%] text-[8px] font-black text-teal-800 bg-teal-100/50 px-1 py-0.5 rounded pointer-events-none">기장군 동해안</div>
-            <div className="absolute bottom-[23%] left-[44%] text-[7px] font-black text-amber-800 bg-amber-100/50 px-1 py-0.5 rounded pointer-events-none">수려한 영도 섬</div>
+            <div className="absolute top-[8%] left-[8%] text-[10px] sm:text-xs font-black text-emerald-800 bg-emerald-100/60 px-1.5 py-0.5 rounded pointer-events-none border border-emerald-200/40">서부산 낙동강 본류</div>
+            <div className="absolute top-[8%] left-[45%] text-[10px] sm:text-xs font-black text-yellow-800 bg-yellow-100/60 px-1.5 py-0.5 rounded pointer-events-none border border-yellow-200/40">금정산맥 지대</div>
+            <div className="absolute top-[48%] left-[45%] text-[10px] sm:text-xs font-black text-purple-850 bg-purple-100/60 px-1.5 py-0.5 rounded pointer-events-none border border-purple-200/40">산복도로 원도심</div>
+            <div className="absolute top-[20%] left-[80%] text-[10px] sm:text-xs font-black text-teal-800 bg-teal-100/60 px-1.5 py-0.5 rounded pointer-events-none border border-teal-200/40">기장군 동해안</div>
+            <div className="absolute bottom-[23%] left-[44%] text-[9px] sm:text-[10px] font-black text-amber-800 bg-amber-100/60 px-1.5 py-0.5 rounded pointer-events-none border border-amber-200/40">수려한 영도 섬</div>
 
             {/* 16개 구역 흐릿한 워터마크 표시 (사용자 피드백 반영) */}
             {DISTRICT_WATERMARKS.map((dw, idx) => (
               <div
                 key={`dw-${idx}`}
                 style={{ left: `${dw.x}%`, top: `${dw.y}%` }}
-                className="absolute -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none text-[8.5px] font-black text-slate-400/25 tracking-widest bg-slate-100/5 px-1 py-0.5 rounded border border-dashed border-slate-350/10 whitespace-nowrap"
+                className="absolute -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none text-[10px] sm:text-xs font-black text-slate-400/35 tracking-widest bg-slate-100/5 px-1.5 py-0.5 rounded border border-dashed border-slate-350/15 whitespace-nowrap"
               >
                 {dw.name}
               </div>
@@ -442,10 +442,10 @@ export default function BusanMap({
                 >
                   <div className="relative flex flex-col items-center group">
                     {/* 확대/마커명 표시 - 호버 및 초등 맞춤형 크기 */}
-                    <div className={`px-1.5 py-0.5 rounded-md text-[8px] font-black shadow-xs whitespace-nowrap mb-0.5 border select-none transition-all duration-200 ${
+                    <div className={`px-2 py-0.5 rounded-md text-[10px] sm:text-xs font-black shadow-xs whitespace-nowrap mb-0.5 border select-none transition-all duration-200 ${
                       isSelected
-                        ? 'bg-slate-800 text-white border-slate-900 scale-100'
-                        : 'bg-white text-slate-600 border-slate-200 opacity-80 group-hover:opacity-100'
+                        ? 'bg-slate-800 text-white border-slate-900 scale-105'
+                        : 'bg-white text-slate-700 border-slate-200 opacity-85 group-hover:opacity-100'
                     }`}>
                       {spot.name.split(' (')[0]}
                     </div>
@@ -467,7 +467,7 @@ export default function BusanMap({
 
                       {/* 수집 완료 도장 뱃지 */}
                       {isCollected && (
-                        <div className="absolute -top-1.5 -right-1.5 bg-yellow-400 border border-slate-900 text-slate-900 rounded-full w-3.5 h-3.5 flex items-center justify-center p-0 font-black text-[7px]" title="획득!">
+                        <div className="absolute -top-1.5 -right-1.5 bg-yellow-400 border border-slate-900 text-slate-900 rounded-full w-4 h-4 flex items-center justify-center p-0 font-black text-[9px] sm:text-xs" title="획득!">
                           ✓
                         </div>
                       )}

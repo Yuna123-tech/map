@@ -80,7 +80,7 @@ export default function BarChartBuilder({
 
   // 개수 직접/증감 입력 핸들러 - 입력 변경 시 즉시 상위 표 상태와도 동기화
   const handleCountChange = (key: CategoryKey, val: number) => {
-    const nextVal = Math.min(Math.max(val, 0), 35); // 최댓값 35로 상향 조정
+    const nextVal = Math.min(Math.max(val, 0), 35); // 가장 많은 값 35로 상향 조정
     const newCounts = { ...counts, [key]: nextVal };
     setCounts(newCounts);
     onUpdateTableCounts(newCounts); // 상위 tableCounts 실시간 동기화
@@ -115,41 +115,41 @@ export default function BarChartBuilder({
         );
       } else {
         setStepFeedback(
-          `⚠️ 한번 더 생각해 볼까요? 우리 구역의 최댓값이 단 ${maxCount}개밖에 되지 않는데 눈금을 5개 단위로 잡으면, 모든 막대 기둥이 겨우 1~2칸 밑에 납작하게 누워버려서 서로 크기가 잘 비교되지 않는답니다. 이 경우에는 1이나 2를 권장해요!`
+          `⚠️ 한번 더 생각해 볼까요? 우리 구역의 가장 많은 값이 단 ${maxCount}개밖에 되지 않는데 눈금을 5개 단위로 잡으면, 모든 막대 기둥이 겨우 1~2칸 밑에 납작하게 누워버려서 서로 크기가 잘 비교되지 않는답니다. 이 경우에는 1이나 2를 권장해요!`
         );
       }
     } else if (stepSize === '2') {
       if (maxCount >= 10 && maxCount < 20) {
         setStepFeedback(
-          `👏 완벽해요! 우리 구역의 최댓값이 ${maxCount}개이므로 세로축 눈금 한 칸을 2칸씩 묶는 것이 보기에도 선명하고 그래프 크기가 직관적으로 눈에 잘 들어와 아주 기막힌 선택입니다.`
+          `👏 완벽해요! 우리 구역의 가장 많은 값이 ${maxCount}개이므로 세로축 눈금 한 칸을 2칸씩 묶는 것이 보기에도 선명하고 그래프 크기가 직관적으로 눈에 잘 들어와 아주 기막힌 선택입니다.`
         );
       } else if (maxCount >= 20) {
         setStepFeedback(
-          `⚠️ 조금 복잡해요! 우리 구역 최댓값이 ${maxCount}개라 눈금을 2개 단위로 쪼개면 눈금을 무려 ${Math.ceil(maxCount / 2)}칸 이상 그려야 하므로 세로축이 지나치게 길어져서 한눈에 담가 보기 영 조심스럽답니다.`
+          `⚠️ 조금 복잡해요! 우리 구역의 가장 많은 값이 ${maxCount}개라 눈금을 2개 단위로 쪼개면 눈금을 무려 ${Math.ceil(maxCount / 2)}칸 이상 그려야 하므로 세로축이 지나치게 길어져서 한눈에 담가 보기 영 조심스럽답니다.`
         );
       } else {
         setStepFeedback(
-          `👏 훌륭해요! 최댓값이 ${maxCount}개로 아담해 눈금 한 칸을 2로 두면 썩 깔끔한 그래프가 완성됩니다.`
+          `👏 훌륭해요! 가장 많은 값이 ${maxCount}개로 아담해 눈금 한 칸을 2로 두면 썩 깔끔한 그래프가 완성됩니다.`
         );
       }
     } else { // stepSize === '1'
       if (maxCount <= 8) {
         setStepFeedback(
-          `👏 대단해요! 우리 구역은 명소 수량이 적어 최댓값이 단 ${maxCount}개이므로, 눈금 크기를 상세하게 1개씩 꼼꼼히 표시해 주는 것이 정확도를 최고로 살려 비교하기 적절한 신의 한 수입니다.`
+          `👏 대단해요! 우리 구역은 명소 수량이 적어 가장 많은 값이 단 ${maxCount}개이므로, 눈금 크기를 상세하게 1개씩 꼼꼼히 표시해 주는 것이 정확도를 최고로 살려 비교하기 적절한 신의 한 수입니다.`
         );
       } else {
         setStepFeedback(
-          `❌ 오, 그건 너무 빼곡해요! 우리 구역 최댓값이 ${maxCount}개인데 눈금 크기를 1개씩 나누면 Y축 눈금을 수십 개 이상 빼곡히 다 그려야 해서, 그래프 본래의 장점인 '한눈에 수치 견주어보기' 효과가 무뎌집니다.`
+          `❌ 오, 그건 너무 빼곡해요! 우리 구역의 가장 많은 값이 ${maxCount}개인데 눈금 크기를 1개씩 나누면 Y축 눈금을 수십 개 이상 빼곡히 다 그려야 해서, 그래프 본래의 장점인 '한눈에 수치 견주어보기' 효과가 무뎌집니다.`
         );
       }
     }
   }, [stepSize, selectedRegion]);
 
-  // 눈금 크기(1, 2, 5)에 따라 세로 눈금 및 최댓값을 똑똑하고 유연하게 자동 설계
+  // 눈금 크기(1, 2, 5)에 따라 세로 눈금 및 가장 많은 값을 똑똑하고 유연하게 자동 설계
   const stepValue = Number(stepSize);
   const maxCount = Math.max(...(Object.values(counts) as number[]), 1);
   
-  // maxVal은 세로축 눈금에 딱 맞게 떨어지는 최댓값
+  // maxVal은 세로축 눈금에 딱 맞게 떨어지는 가장 큰 값
   let maxVal = Math.ceil(maxCount / stepValue) * stepValue;
   
   // Y축 높이가 너무 납작해지는 것(예: 눈금 칸수가 5개 미만)을 방지하기 위해 최소 5칸 확보
@@ -226,17 +226,17 @@ export default function BarChartBuilder({
             </div>
 
             {/* 실시간 탐정 멘트 박스 */}
-            <div className="mt-3 bg-indigo-50 border border-indigo-100 p-2.5 rounded-xl text-[10px] leading-relaxed text-indigo-900 font-bold">
+            <div className="mt-3 bg-indigo-50 border border-indigo-100 p-2.5 rounded-xl text-xs sm:text-sm leading-relaxed text-indigo-900 font-bold">
               📢 윤아 쌤의 수학 꿀팁: {stepFeedback}
             </div>
           </div>
 
           <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-            <h4 className="font-bold text-slate-800 text-xs flex items-center gap-1">
+            <h4 className="font-extrabold text-slate-800 text-xs sm:text-sm flex items-center gap-1">
               <span>✏️</span>
-              <span>수집한 갯수를 입력해 보세요</span>
+              <span>수집한 개수를 입력해 보세요</span>
             </h4>
-            <span className="text-[10px] text-slate-400 font-bold">한도: 최대 35개</span>
+            <span className="text-[11px] md:text-xs text-slate-500 font-bold">최대 35개까지</span>
           </div>
 
           {/* 입력 폼 리스트 */}
@@ -259,8 +259,8 @@ export default function BarChartBuilder({
                       {cat.emoji}
                     </span>
                     <div>
-                      <h5 className="text-[11px] font-black text-slate-800">{cat.name}</h5>
-                      <span className="text-[9px] text-slate-400 font-bold">{cat.stamp} 마커 아이콘</span>
+                      <h5 className="text-xs md:text-sm font-black text-slate-800">{cat.name}</h5>
+                      <span className="text-[10px] md:text-xs text-slate-500 font-semibold">{cat.stamp} 마커 아이콘</span>
                     </div>
                   </div>
 
@@ -320,22 +320,22 @@ export default function BarChartBuilder({
                 {isCorrect ? (
                   <>
                     <PartyPopper className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <div>
-                      <h6 className="text-[11px] font-black">정확도 100%! 갯수를 모두 맞췄습니다! 🎉</h6>
-                      <p className="text-[10px] mt-0.5 leading-relaxed font-semibold">
-                        이제 수학 막대그래프 결과를 활용해 방문객과 관광객 분들에게 멋지게 제안할 논리를 만들러 3단계 발표 보드장으로 떠나볼까요?
-                      </p>
-                    </div>
+                     <div>
+                       <h6 className="text-xs md:text-sm font-black">정확도 100%! 개수를 모두 맞췄습니다! 🎉</h6>
+                       <p className="text-[11px] md:text-xs mt-0.5 leading-relaxed font-semibold text-emerald-800">
+                         이제 수학 막대그래프 결과를 활용해 방문객과 관광객 분들에게 멋지게 제안할 논리를 만들러 3단계 발표 보드장으로 떠나볼까요?
+                       </p>
+                     </div>
                   </>
                 ) : (
                   <>
                     <AlertTriangle className="w-4 h-4 text-rose-500 shrink-0" />
-                    <div>
-                      <h6 className="text-[11px] font-black">앗! 일치하지 않는 숫자가 있어요! 🧐</h6>
-                      <p className="text-[10px] mt-0.5 leading-relaxed font-semibold">
-                        빨갛게 표시된 카테고리의 갯수를 다시 조심히 세어가며 정정해 보아요. 1단계 지도를 확대하여 갯수를 세어보면 편리합니다!
-                      </p>
-                    </div>
+                     <div>
+                       <h6 className="text-xs md:text-sm font-black">앗! 일치하지 않는 숫자가 있어요! 🧐</h6>
+                       <p className="text-[11px] md:text-xs mt-0.5 leading-relaxed font-semibold text-rose-800">
+                         빨갛게 표시된 카테고리의 개수를 다시 조심히 세어가며 정정해 보아요. 1단계 지도를 확대해서 개수를 세어보면 편리합니다!
+                       </p>
+                     </div>
                   </>
                 )}
               </motion.div>
@@ -347,27 +347,27 @@ export default function BarChartBuilder({
         <div className="lg:col-span-7 bg-white rounded-3xl p-6 shadow-xs border border-slate-100 flex flex-col justify-between space-y-5">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3">
             <div>
-              <h4 className="font-bold text-slate-800 text-xs flex items-center gap-1">
+              <h4 className="font-extrabold text-slate-800 text-xs sm:text-sm flex items-center gap-1">
                 <span>🎨</span>
                 <span>우리 교실 막대그래프 보드</span>
               </h4>
-              <p className="text-[10px] text-slate-400 mt-0.5">숫자에 따라 막대가 즉각적으로 기하 성장하여 한눈에 비교됩니다.</p>
+              <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5 font-medium">숫자에 따라 막대가 즉각적으로 멋지게 자라나며 한눈에 비교됩니다.</p>
             </div>
 
             <div className="flex items-center gap-2">
               <div className="bg-slate-100 p-1 rounded-xl flex gap-1">
                 <button
                   onClick={() => setRenderMode('bar')}
-                  className={`px-2.5 py-1 rounded-lg text-[9px] font-black cursor-pointer transition-all ${
-                    renderMode === 'bar' ? 'bg-white text-slate-800 shadow-sm' : 'text-slate-500'
+                  className={`px-2.5 py-1 rounded-lg text-xs md:text-sm font-black cursor-pointer transition-all ${
+                    renderMode === 'bar' ? 'bg-white text-slate-800 shadow-xs' : 'text-slate-50'
                   }`}
                 >
                   막대 모드
                 </button>
                 <button
                   onClick={() => setRenderMode('block')}
-                  className={`px-2.5 py-1 rounded-lg text-[9px] font-black cursor-pointer transition-all ${
-                    renderMode === 'block' ? 'bg-white text-slate-800 shadow-sm' : 'text-slate-500'
+                  className={`px-2.5 py-1 rounded-lg text-xs md:text-sm font-black cursor-pointer transition-all ${
+                    renderMode === 'block' ? 'bg-white text-slate-800 shadow-xs' : 'text-slate-50'
                   }`}
                 >
                   블록 쌓기
@@ -378,7 +378,7 @@ export default function BarChartBuilder({
                 <select
                   value={barDecoration}
                   onChange={(e: any) => setBarDecoration(e.target.value)}
-                  className="bg-slate-50 border border-slate-150 text-[9px] font-black text-slate-650 px-2 py-1 rounded-lg focus:outline-none cursor-pointer"
+                  className="bg-slate-50 border border-slate-200 text-xs font-black text-slate-700 px-2 py-1 rounded-lg focus:outline-none cursor-pointer hover:bg-slate-100"
                 >
                   <option value="normal">🎨 기본 막대</option>
                   <option value="cookie">🍬 알탕 막대</option>
@@ -396,7 +396,7 @@ export default function BarChartBuilder({
                 const shouldShowLabel = yTicks.length <= 15 || num % 5 === 0 || num === maxVal || num === 0;
                 return (
                   <div key={num} className="w-full flex items-center gap-2">
-                    <span className="text-[9px] font-bold text-slate-400 w-4 text-right select-none">
+                    <span className="text-[10px] md:text-xs font-black text-slate-500 w-4 text-right select-none">
                       {shouldShowLabel ? num : ''}
                     </span>
                     <div className="flex-1 border-t border-dashed border-slate-200" />
@@ -418,7 +418,7 @@ export default function BarChartBuilder({
                     {/* 상단 펄쩍 뛰는 수치 뱃지 */}
                     {countVal > 0 && (
                       <div className="absolute -top-7 select-none">
-                        <span className={`px-2 py-0.5 rounded-full text-[9px] font-black text-white shadow-3xs ${
+                        <span className={`px-2.5 py-0.5 rounded-full text-xs font-black text-white shadow-3xs ${
                           cat.key === 'food' ? 'bg-rose-500' : cat.key === 'traffic' ? 'bg-cyan-500' : cat.key === 'play' ? 'bg-amber-500' : cat.key === 'history' ? 'bg-emerald-600' : 'bg-blue-500'
                         }`}>
                           {countVal}개
@@ -486,7 +486,7 @@ export default function BarChartBuilder({
             {CATEGORY_LIST.map((cat) => (
               <div key={cat.key} className="flex flex-col items-center">
                 <span className="text-sm select-none mb-0.5">{cat.emoji}</span>
-                <span className="text-[10px] font-black text-slate-600 block line-clamp-1">{cat.name}</span>
+                <span className="text-xs md:text-sm font-black text-slate-700 block line-clamp-1">{cat.name}</span>
               </div>
             ))}
           </div>
