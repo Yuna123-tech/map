@@ -1,0 +1,6 @@
+{
+  "name": "막대그래프 부산 여행 지도",
+  "description": "외국인 아미(ARMY)들을 위한 부산의 맛집, 관광지, 해수욕장을 분류하고 막대그래프로 탐구하는 4학년 공개수업용 양방향 지도 웹앱",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

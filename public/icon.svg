@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2005/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1" />
+      <stop offset="100%" stop-color="#4f46e5" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Rounded corner background typical for PWA app icons -->
+  <rect width="512" height="512" rx="112" fill="url(#bg-grad)"/>
+  
+  <!-- Subtle globe grid lines for geography theme -->
+  <circle cx="256" cy="256" r="210" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="8" />
+  <path d="M 46 256 H 466" stroke="rgba(255,255,255,0.08)" stroke-width="8" fill="none"/>
+  <path d="M 256 46 V 466" stroke="rgba(255,255,255,0.08)" stroke-width="8" fill="none"/>
+  
+  <!-- Bar Charts (수학 통계 테마) -->
+  <rect x="110" y="280" width="44" height="130" rx="12" fill="#fbbf24" />
+  <rect x="174" y="210" width="44" height="200" rx="12" fill="#38bdf8" />
+  <rect x="238" y="140" width="44" height="270" rx="12" fill="#ec4899" />
+  
+  <!-- Wave decoration at bottom -->
+  <path d="M 80 430 Q 150 400 220 430 T 360 430 T 500 430" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="12" stroke-linecap="round" />
+
+  <!-- Super friendly explorer Seagull (갈매기 캐릭터 + 모험가 모자) -->
+  <g transform="translate(190, 60)">
+    <!-- Body & neck -->
+    <path d="M 120 180 Q 70 120 120 80 Q 200 60 220 120 Q 200 190 120 180 Z" fill="#ffffff" />
+    <!-- Wing -->
+    <path d="M 130 110 Q 90 120 110 150 Q 150 140 170 110 Z" fill="#e2e8f0" />
+    <!-- Eye -->
+    <circle cx="175" cy="95" r="7" fill="#1e293b" />
+    <circle cx="178" cy="92" r="2.5" fill="#ffffff" />
+    <!-- Bill/Beak -->
+    <path d="M 195 90 L 235 100 L 195 110 Z" fill="#f59e0b" stroke="#d97706" stroke-width="2" stroke-linejoin="round" />
+    <!-- Cute graduation or explorer cap -->
+    <path d="M 140 82 L 180 72 L 170 60 L 130 70 Z" fill="#475569" />
+    <rect x="145" y="70" width="22" height="10" transform="rotate(-14 145 70)" fill="#1e293b" rx="2" />
+    <circle cx="156" cy="55" r="5" fill="#f59e0b" />
+  </g>
+  
+  <!-- Glossy overlay reflection for modern app look -->
+  <path d="M 0 0 C 200 0 350 100 512 250 L 512 0 Z" fill="rgba(255,255,255,0.06)" />
+</svg>
