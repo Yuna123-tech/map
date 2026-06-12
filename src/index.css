@@ -6,19 +6,7 @@
   html의 폰트 크기를 표준(16px) 대비 130% 확대 수치인 20.8px로 일관되게 고정합니다.
 */
 html {
-  font-size: 14.5px !important; /* Mobile optimal base size */
-}
-
-@media (min-width: 640px) {
-  html {
-    font-size: 16px !important; /* Tablet optimal base size */
-  }
-}
-
-@media (min-width: 1024px) {
-  html {
-    font-size: 20.8px !important; /* PC / Classroom Projector舒适 zoom size */
-  }
+  font-size: 16px !important;
 }
 
 body {

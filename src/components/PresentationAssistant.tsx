@@ -85,22 +85,22 @@ export default function PresentationAssistant({
   const minSpotsList = getMinSpotsList();
 
   // 가장 많은 개수를 자랑하기 대본
-  const maxSpeech = `안녕하세요 여러분! 저희는 [우리 모둠]입니다.
+  const maxSpeech = `안녕하세요 여러분! 저희는 멋진 발표를 준비한 우리 모둠입니다.
 
-저희 모둠이 부산 ${currentRegion.name} 구역을 친구들한테 당당하게 추천하고 홍보하기 위해 정한 여행 제목은 《${maxSpotsList.split(',')[0] || '부산'}와(과) 함께 떠나는 신나는 여행》입니다.
+저희 모둠이 부산 ${currentRegion.name} 구역을 친구들에게 당당하게 추천하고 홍보하기 위해 정한 여행 제목은 《${maxSpotsList.split(',')[0] || '부산'}와 함께 떠나는 신나는 여행》입니다.
 
-우리가 이렇게 여행 코스를 정하게 된 명확한 수학적·지리학적 근거는, 부산 백지도를 열심히 구석구석 조사하고 막대그래프로 나타내어 비교해 보았기 때문이에요. 분석해 본 결과, 우리 구역은 다른 종류보다 [${categoryEmojis[maxCategoryKey]} ${categoryNames[maxCategoryKey]}] 탐색지가 총 ${counts[maxCategoryKey]}곳이나 있어서 가장 많고 풍성했답니다!
+우리가 이렇게 코스를 정하게 된 소중한 지리적 근거는, 부산 백지도를 구석구석 조사하고 수집하여 막대그래프로 직접 비교해 보았기 때문입니다. 분석해 본 결과, 우리 구역은 다른 종류보다 '${categoryEmojis[maxCategoryKey]} ${categoryNames[maxCategoryKey]}' 장소가 총 ${counts[maxCategoryKey]}곳이나 발견되어 가장 많고 풍성했답니다!
 
-그래서 우리 모둠은 이 가장 멋지고 풍성한 매력을 한껏 뽐낼 수 있는 최고의 추천 여행을 만들기로 결정했습니다. [${maxSpotsList}] 같이 즐겁고 매력적인 자랑거리들을 많이 소개해 드릴 테니 꼭 한번 놀러 오세요. 들어주셔서 감사합니다!`;
+그래서 우리 모둠은 이 넘치는 장점과 매력을 한껏 살릴 수 있는 최고의 추천 여행을 떠나기로 했습니다. 특히 ${maxSpotsList} 같이 즐겁고 매력적인 자랑거리들이 많으니 여러분도 꼭 한번 놀러 오시면 좋겠습니다. 들어주셔서 감사합니다!`;
 
   // 가장 적은 개수를 보완하기 대본
-  const minSpeech = `안녕하세요 여러분! 저희는 [우리 모둠]입니다.
+  const minSpeech = `안녕하세요 여러분! 저희는 멋진 발표를 준비한 우리 모둠입니다.
 
 저희 모둠이 부산 ${currentRegion.name} 구역의 숨은 매력을 골고루 살리는 상생 발전 계획의 제목은 《숨은 보석, ${minSpotsList.split(',')[0] || '부산'}를 골고루 사랑하는 가치 투어》입니다.
 
-우리가 이 나눔 계획을 제안하게 된 근거는, 직접 수집한 개수 분류표를 막대그래프 기둥 높이로 비교해 본 결과입니다. 우리 구역은 [${categoryEmojis[minCategoryKey]} ${categoryNames[minCategoryKey]}] 장소가 단 ${counts[minCategoryKey]}곳밖에 발견되지 않아서 상대적으로 숫자가 아주 적었습니다.
+우리가 이 나눔 계획을 제안하게 된 근거는, 분류표를 가로 세로 막대그래프 기둥 높이로 나타내어 눈으로 직접 확인했기 때문입니다. 우리 구역은 '${categoryEmojis[minCategoryKey]} ${categoryNames[minCategoryKey]}' 장소가 단 ${counts[minCategoryKey]}곳밖에 없어서 상대적으로 매우 적었습니다.
 
-그래서 우리 모둠은 "어느 동네든 골고루 놀거리도 많고 행복해야 한다"는 생각으로 결정을 내렸습니다. 개수나 시설이 상대적으로 부족한 [${minSpotsList}] 주변을 더 가꾸고 알려서, 모두가 함께 행복할 수 있도록 힘쓰겠습니다. 감사합니다!`;
+그래서 우리 모둠은 "모든 동네가 골고루 발전하고 행복해야 한다"는 생각으로 씩씩한 계획을 채택했습니다. 다른 테마에 비해 상대적으로 부족했던 ${minSpotsList} 주변 지역을 더 예쁘게 가꾸고 널리 홍보하여, 모두가 함께 상생할 수 있도록 노력하겠습니다. 감사합니다!`;
 
   return (
     <div className="space-y-6" id="presentation-assistant-section">
