@@ -6,7 +6,7 @@
   모든 컴퓨터와 모바일 기기에서 동일하고 일관된 비례로 출력되도록 최적화합니다.
 */
 html {
-  font-size: 16px;
+  font-size: 20.8px; /* 130% scaling of standard 16px, kept uniform for identical PC and mobile proportions */
 }
 
 body {
