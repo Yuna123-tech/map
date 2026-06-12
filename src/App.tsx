@@ -169,49 +169,49 @@ export default function App() {
           
           {/* 타이틀 명가 */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-indigo-505 to-sky-600 bg-sky-500 rounded-2xl flex items-center justify-center text-white shadow-sm transform hover:rotate-6 transition-transform">
-              <span className="text-xl select-none">🧭</span>
+            <div className="w-12 h-12 bg-gradient-to-br from-indigo-505 to-sky-600 bg-sky-500 rounded-2xl flex items-center justify-center text-white shadow-md transform hover:rotate-6 transition-transform">
+              <span className="text-2xl select-none">🧭</span>
             </div>
             <div>
-              <div className="flex items-center gap-1.5 flex-wrap">
-                <span className="bg-indigo-100 text-indigo-850 text-xs md:text-sm font-black px-2.5 py-1 rounded-full select-none">
+              <div className="flex items-center gap-2.5 flex-wrap">
+                <span className="bg-indigo-100 text-indigo-850 text-sm md:text-base font-black px-3.5 py-1.5 rounded-full select-none shadow-3xs">
                   🏫 {presentation?.teamName ? `👥 ${presentation?.teamName} 모둠` : '🏫 초등 4학년 활기찬 교실'}
                 </span>
-                <span className="bg-sky-100 text-sky-900 text-xs md:text-sm font-black px-2.5 py-1 rounded-full select-none">
+                <span className="bg-sky-100 text-sky-900 text-sm md:text-base font-black px-3.5 py-1.5 rounded-full select-none shadow-3xs">
                   사회 · 수학 융합 교과
                 </span>
               </div>
-              <h1 className="text-sm md:text-base lg:text-xl font-black text-slate-800 tracking-tight mt-1 animate-fade-in flex items-center gap-1">
+              <h1 className="text-base sm:text-lg md:text-xl lg:text-2xl font-black text-slate-900 tracking-tight mt-1.5 animate-fade-in flex items-center gap-2">
                 <span>막대그래프로 소개하는 부산 100대 명소 지리 지도</span>
-                <Sparkles className="w-4.5 h-4.5 text-sky-500 animate-pulse shrink-0" />
+                <Sparkles className="w-5.5 h-5.5 text-sky-500 animate-pulse shrink-0" />
               </h1>
             </div>
           </div>
 
           {/* 스코어 리포트 대시보드 */}
-          <div className="flex flex-wrap items-center gap-3 text-xs md:text-sm">
-            <div className="flex items-center gap-3 bg-slate-50 border border-slate-200 px-4 py-2 rounded-2xl">
+          <div className="flex flex-wrap items-center gap-4 text-sm md:text-base">
+            <div className="flex items-center gap-4 bg-slate-50 border border-slate-200 px-5 py-3 rounded-2xl shadow-3xs">
               <div className="text-center">
-                <p className="text-[10px] md:text-xs text-slate-500 font-extrabold leading-none">
+                <p className="text-xs sm:text-sm text-slate-600 font-extrabold leading-none mb-1">
                   {(REGIONS[selectedRegion] || REGIONS['all']).emoji} 조사 범위 발견율
                 </p>
-                <p className="text-xs sm:text-sm md:text-base font-black text-slate-850 mt-1.5">
-                  🔑 <span className="text-indigo-650 font-black">{regionCollectedCount}</span> / {currentRegionSpots.length} <span className="text-[10px] md:text-xs text-slate-500">곳</span>
+                <p className="text-sm sm:text-base md:text-lg font-black text-slate-850">
+                  🔑 <span className="text-indigo-650 font-black">{regionCollectedCount}</span> / {currentRegionSpots.length} <span className="text-xs sm:text-sm text-slate-500 font-bold">곳</span>
                 </p>
               </div>
-              <div className="h-6 w-px bg-slate-250" />
+              <div className="h-8 w-px bg-slate-350" />
               <div className="text-center">
-                <p className="text-[10px] md:text-xs text-slate-500 font-extrabold leading-none">골든벨 점수</p>
-                <p className="text-xs sm:text-sm md:text-base font-black text-emerald-600 mt-1.5">💯 {correctQuizCount} / {quizSolvedCount} <span className="text-[10px] md:text-xs text-slate-500 font-bold">개</span></p>
+                <p className="text-xs sm:text-sm text-slate-600 font-extrabold leading-none mb-1">골든벨 점수</p>
+                <p className="text-sm sm:text-base md:text-lg font-black text-emerald-600">💯 {correctQuizCount} / {quizSolvedCount} <span className="text-xs sm:text-sm text-slate-500 font-bold">개</span></p>
               </div>
             </div>
 
             <button
               onClick={handleReset}
-              className="flex items-center gap-1.5 px-4 py-2 bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-650 rounded-2xl text-xs md:text-sm font-black transition-all cursor-pointer shadow-3xs"
+              className="flex items-center gap-2 px-5 py-3 bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-650 rounded-2xl text-xs sm:text-sm md:text-base font-black transition-all cursor-pointer shadow-sm hover:shadow-md"
               title="모든 조사 데이터를 처음으로 초기화합니다"
             >
-              <RefreshCw className="w-4 h-4" />
+              <RefreshCw className="w-5 h-5 animate-spin-slow" />
               <span>🎒 처음부터 다시 조사 (초기화)</span>
             </button>
           </div>
@@ -224,55 +224,55 @@ export default function App() {
         {/* 모둠별 조사 범위(권역) 커스텀 선택 장치 (고민 완벽 해결책) */}
         <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-150/80 shadow-3xs hover:shadow-2xs transition-shadow">
           <div className="flex flex-col xl:flex-row items-start xl:items-center justify-between gap-4 border-b border-slate-100 pb-4 mb-5">
-            <div>
-              <h3 className="text-base sm:text-lg md:text-xl font-black text-slate-900 flex items-center gap-2 flex-wrap">
-                <span className="p-1 px-2 mb-1 sm:mb-0 bg-indigo-50 text-indigo-650 rounded-lg text-xs sm:text-sm">활동 조율</span>
-                <span>우리 모둠의 관심 탐색 구역(조사 범위)을 정해 볼까요? 🎒🌎</span>
+            <div className="space-y-2">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-black text-slate-900 flex items-center gap-2.5 flex-wrap">
+                <span className="p-1.5 px-3 bg-indigo-50 text-indigo-650 rounded-lg text-sm sm:text-base font-black">활동 조율</span>
+                <span>우리 모둠의 관심 탐색 구역(조사 범위)을 정해 볼까요? 🎒 🌏</span>
               </h3>
-              <p className="text-sm sm:text-base md:text-lg text-slate-700 font-bold mt-2 leading-relaxed">
-                구역을 정하면 지도에 해당 명소들이 선명해지고, <strong className="text-indigo-650">각 권역의 고유한 지리 통계에 따라 2단계 막대그래프 목표치(정답 수)와 3단계 발표 자료가 완전히 달라집니다!</strong>
+              <p className="text-sm sm:text-base md:text-lg lg:text-xl text-slate-600 font-bold mt-2 leading-relaxed">
+                구역을 정하면 해당 지도에 명소들이 선명해지고, 각 권역의 고유 지리 통계에 따라 <strong className="text-indigo-650">2단계 막대그래프 미션 및 3단계 발표 대본이 다르게</strong> 바뀝니다!
               </p>
             </div>
-            <div className="flex items-center gap-1.5 px-4 py-2 bg-amber-50 rounded-2xl border border-amber-150 text-xs sm:text-sm md:text-base font-extrabold text-amber-900 shrink-0 self-start xl:self-auto">
-              <span>💡 모둠별로 서로 다른 구역을 선택하면 더욱 풍부하고 입체적인 공유 발표회가 된답니다!</span>
+            <div className="bg-amber-50 text-amber-900 px-4.5 py-3 rounded-2xl border border-amber-200 text-sm sm:text-base md:text-lg font-black flex items-center gap-1.5 shadow-3xs shrink-0">
+              💡 모둠별 다른 구역 선택이 장려됩니다!
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {REGION_LIST.map((rg) => {
               const isSelected = selectedRegion === rg.key;
               return (
                 <button
                   key={rg.key}
                   onClick={() => handleRegionChange(rg.key)}
-                  className={`p-4 rounded-2xl border text-left transition-all relative overflow-hidden group cursor-pointer ${
+                  className={`p-5 rounded-3xl border text-left transition-all relative overflow-hidden group cursor-pointer ${
                     isSelected
-                      ? 'bg-indigo-50/65 border-indigo-400 ring-2 ring-indigo-200/50 shadow-xs'
-                      : 'bg-slate-50/40 border-slate-200/75 hover:bg-slate-50/90'
+                      ? 'bg-indigo-50/75 border-indigo-400 ring-4 ring-indigo-200/50 shadow-md'
+                      : 'bg-slate-50/60 border-slate-200 hover:bg-slate-50/90 hover:shadow-2xs'
                   }`}
                 >
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-xl select-none group-hover:scale-110 transition-transform">{rg.emoji}</span>
-                    <span className="text-xs sm:text-sm font-black text-slate-850 tracking-tight">{rg.name}</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-2xl select-none group-hover:scale-120 transition-transform">{rg.emoji}</span>
+                    <span className="text-base sm:text-lg font-black text-slate-900 tracking-tight">{rg.name}</span>
                   </div>
-                  <p className="text-[11px] sm:text-xs text-slate-500 font-bold mt-1.5 leading-relaxed line-clamp-2">
+                  <p className="text-sm sm:text-base md:text-lg text-slate-700 font-bold mt-2.5 leading-relaxed line-clamp-3">
                     {rg.description}
                   </p>
                   
                   {/* 정적 구 표시 장식 */}
-                  <div className="mt-2 pt-1.5 border-t border-slate-150/60 flex flex-wrap gap-0.5 pointer-events-none">
+                  <div className="mt-4 pt-2.5 border-t border-slate-200/80 flex flex-wrap gap-1 pointer-events-none">
                     {rg.districts.slice(0, 3).map((dist, dIdx) => (
-                      <span key={dIdx} className="text-[9.5px] sm:text-[10px] px-1 bg-white/60 text-slate-650 rounded border border-slate-200/50 font-semibold">
+                      <span key={dIdx} className="text-sm px-2.5 py-1 bg-white text-slate-700 rounded-md border border-slate-300 font-heavy">
                         {dist.replace('구', '').replace('군', '')}
                       </span>
                     ))}
                     {rg.districts.length > 3 && (
-                      <span className="text-[9.5px] sm:text-[10px] text-slate-400 font-bold">...</span>
+                      <span className="text-sm text-slate-500 font-black">...</span>
                     )}
                   </div>
 
                   {isSelected && (
-                    <div className="absolute top-1 right-1 w-2 h-2 rounded-full bg-indigo-600 animate-ping" />
+                    <div className="absolute top-1.5 right-1.5 w-3 h-3 rounded-full bg-indigo-600 animate-ping" />
                   )}
                 </button>
               );
@@ -281,54 +281,54 @@ export default function App() {
         </div>
 
         {/* 👥 1인 1기기 사회-수학 모둠 협동 미션 흐름도 (수업용 쌍방향 길잡이) */}
-        <div className="bg-amber-50/40 border border-amber-250 rounded-3xl p-6.5 sm:p-8 shadow-3xs relative overflow-hidden">
+        <div className="bg-amber-50/40 border-2 border-amber-250 rounded-4xl p-8 sm:p-10 shadow-sm relative overflow-hidden">
           <div className="absolute top-0 right-0 p-4 opacity-[0.03] select-none pointer-events-none text-9xl">
             👥
           </div>
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-            <div className="space-y-2.5">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-150 border border-amber-200 rounded-full text-xs sm:text-sm md:text-base font-black text-amber-950 select-none">
+            <div className="space-y-3.5">
+              <span className="inline-flex items-center gap-2 px-4 py-2 bg-amber-150 border border-amber-200 rounded-full text-sm sm:text-base md:text-lg font-black text-amber-950 select-none shadow-3xs">
                 👥 1인 1기기 사회·수학 모둠 융합학습법
               </span>
-              <h3 className="text-lg sm:text-xl md:text-2xl font-black text-amber-950 flex items-center gap-1.5">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-amber-950 flex items-center gap-2">
                 <span>지도가 완성되고 표·그래프 수치가 딱 맞춰지는 4회전 비밀 흐름</span>
               </h3>
-              <p className="text-sm sm:text-base md:text-lg text-slate-705 font-bold leading-relaxed">
-                각자 자리에 개인 태블릿이나 노트북(1인 1기기)이 있어도, 아래 4단계 미션을 올바르게 따라 하면 수량이 삐뚤어지지 않고 <strong>전체 모둠원이 완벽히 일치하는 아름다운 결과 분석</strong>을 이뤄낼 수 있답니다!
+              <p className="text-base sm:text-lg md:text-xl text-slate-755 font-bold leading-relaxed max-w-5xl">
+                각자 자리에 개인 태블릿이나 노트북(1인 1기기)이 있어도, 아래 4단계 미션을 올바르게 따라 하면 수량이 삐뚤어지지 않고 <strong className="text-amber-950">전체 모둠원이 완벽히 일치하는 아름다운 결과 분석</strong>을 이뤄낼 수 있답니다!
               </p>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-7">
             {/* Step 1: 구역 통일 */}
-            <div className={`p-5 rounded-2xl border transition-all flex flex-col justify-between min-h-[180px] ${
+            <div className={`p-6 sm:p-7 rounded-3xl border transition-all flex flex-col justify-between min-h-[220px] ${
               selectedRegion !== 'all'
-                ? 'bg-emerald-50/40 border-emerald-250 shadow-3xs'
+                ? 'bg-emerald-50/50 border-emerald-300 shadow-3xs'
                 : 'bg-white border-slate-205 shadow-2xs'
             }`}>
               <div>
-                <div className="flex items-center justify-between gap-2 border-b border-slate-100/60 pb-2">
-                  <div className="flex items-center gap-1.55">
-                    <span className="w-6 h-6 rounded-full bg-slate-800 text-white text-xs sm:text-sm font-black flex items-center justify-center">1</span>
-                    <span className="text-sm sm:text-base font-black text-slate-805">모둠 구역 통일</span>
+                <div className="flex items-center justify-between gap-2 border-b border-slate-200 pb-2.5">
+                  <div className="flex items-center gap-2">
+                    <span className="w-7 h-7 rounded-full bg-slate-850 text-white text-sm font-black flex items-center justify-center">1</span>
+                    <span className="text-base sm:text-lg font-black text-slate-900">모둠 구역 통일</span>
                   </div>
                   {selectedRegion !== 'all' ? (
-                    <span className="text-xs px-2.5 py-0.5 bg-emerald-100 text-emerald-850 rounded font-black border border-emerald-150">일치 성공</span>
+                    <span className="text-xs sm:text-sm px-3 py-1 bg-emerald-100 text-emerald-850 rounded-lg font-black border border-emerald-200">일치 성공</span>
                   ) : (
-                    <span className="text-xs px-2.5 py-0.5 bg-amber-100 text-amber-900 rounded font-black border border-amber-150 animate-pulse">선택 필수</span>
+                    <span className="text-xs sm:text-sm px-3 py-1 bg-amber-100 text-amber-900 rounded-lg font-black border border-amber-200 animate-pulse">선택 필수</span>
                   )}
                 </div>
-                <p className="text-sm sm:text-base text-slate-700 mt-3 leading-relaxed font-bold">
-                  <strong>먼저 구역을 정해요!</strong> 모둠 친구들과 은밀히 의논하여 위 가로 타일 목록에서 <strong>동일한 관심지(동래, 사하 등)를 다같이 클릭</strong>하여 고정합니다.
+                <p className="text-sm sm:text-base md:text-lg text-slate-700 mt-4 leading-relaxed font-bold">
+                  <strong>먼저 구역을 정해요!</strong> 모둠 친구들과 은밀히 의논하여 위 가로 타일 목록에서 <strong className="text-indigo-750 underline">동일한 관심지(동래, 사하 등)를 다같이 클릭</strong>하여 고정합니다.
                 </p>
               </div>
-              <div className="mt-4 pt-2 border-t border-slate-150/50">
+              <div className="mt-5 pt-3 border-t border-slate-150/55">
                 {selectedRegion !== 'all' ? (
-                  <p className="text-sm text-emerald-800 font-extrabold">
+                  <p className="text-sm sm:text-base text-emerald-900 font-extrabold">
                     📍 {REGIONS[selectedRegion].emoji} [{REGIONS[selectedRegion].name}] 구역 지정 완료!
                   </p>
                 ) : (
-                  <p className="text-sm text-rose-650 font-extrabold flex items-center gap-1">
+                  <p className="text-sm sm:text-base text-rose-650 font-extrabold flex items-center gap-1">
                     <span>⚠️</span>
                     <span>아직 구역이 [전체]입니다. 정해 보세요!</span>
                   </p>
@@ -337,37 +337,37 @@ export default function App() {
             </div>
 
             {/* Step 2: 공동 수집 지도조사 */}
-            <div className={`p-5 rounded-2xl border transition-all flex flex-col justify-between min-h-[180px] ${
+            <div className={`p-6 sm:p-7 rounded-3xl border transition-all flex flex-col justify-between min-h-[220px] ${
               regionCollectedCount > 0 && activeStep === 1
-                ? 'bg-sky-50/40 border-sky-300 ring-2 ring-sky-100/30'
+                ? 'bg-sky-50/50 border-sky-355 ring-4 ring-sky-100/30'
                 : regionCollectedCount === currentRegionSpots.length && currentRegionSpots.length > 0
-                ? 'bg-emerald-50/40 border-emerald-250'
+                ? 'bg-emerald-50/50 border-emerald-300'
                 : 'bg-white border-slate-205 opacity-90'
             }`}>
               <div>
-                <div className="flex items-center justify-between gap-2 border-b border-slate-100/60 pb-2">
-                  <div className="flex items-center gap-1.55">
-                    <span className="w-6 h-6 rounded-full bg-slate-800 text-white text-xs sm:text-sm font-black flex items-center justify-center">2</span>
-                    <span className="text-sm sm:text-base font-black text-slate-805">백지도 공동 조사</span>
+                <div className="flex items-center justify-between gap-2 border-b border-slate-200 pb-2.5">
+                  <div className="flex items-center gap-2">
+                    <span className="w-7 h-7 rounded-full bg-slate-850 text-white text-sm font-black flex items-center justify-center">2</span>
+                    <span className="text-base sm:text-lg font-black text-slate-900">백지도 공동 조사</span>
                   </div>
                   {regionCollectedCount === currentRegionSpots.length && currentRegionSpots.length > 0 ? (
-                    <span className="text-xs px-2.5 py-0.5 bg-emerald-100 text-emerald-850 rounded font-black border border-emerald-150">수집 100%</span>
+                    <span className="text-xs sm:text-sm px-3 py-1 bg-emerald-100 text-emerald-850 rounded-lg font-black border border-emerald-200">수집 100%</span>
                   ) : regionCollectedCount > 0 ? (
-                    <span className="text-xs px-2.5 py-0.5 bg-sky-100 text-sky-850 rounded font-black border border-sky-150 animate-pulse">수집 중</span>
+                    <span className="text-xs sm:text-sm px-3 py-1 bg-sky-100 text-sky-850 rounded-lg font-black border border-sky-200 animate-pulse">수집 중</span>
                   ) : (
-                    <span className="text-xs px-2.5 py-0.5 bg-slate-100 text-slate-450 rounded font-black border border-slate-200">대기</span>
+                    <span className="text-xs sm:text-sm px-3 py-1 bg-slate-100 text-slate-600 rounded-lg font-black border border-slate-200">대기</span>
                   )}
                 </div>
-                <p className="text-sm sm:text-base text-slate-700 mt-3 leading-relaxed font-bold">
+                <p className="text-sm sm:text-base md:text-lg text-slate-700 mt-4 leading-relaxed font-bold">
                   <strong>표가 똑같이 나옵니다!</strong> 1단계 부산 백지도를 보며 파란색 명소를 터치하고 퀴즈를 풀러 도장을 얻으세요. 모량 표 데이터가 모두에게 똑같이 완성됩니다.
                 </p>
               </div>
-              <div className="mt-4 pt-2 border-t border-slate-150/50">
-                <div className="flex items-center justify-between text-sm font-black">
-                  <span className="text-slate-500">수집 진행:</span>
-                  <span className="text-sky-700 font-black">{regionCollectedCount} / {currentRegionSpots.length} 곳</span>
+              <div className="mt-5 pt-3 border-t border-slate-150/55">
+                <div className="flex items-center justify-between text-sm sm:text-base font-black">
+                  <span className="text-slate-650">수집 진행:</span>
+                  <span className="text-sky-700 font-heavy">{regionCollectedCount} / {currentRegionSpots.length} 곳</span>
                 </div>
-                <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden mt-1.5">
+                <div className="w-full bg-slate-150 h-3 rounded-full overflow-hidden mt-2.5">
                   <div 
                     className="bg-sky-500 h-full transition-all duration-300" 
                     style={{ width: `${Math.min(100, currentRegionSpots.length > 0 ? (regionCollectedCount / currentRegionSpots.length) * 100 : 0)}%` }}
@@ -377,37 +377,37 @@ export default function App() {
             </div>
 
             {/* Step 3: 개별 막대 작도 */}
-            <div className={`p-5 rounded-2xl border transition-all flex flex-col justify-between min-h-[180px] ${
+            <div className={`p-6 sm:p-7 rounded-3xl border transition-all flex flex-col justify-between min-h-[220px] ${
               verifiedCounts
-                ? 'bg-emerald-50/40 border-emerald-250'
+                ? 'bg-emerald-50/50 border-emerald-300'
                 : activeStep === 2
-                ? 'bg-amber-50/40 border-amber-300 ring-2 ring-amber-100/30'
+                ? 'bg-amber-50/50 border-amber-305 ring-4 ring-amber-100/30'
                 : 'bg-white border-slate-205 opacity-90'
             }`}>
               <div>
-                <div className="flex items-center justify-between gap-2 border-b border-slate-100/60 pb-2">
-                  <div className="flex items-center gap-1.55">
-                    <span className="w-6 h-6 rounded-full bg-slate-800 text-white text-xs sm:text-sm font-black flex items-center justify-center">3</span>
-                    <span className="text-sm sm:text-base font-black text-slate-805">각자 그래프 그리기</span>
+                <div className="flex items-center justify-between gap-2 border-b border-slate-200 pb-2.5">
+                  <div className="flex items-center gap-2">
+                    <span className="w-7 h-7 rounded-full bg-slate-850 text-white text-sm font-black flex items-center justify-center">3</span>
+                    <span className="text-base sm:text-lg font-black text-slate-900">각자 그래프 그리기</span>
                   </div>
                   {verifiedCounts ? (
-                    <span className="text-xs px-2.5 py-0.5 bg-emerald-100 text-emerald-850 rounded font-black border border-emerald-150">정답 확인</span>
+                    <span className="text-xs sm:text-sm px-3 py-1 bg-emerald-100 text-emerald-850 rounded-lg font-black border border-emerald-200">정답 확인</span>
                   ) : (
-                    <span className="text-xs px-2.5 py-0.5 bg-slate-100 text-slate-450 rounded font-black border border-slate-200">대기</span>
+                    <span className="text-xs sm:text-sm px-3 py-1 bg-slate-100 text-slate-650 rounded-lg font-black border border-slate-200">대기</span>
                   )}
                 </div>
-                <p className="text-sm sm:text-base text-slate-700 mt-3 leading-relaxed font-bold">
+                <p className="text-sm sm:text-base md:text-lg text-slate-700 mt-4 leading-relaxed font-bold">
                   <strong>각자 기기에서 따로!</strong> 모여진 표의 개수 수치를 2단계 빌더에 기입하고 세로 눈금 한 칸의 양(1, 2, 5)을 직접 고른 뒤, 정답 채점 버튼을 터치해 그래프 검정을 마칩니다.
                 </p>
               </div>
-              <div className="mt-4 pt-2 border-t border-slate-150/50">
+              <div className="mt-5 pt-3 border-t border-slate-150/55">
                 {verifiedCounts ? (
-                  <p className="text-sm text-emerald-800 font-extrabold flex items-center gap-1">
+                  <p className="text-sm sm:text-base text-emerald-850 font-extrabold flex items-center gap-1.5">
                     <span>✨</span>
                     <span>검증 완료! 친구 그래프와 맞대어보세요</span>
                   </p>
                 ) : (
-                  <p className="text-sm text-slate-600 font-bold">
+                  <p className="text-sm sm:text-base text-slate-650 font-extrabold">
                     📊 2단계 빌더에서 작도 대기 중
                   </p>
                 )}
@@ -415,36 +415,37 @@ export default function App() {
             </div>
 
             {/* Step 4: 공동 발표 해석 */}
-            <div className={`p-5 rounded-2xl border transition-all flex flex-col justify-between min-h-[180px] ${
+            <div className={`p-6 sm:p-7 rounded-3xl border transition-all flex flex-col justify-between min-h-[220px] ${
               presentation
-                ? 'bg-indigo-50/40 border-indigo-250 text-indigo-900 shadow-3xs'
+                ? 'bg-indigo-50/50 border-indigo-300 text-indigo-900 shadow-3xs'
                 : activeStep === 3
-                ? 'bg-indigo-50/20 border-indigo-300 ring-2 ring-indigo-100/30'
+                ? 'bg-indigo-50/30 border-indigo-350 ring-4 ring-indigo-100/30'
                 : 'bg-white border-slate-205 opacity-90'
             }`}>
               <div>
-                <div className="flex items-center justify-between gap-2 border-b border-slate-100/60 pb-2">
-                  <div className="flex items-center gap-1.55">
-                    <span className="w-6 h-6 rounded-full bg-slate-800 text-white text-xs sm:text-sm font-black flex items-center justify-center">4</span>
-                    <span className="text-sm sm:text-base font-black text-slate-805">모여서 대본 쓰기</span>
+                <div className="flex items-center justify-between gap-2 border-b border-slate-200 pb-2.5">
+                  <div className="flex items-center gap-2">
+                    <span className="w-8 h-8 rounded-full bg-slate-850 text-white text-sm font-black flex items-center justify-center">4</span>
+                    <span className="text-base sm:text-lg md:text-xl font-black text-slate-900">모여서 대본 쓰기</span>
                   </div>
                   {presentation ? (
-                    <span className="text-xs px-2.5 py-0.5 bg-indigo-100 text-indigo-850 rounded font-black border border-indigo-150">제출완료</span>
+                    <span className="text-xs sm:text-sm px-3.5 py-1.5 bg-indigo-100 text-indigo-850 rounded-lg font-black border border-indigo-200">제출완료</span>
                   ) : (
-                    <span className="text-xs px-2.5 py-0.5 bg-slate-100 text-slate-450 rounded font-black border border-slate-200">대기</span>
+                    <span className="text-xs sm:text-sm px-3.5 py-1.5 bg-slate-100 text-slate-650 rounded-lg font-black border border-slate-200">대기</span>
                   )}
                 </div>
-                <p className="text-sm sm:text-base text-slate-700 mt-3 leading-relaxed font-bold">
+                <p className="text-sm sm:text-base md:text-lg text-slate-700 mt-4 leading-relaxed font-bold">
                   <strong>다시 동그랗게 모여서!</strong> 각자의 그래프가 같음을 확인했다면, 대본 단계로 넘어가서 우리 구역이 품은 최고의 3대 명소 코스를 토의해 가이드 원고를 최종 완성합니다!
                 </p>
               </div>
-              <div className="mt-4 pt-2 border-t border-slate-150/50">
+              <div className="mt-5 pt-3 border-t border-slate-150/55">
                 {presentation ? (
-                  <p className="text-sm text-indigo-850 font-extrabold">
-                    🎉 《{presentation.themeName}》 제출!
+                  <p className="text-sm sm:text-base md:text-lg text-indigo-900 font-extrabold flex items-center gap-2">
+                    <span>🎉</span>
+                    <span>《{presentation.themeName}》 제출!</span>
                   </p>
                 ) : (
-                  <p className="text-sm text-slate-650 font-bold">
+                  <p className="text-sm sm:text-base md:text-lg text-slate-700 font-extrabold">
                     ✏️ 모둠 3대 명소 의사결정 대본 쓰기
                   </p>
                 )}
@@ -454,7 +455,6 @@ export default function App() {
         </div>
 
         <div className="bg-white rounded-3xl p-4 shadow-3xs border border-slate-100 flex flex-col md:flex-row items-stretch justify-between gap-3">
-          
           {/* STEP 1 */}
           <button
             onClick={() => setActiveStep(1)}
