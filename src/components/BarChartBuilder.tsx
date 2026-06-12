@@ -166,23 +166,23 @@ export default function BarChartBuilder({
   return (
     <div className="space-y-6" id="barchart-builder-section">
       {/* 아침 미션 약점 오답 대시보드 힌트 박스 */}
-      <div className="bg-indigo-950 text-purple-100 py-3 px-5 rounded-2xl text-xs md:text-sm font-semibold flex flex-col sm:flex-row items-center gap-2.5 shadow-sm border border-indigo-900">
-        <span className="bg-yellow-400 text-indigo-950 px-2 rounded-md text-[10px] font-black animate-pulse shrink-0">
+      <div className="bg-indigo-950 text-purple-100 py-4.5 px-6 rounded-2xl text-sm sm:text-base md:text-lg font-bold flex flex-col xl:flex-row items-center gap-3 shadow-md border border-indigo-900">
+        <span className="bg-yellow-400 text-indigo-950 px-3 py-1 rounded-lg text-xs sm:text-sm font-black animate-pulse shrink-0">
           💡 AIDT 아침 약점 피드백
         </span>
-        <p className="text-left">
+        <p className="text-left leading-relaxed">
           우리 4학년 5반은 아침 미션에서 <strong className="underline text-yellow-300">"자료에 알맞은 눈금 한 칸의 크기 정하기"</strong> 문항 오답률이 35%로 가장 높았습니다! Y축 눈금을 1개, 2개, 5개 중 어떤 것으로 선택해야 보기에 깔끔할지 직접 분석해 보세요.
         </p>
       </div>
 
       {/* 안내 교구판 */}
-      <div className="bg-white rounded-3xl p-5 shadow-xs border border-slate-100 flex flex-col md:flex-row items-center justify-between gap-4">
-        <div className="space-y-1 text-center md:text-left">
-          <h3 className="text-lg font-black text-slate-800 flex items-center gap-2 justify-center md:justify-start">
+      <div className="bg-white rounded-3xl p-6 md:p-8 shadow-xs border border-slate-100 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="space-y-2 text-center md:text-left">
+          <h3 className="text-xl sm:text-2xl font-black text-slate-900 flex items-center gap-2 justify-center md:justify-start">
             <span>📊</span>
             <span>[활동 2] 스마트 막대그래프 융합 빌더</span>
           </h3>
-          <p className="text-xs text-slate-500 font-semibold leading-relaxed max-w-xl">
+          <p className="text-sm sm:text-base md:text-lg text-slate-600 font-bold leading-relaxed max-w-2xl">
             1단계 지도에서 직접 파악하고 분류한 테마별 수치를 빈칸에 기재해 주세요. <br />
             개수 수치에 맞춤화해 막대그래프 기둥이 실시간으로 조율되며, 아이들의 자주적 통계 이해도를 높여줍니다 ✨
           </p>
@@ -191,11 +191,11 @@ export default function BarChartBuilder({
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* 왼쪽: 학생 직접 숫자 입력 테이블 (5칸) */}
-        <div className="lg:col-span-5 bg-white rounded-3xl p-6 shadow-xs border border-slate-100 space-y-4">
+        <div className="lg:col-span-5 bg-white rounded-3xl p-6 sm:p-8 shadow-xs border border-slate-100 space-y-5">
           
           {/* 수학 탐구: 눈금 크기 정하기 */}
-          <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200">
-            <span className="block text-xs font-black text-slate-600 mb-2">
+          <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200">
+            <span className="block text-sm sm:text-base md:text-lg font-black text-slate-805 mb-3">
               📏 [수학 탐구] 세로 눈금 한 칸의 크기를 얼마로 선택할까요?
             </span>
             <div className="grid grid-cols-3 gap-2">
@@ -206,10 +206,10 @@ export default function BarChartBuilder({
               ].map((opt) => (
                 <label
                   key={opt.value}
-                  className={`flex items-center justify-center gap-1.5 p-2 rounded-xl border text-xs font-bold cursor-pointer transition-all ${
+                  className={`flex items-center justify-center gap-1.5 p-3 rounded-xl border text-xs sm:text-sm font-black cursor-pointer transition-all ${
                     stepSize === opt.value
                       ? 'bg-slate-800 border-slate-900 text-white shadow-3xs'
-                      : 'bg-white border-slate-200 hover:bg-slate-100 text-slate-600'
+                      : 'bg-white border-slate-200 hover:bg-slate-100 text-slate-655'
                   }`}
                 >
                   <input
@@ -226,21 +226,21 @@ export default function BarChartBuilder({
             </div>
 
             {/* 실시간 탐정 멘트 박스 */}
-            <div className="mt-3 bg-indigo-50 border border-indigo-100 p-2.5 rounded-xl text-xs sm:text-sm leading-relaxed text-indigo-900 font-bold">
+            <div className="mt-4 bg-indigo-50 border border-indigo-150 p-4 sm:p-5 rounded-xl text-sm sm:text-base md:text-lg leading-relaxed text-indigo-955 font-bold">
               📢 윤아 쌤의 수학 꿀팁: {stepFeedback}
             </div>
           </div>
 
-          <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-            <h4 className="font-extrabold text-slate-800 text-xs sm:text-sm flex items-center gap-1">
+          <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
+            <h4 className="font-extrabold text-slate-800 text-sm sm:text-base flex items-center gap-1">
               <span>✏️</span>
               <span>수집한 개수를 입력해 보세요</span>
             </h4>
-            <span className="text-[11px] md:text-xs text-slate-500 font-bold">최대 35개까지</span>
+            <span className="text-xs sm:text-sm text-slate-600 font-bold">최대 35개까지</span>
           </div>
 
           {/* 입력 폼 리스트 */}
-          <div className="space-y-3">
+          <div className="space-y-3.5">
             {CATEGORY_LIST.map((cat) => {
               const currentVal = counts[cat.key];
               const isWrong = hasChecked && currentVal !== CURRENT_REAL_COUNTS[cat.key];
@@ -248,27 +248,27 @@ export default function BarChartBuilder({
               return (
                 <div
                   key={cat.key}
-                  className={`flex items-center justify-between p-3 rounded-2xl border transition-all ${
+                  className={`flex items-center justify-between p-4 rounded-2xl border transition-all ${
                     isWrong
                       ? 'bg-rose-50 border-rose-300 animate-shake'
                       : 'bg-slate-50/60 border-slate-150 hover:border-slate-200'
                   }`}
                 >
-                  <div className="flex items-center gap-2.5">
-                    <span className="text-xl leading-none bg-white w-8 h-8 rounded-full shadow-3xs flex items-center justify-center">
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl leading-none bg-white w-10 h-10 rounded-full shadow-3xs flex items-center justify-center border border-slate-100">
                       {cat.emoji}
                     </span>
                     <div>
-                      <h5 className="text-xs md:text-sm font-black text-slate-800">{cat.name}</h5>
-                      <span className="text-[10px] md:text-xs text-slate-500 font-semibold">{cat.stamp} 마커 아이콘</span>
+                      <h5 className="text-sm sm:text-base font-black text-slate-850">{cat.name}</h5>
+                      <span className="text-xs sm:text-sm text-slate-505 font-bold">{cat.stamp} 마커 아이콘</span>
                     </div>
                   </div>
 
                   {/* 수치 조정 증감 박스 */}
-                  <div className="flex items-center gap-1 bg-white p-1 rounded-xl border border-slate-200">
+                  <div className="flex items-center gap-2 bg-white p-1.5 rounded-xl border border-slate-250 shrink-0">
                     <button
                       onClick={() => handleCountChange(cat.key, currentVal - 1)}
-                      className="w-7 h-7 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-650 font-black text-sm flex items-center justify-center cursor-pointer"
+                      className="w-9 h-9 rounded-lg bg-slate-55 hover:bg-slate-100 text-slate-705 font-black text-base flex items-center justify-center cursor-pointer border border-slate-200"
                     >
                       -
                     </button>
@@ -280,11 +280,11 @@ export default function BarChartBuilder({
                         handleCountChange(cat.key, isNaN(parsed) ? 0 : parsed);
                       }}
                       placeholder="0"
-                      className="w-8 text-center font-black text-slate-800 bg-transparent text-xs focus:outline-none"
+                      className="w-10 text-center font-black text-slate-850 bg-transparent text-sm sm:text-base focus:outline-none"
                     />
                     <button
                       onClick={() => handleCountChange(cat.key, currentVal + 1)}
-                      className="w-7 h-7 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-650 font-black text-sm flex items-center justify-center cursor-pointer"
+                      className="w-9 h-9 rounded-lg bg-slate-55 hover:bg-slate-100 text-slate-705 font-black text-base flex items-center justify-center cursor-pointer border border-slate-200"
                     >
                       +
                     </button>
@@ -294,16 +294,16 @@ export default function BarChartBuilder({
             })}
           </div>
 
-          <div className="pt-2.5 space-y-2">
+          <div className="pt-2.5 space-y-3">
             <button
               onClick={handleCheckAnswers}
-              className={`w-full py-3 rounded-2xl font-black text-xs transition-shadow flex items-center justify-center gap-2 cursor-pointer shadow-md ${
+              className={`w-full py-4 rounded-2xl font-black text-sm sm:text-base transition-shadow flex items-center justify-center gap-2 cursor-pointer shadow-md ${
                 isCorrect
                   ? 'bg-emerald-500 hover:bg-emerald-600 text-white'
                   : 'bg-sky-500 hover:bg-sky-600 text-white'
               }`}
             >
-              {isCorrect ? <Check className="w-4 h-4 animate-bounce" /> : '📊'}
+              {isCorrect ? <Check className="w-5 h-5 animate-bounce" /> : '📊'}
               <span>막대그래프 정답 확인 및 채점하기</span>
             </button>
 
@@ -311,28 +311,28 @@ export default function BarChartBuilder({
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className={`p-3 rounded-2xl flex items-start gap-2 border ${
+                className={`p-4 rounded-2xl flex items-start gap-3 border ${
                   isCorrect
-                    ? 'bg-emerald-50 border-emerald-200 text-emerald-900'
-                    : 'bg-rose-50 border-rose-200 text-rose-900'
+                    ? 'bg-emerald-50 border-emerald-250 text-emerald-950'
+                    : 'bg-rose-50 border-rose-250 text-rose-955'
                 }`}
               >
                 {isCorrect ? (
                   <>
-                    <PartyPopper className="w-4 h-4 text-emerald-600 shrink-0" />
-                     <div>
-                       <h6 className="text-xs md:text-sm font-black">정확도 100%! 개수를 모두 맞췄습니다! 🎉</h6>
-                       <p className="text-[11px] md:text-xs mt-0.5 leading-relaxed font-semibold text-emerald-800">
+                    <PartyPopper className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+                     <div className="space-y-0.5">
+                       <h6 className="text-sm sm:text-base font-black text-emerald-900">정확도 100%! 개수를 모두 맞췄습니다! 🎉</h6>
+                       <p className="text-xs sm:text-sm md:text-base leading-relaxed font-bold text-emerald-800">
                          이제 수학 막대그래프 결과를 활용해 방문객과 관광객 분들에게 멋지게 제안할 논리를 만들러 3단계 발표 보드장으로 떠나볼까요?
                        </p>
                      </div>
                   </>
                 ) : (
                   <>
-                    <AlertTriangle className="w-4 h-4 text-rose-500 shrink-0" />
-                     <div>
-                       <h6 className="text-xs md:text-sm font-black">앗! 일치하지 않는 숫자가 있어요! 🧐</h6>
-                       <p className="text-[11px] md:text-xs mt-0.5 leading-relaxed font-semibold text-rose-800">
+                    <AlertTriangle className="w-5 h-5 text-rose-500 shrink-0 mt-0.5" />
+                     <div className="space-y-0.5">
+                       <h6 className="text-sm sm:text-base font-black text-rose-900">앗! 일치하지 않는 숫자가 있어요! 🧐</h6>
+                       <p className="text-xs sm:text-sm md:text-base leading-relaxed font-bold text-rose-800">
                          빨갛게 표시된 카테고리의 개수를 다시 조심히 세어가며 정정해 보아요. 1단계 지도를 확대해서 개수를 세어보면 편리합니다!
                        </p>
                      </div>
@@ -344,30 +344,30 @@ export default function BarChartBuilder({
         </div>
 
         {/* 오른쪽 막대그래프 시각화 교구 (7칸) */}
-        <div className="lg:col-span-7 bg-white rounded-3xl p-6 shadow-xs border border-slate-100 flex flex-col justify-between space-y-5">
+        <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 shadow-xs border border-slate-100 flex flex-col justify-between space-y-5">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3">
             <div>
-              <h4 className="font-extrabold text-slate-800 text-xs sm:text-sm flex items-center gap-1">
+              <h4 className="font-black text-slate-900 text-sm sm:text-base md:text-lg flex items-center gap-1.5">
                 <span>🎨</span>
                 <span>우리 교실 막대그래프 보드</span>
               </h4>
-              <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5 font-medium">숫자에 따라 막대가 즉각적으로 멋지게 자라나며 한눈에 비교됩니다.</p>
+              <p className="text-xs sm:text-sm md:text-base text-slate-600 mt-1 font-bold">숫자에 따라 막대가 즉각적으로 멋지게 자라나며 한눈에 비교됩니다.</p>
             </div>
 
-            <div className="flex items-center gap-2">
-              <div className="bg-slate-100 p-1 rounded-xl flex gap-1">
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="bg-slate-100 p-1 rounded-xl flex gap-1 border border-slate-200">
                 <button
                   onClick={() => setRenderMode('bar')}
-                  className={`px-2.5 py-1 rounded-lg text-xs md:text-sm font-black cursor-pointer transition-all ${
-                    renderMode === 'bar' ? 'bg-white text-slate-800 shadow-xs' : 'text-slate-50'
+                  className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-black cursor-pointer transition-all ${
+                    renderMode === 'bar' ? 'bg-white text-slate-805 shadow-xs' : 'text-slate-500 hover:text-slate-700'
                   }`}
                 >
                   막대 모드
                 </button>
                 <button
                   onClick={() => setRenderMode('block')}
-                  className={`px-2.5 py-1 rounded-lg text-xs md:text-sm font-black cursor-pointer transition-all ${
-                    renderMode === 'block' ? 'bg-white text-slate-800 shadow-xs' : 'text-slate-50'
+                  className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-black cursor-pointer transition-all ${
+                    renderMode === 'block' ? 'bg-white text-slate-805 shadow-xs' : 'text-slate-500 hover:text-slate-700'
                   }`}
                 >
                   블록 쌓기
@@ -378,7 +378,7 @@ export default function BarChartBuilder({
                 <select
                   value={barDecoration}
                   onChange={(e: any) => setBarDecoration(e.target.value)}
-                  className="bg-slate-50 border border-slate-200 text-xs font-black text-slate-700 px-2 py-1 rounded-lg focus:outline-none cursor-pointer hover:bg-slate-100"
+                  className="bg-slate-50 border border-slate-200 text-xs sm:text-sm font-black text-slate-700 px-3 py-1.5 rounded-lg focus:outline-none cursor-pointer hover:bg-slate-100 border border-slate-250"
                 >
                   <option value="normal">🎨 기본 막대</option>
                   <option value="cookie">🍬 알탕 막대</option>
@@ -396,17 +396,17 @@ export default function BarChartBuilder({
                 const shouldShowLabel = yTicks.length <= 15 || num % 5 === 0 || num === maxVal || num === 0;
                 return (
                   <div key={num} className="w-full flex items-center gap-2">
-                    <span className="text-[10px] md:text-xs font-black text-slate-500 w-4 text-right select-none">
+                    <span className="text-xs sm:text-sm font-black text-slate-600 w-5 text-right select-none">
                       {shouldShowLabel ? num : ''}
                     </span>
-                    <div className="flex-1 border-t border-dashed border-slate-200" />
+                    <div className="flex-1 border-t border-dashed border-slate-250" />
                   </div>
                 );
               })}
             </div>
 
             {/* 실제 막대 기둥 그리드 */}
-            <div className="absolute top-4 bottom-14 left-14 right-2 grid grid-cols-5 gap-3.5 items-end">
+            <div className="absolute top-4 bottom-14 left-16 right-2 grid grid-cols-5 gap-3.5 items-end">
               {CATEGORY_LIST.map((cat) => {
                 const countVal = counts[cat.key];
                 // 실제 입력 갯수와 Y축 기준값에 따른 높이 퍼센트 (최대 30 기준)
@@ -418,7 +418,7 @@ export default function BarChartBuilder({
                     {/* 상단 펄쩍 뛰는 수치 뱃지 */}
                     {countVal > 0 && (
                       <div className="absolute -top-7 select-none">
-                        <span className={`px-2.5 py-0.5 rounded-full text-xs font-black text-white shadow-3xs ${
+                        <span className={`px-2.5 py-0.5 rounded-full text-xs sm:text-sm font-black text-white shadow-3xs ${
                           cat.key === 'food' ? 'bg-rose-500' : cat.key === 'traffic' ? 'bg-cyan-500' : cat.key === 'play' ? 'bg-amber-500' : cat.key === 'history' ? 'bg-emerald-600' : 'bg-blue-500'
                         }`}>
                           {countVal}개
@@ -439,7 +439,7 @@ export default function BarChartBuilder({
                         {barDecoration === 'cookie' && (
                           <div className="absolute inset-x-0 bottom-0 top-0 flex flex-col justify-around items-center opacity-45 pointer-events-none">
                             {Array.from({ length: 4 }).map((_, i) => (
-                              <span key={i} className="text-[8px] select-none">🟡</span>
+                              <span key={i} className="text-[10px] select-none">🟡</span>
                             ))}
                           </div>
                         )}
@@ -458,7 +458,7 @@ export default function BarChartBuilder({
                               initial={{ scale: 0, y: 10 }}
                               animate={{ scale: 1, y: 0 }}
                               transition={{ delay: idx * 0.015 }}
-                              className={`w-6 h-4 sm:w-8 sm:h-5 rounded-xs flex items-center justify-center border text-[8px] font-black shadow-3xs shrink-0 ${
+                              className={`w-6 h-4 sm:w-8 sm:h-5 rounded-xs flex items-center justify-center border text-[10px] font-black shadow-3xs shrink-0 ${
                                 cat.key === 'food' ? 'bg-rose-100 border-rose-350 text-rose-700' : cat.key === 'traffic' ? 'bg-cyan-100 border-cyan-300 text-cyan-705' : cat.key === 'play' ? 'bg-amber-100 border-amber-300 text-amber-700' : cat.key === 'history' ? 'bg-emerald-100 border-emerald-300 text-emerald-705' : 'bg-blue-100 border-blue-305 text-blue-700'
                               }`}
                             >
@@ -466,7 +466,7 @@ export default function BarChartBuilder({
                             </motion.div>
                           ))
                         ) : (
-                          <div className="text-[8px] text-slate-300 font-bold border border-dashed border-slate-200 w-6 h-4 sm:w-8 sm:h-5 rounded-xs flex items-center justify-center bg-white">
+                          <div className="text-[10px] text-slate-300 font-bold border border-dashed border-slate-200 w-6 h-4 sm:w-8 sm:h-5 rounded-xs flex items-center justify-center bg-white">
                             0
                           </div>
                         )}
@@ -482,11 +482,11 @@ export default function BarChartBuilder({
           </div>
 
           {/* X축 카테고리 레이블 */}
-          <div className="grid grid-cols-5 gap-3.5 left-14 right-2 relative text-center">
+          <div className="grid grid-cols-5 gap-3.5 left-16 right-2 relative text-center">
             {CATEGORY_LIST.map((cat) => (
               <div key={cat.key} className="flex flex-col items-center">
-                <span className="text-sm select-none mb-0.5">{cat.emoji}</span>
-                <span className="text-xs md:text-sm font-black text-slate-700 block line-clamp-1">{cat.name}</span>
+                <span className="text-base select-none mb-0.5">{cat.emoji}</span>
+                <span className="text-sm sm:text-base font-black text-slate-700 block line-clamp-1">{cat.name}</span>
               </div>
             ))}
           </div>
