@@ -1,1 +1,39 @@
 @import "tailwindcss";
+
+html {
+  font-size: 26px !important;
+}
+
+@media (min-width: 640px) {
+  html {
+    font-size: 32px !important;
+  }
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 35px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  html {
+    font-size: 38px !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  html {
+    font-size: 42px !important;
+  }
+}
+
+@media (min-width: 1440px) {
+  html {
+    font-size: 46px !important;
+  }
+}
+
+body {
+  line-height: 1.6;
+}

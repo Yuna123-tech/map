@@ -109,10 +109,10 @@ export default function PresentationAssistant({
           📢
         </div>
         <div className="relative space-y-3.5 max-w-3xl">
-          <span className="bg-white/20 text-white border border-white/20 text-xs sm:text-sm font-black px-3.5 py-1.5 rounded-full uppercase tracking-wider">
+          <span className="bg-white/20 text-white border border-white/20 text-sm sm:text-base font-black px-3.5 py-1.5 rounded-full uppercase tracking-wider">
             🎤 3단계: 우리 모둠이 토의하는 의사결정 스테이지
           </span>
-          <h3 className="text-2xl sm:text-3xl font-black leading-tight">
+          <h3 className="text-2xl sm:text-3xl md:text-4xl font-black leading-tight">
             부산 {{all: '각 구역', north: '북부 구역🌲', west: '서부 구역🌅', south: '남부 구역⚓', haeundae: '해운대 구역🏖️', dongnae: '동래 구역♨️', gijang_suyeong: '기장/수영 구역🌉'}[selectedRegion]} 여행 홍보대사 발표 안내
           </h3>
           <p className="text-sm sm:text-base md:text-lg text-indigo-100 font-semibold leading-relaxed">
@@ -175,35 +175,35 @@ export default function PresentationAssistant({
         </div>
 
         {/* 오른쪽: 우리 모둠 전용 Dynamic 발표 예시 대본 (7칸) */}
-        <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 shadow-xs border border-slate-100 flex flex-col justify-between space-y-5">
+        <div className="lg:col-span-12 xl:col-span-7 bg-white rounded-3xl p-6 sm:p-8 shadow-xs border border-slate-100 flex flex-col justify-between space-y-5">
           <div className="space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3.5">
               <div>
-                <h4 className="font-extrabold text-slate-850 text-base sm:text-lg md:text-xl flex items-center gap-1.5 animate-pulse">
+                <h4 className="font-extrabold text-slate-850 text-lg sm:text-xl md:text-2xl flex items-center gap-1.5 animate-pulse">
                   <span>💡</span>
                   <span>[실시간 분류표 연동] 우리 구역 맞춤형 발표 대본 예시</span>
                 </h4>
-                <p className="text-xs sm:text-sm text-slate-500 mt-1 font-bold">
+                <p className="text-sm sm:text-base text-slate-500 mt-1 font-bold">
                   1단계에서 직접 채운 수량이 연동되어 아주 구체적인 발표 예시글이 완성됩니다.
                 </p>
               </div>
 
               {/* 클립보드 복사 & 인쇄 버튼 */}
-              <div className="flex items-center gap-2 self-start sm:self-auto shrink-0">
+              <div className="flex items-center gap-2 self-start sm:self-auto shrink-0 font-black">
                 <button
                   onClick={handleCopy}
-                  className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl text-xs sm:text-sm font-black transition-all cursor-pointer flex items-center gap-1.5 border border-slate-200 shadow-3xs"
+                  className="px-5 py-3 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl text-sm sm:text-base font-black transition-all cursor-pointer flex items-center gap-1.5 border border-slate-200 shadow-3xs"
                   title="스피치 복사하기"
                 >
-                  {copied ? <CheckCircle className="w-4.5 h-4.5 text-emerald-650 animate-bounce" /> : <Copy className="w-4.5 h-4.5" />}
+                  {copied ? <CheckCircle className="w-5 h-5 text-emerald-650 animate-bounce" /> : <Copy className="w-5 h-5" />}
                   <span>{copied ? '복사 성공!' : '스피치 복사'}</span>
                 </button>
                 <button
                   onClick={() => window.print()}
-                  className="px-4 py-2.5 bg-indigo-50 hover:bg-indigo-120 text-indigo-800 rounded-xl text-xs sm:text-sm font-black transition-all cursor-pointer flex items-center gap-1.5 border border-indigo-100 shadow-3xs"
+                  className="px-5 py-3 bg-indigo-50 hover:bg-indigo-120 text-indigo-800 rounded-xl text-sm sm:text-base font-black transition-all cursor-pointer flex items-center gap-1.5 border border-indigo-100 shadow-3xs"
                   title="발표 가이드 인쇄"
                 >
-                  <Printer className="w-4.5 h-4.5" />
+                  <Printer className="w-5 h-5" />
                   <span>인쇄하기</span>
                 </button>
               </div>
@@ -213,45 +213,45 @@ export default function PresentationAssistant({
             <div className="grid grid-cols-2 gap-2 bg-slate-50 p-1.5 rounded-2xl border border-slate-150">
               <button
                 onClick={() => setActiveTab('max')}
-                className={`flex items-center justify-center gap-2 py-4 rounded-xl text-xs sm:text-sm font-black transition-all cursor-pointer ${
+                className={`flex items-center justify-center gap-2 py-4 rounded-xl font-black transition-all cursor-pointer ${
                   activeTab === 'max'
-                    ? 'bg-white border-slate-200 text-indigo-950 shadow-3xs border'
+                    ? 'bg-white border-slate-205 text-indigo-950 shadow-3xs border-2'
                     : 'text-slate-500 hover:text-slate-700'
                 }`}
               >
-                <span className="text-xl">📈</span>
+                <span className="text-2xl">📈</span>
                 <span className="flex flex-col items-start leading-none text-left">
-                  <span className="text-sm sm:text-base font-black">가장 많은 곳 홍보 전략</span>
-                  <span className="text-xs sm:text-sm text-slate-500 font-bold mt-1.5">가장 많은 테마를 자랑해요</span>
+                  <span className="text-base sm:text-lg md:text-xl font-black">가장 많은 곳 홍보 전략</span>
+                  <span className="text-xs sm:text-sm text-slate-505 font-bold mt-1.5">가장 많은 테마를 자랑해요</span>
                 </span>
               </button>
 
               <button
                 onClick={() => setActiveTab('min')}
-                className={`flex items-center justify-center gap-2 py-4 rounded-xl text-xs sm:text-sm font-black transition-all cursor-pointer ${
+                className={`flex items-center justify-center gap-2 py-4 rounded-xl font-black transition-all cursor-pointer ${
                   activeTab === 'min'
-                    ? 'bg-white border-slate-200 text-purple-950 shadow-3xs border'
+                    ? 'bg-white border-slate-205 text-purple-950 shadow-3xs border-2'
                     : 'text-slate-500 hover:text-slate-700'
                 }`}
               >
-                <span className="text-xl">🌱</span>
+                <span className="text-2xl">🌱</span>
                 <span className="flex flex-col items-start leading-none text-left">
-                  <span className="text-sm sm:text-base font-black">가장 적은 곳 발전 전략</span>
-                  <span className="text-xs sm:text-sm text-slate-505 font-bold mt-1.5">개수가 적은 테마를 보완해요</span>
+                  <span className="text-base sm:text-lg md:text-xl font-black">가장 적은 곳 발전 전략</span>
+                  <span className="text-xs sm:text-sm text-slate-550 font-bold mt-1.5">개수가 적은 테마를 보완해요</span>
                 </span>
               </button>
             </div>
 
             {/* 실시간 대본 거울 말풍선 */}
-            <div className="bg-slate-50/50 p-5 rounded-3xl border border-dashed border-indigo-200 relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-3 select-none text-rose-500/10 text-7xl">
+            <div className="bg-slate-50/50 p-6 md:p-8 rounded-3xl border border-dashed border-indigo-200 relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-3 select-none text-rose-500/10 text-9xl">
                 {activeTab === 'max' ? '📣' : '🏡'}
               </div>
-              <p className="text-sm sm:text-base font-black text-indigo-700 tracking-wider uppercase mb-2.5 block select-none">
+              <p className="text-base sm:text-lg md:text-xl font-black text-indigo-700 tracking-wider uppercase mb-2.5 block select-none">
                 {activeTab === 'max' ? '🌟 [알록달록 발표대본 1] 우리 구역의 넘치는 매력 소개' : '🤝 [알록달록 발표대본 2] 골고루 살아나는 나눔 전략'}
               </p>
               
-              <div className="text-sm sm:text-base md:text-lg font-bold text-slate-755 leading-relaxed max-h-[350px] overflow-y-auto font-mono whitespace-pre-wrap pr-1">
+              <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-extrabold text-slate-800 leading-relaxed max-h-[850px] overflow-y-auto font-sans whitespace-pre-wrap pr-1">
                 {activeTab === 'max' ? maxSpeech : minSpeech}
               </div>
             </div>
