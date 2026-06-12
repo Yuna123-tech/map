@@ -227,28 +227,28 @@ export default function BusanMap({
                       setActiveSpot(null);
                     }}
                     title={!isDistInRegion ? '우리 모둠의 관심 조사 범위가 아닙니다.' : ''}
-                    className={`px-4.5 py-2 rounded-xl text-sm sm:text-base md:text-lg font-black transition-all cursor-pointer ${
+                     className={`px-3 py-1.5 sm:px-4.5 sm:py-2 rounded-xl text-xs sm:text-sm md:text-base font-bold transition-all cursor-pointer ${
                       !isDistInRegion 
                         ? 'opacity-25 line-through cursor-not-allowed text-slate-400 border border-slate-100'
                         : selectedDistrict === dist 
-                          ? 'bg-slate-800 text-white shadow-xs scale-105'
+                          ? 'bg-slate-800 text-white shadow-xs scale-102'
                           : 'bg-white hover:bg-slate-100 text-slate-600 border border-slate-150'
                     }`}
                   >
-                    {dist === 'all' ? '🌈 부산 전체보기' : dist}
+                    {dist === 'all' ? '🌈 부산 전체' : dist}
                   </button>
                 );
               })}
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-2 border-t border-slate-100 pt-3">
+          <div className="flex flex-wrap gap-1.5 border-t border-slate-100 pt-3">
             <button
               onClick={() => {
                 setSelectedCategory('all');
                 setActiveSpot(null);
               }}
-              className={`px-4.5 py-2.5 rounded-2xl text-sm sm:text-base md:text-lg font-black transition-all flex items-center gap-1.5 cursor-pointer ${
+              className={`px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs sm:text-sm md:text-base font-bold transition-all flex items-center gap-1 cursor-pointer ${
                 selectedCategory === 'all'
                   ? 'bg-sky-500 text-white shadow-xs'
                   : 'bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-100'
@@ -263,7 +263,7 @@ export default function BusanMap({
                   setSelectedCategory(cat.key);
                   setActiveSpot(null);
                 }}
-                className={`px-4 py-2.5 rounded-2xl text-sm sm:text-base md:text-lg font-black transition-all flex items-center gap-1.5 cursor-pointer ${
+                className={`px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs sm:text-sm md:text-base font-bold transition-all flex items-center gap-1 cursor-pointer ${
                   selectedCategory === cat.key
                     ? `${cat.key === 'food' ? 'bg-rose-500' : cat.key === 'traffic' ? 'bg-cyan-500' : cat.key === 'play' ? 'bg-amber-500' : cat.key === 'history' ? 'bg-emerald-600' : 'bg-blue-500'} text-white shadow-xs`
                     : 'bg-slate-50 text-slate-650 hover:bg-slate-100 border border-slate-100'
