@@ -84,22 +84,23 @@ export default function PresentationAssistant({
   const maxSpotsList = getMaxSpotsList();
   const minSpotsList = getMinSpotsList();
 
-  // 가장 많은 개수를 자랑하기 대본 (풍부성 추천 모델)
+  // 가장 많은 개수를 자랑하기 대본
   const maxSpeech = `안녕하세요 여러분! 저희는 [우리 모둠]입니다.
 
-저희 모둠이 부산 ${currentRegion.name} 구역을 친구들에게 추천하고 홍보하는 멋진 추천 코스의 제목은 《${maxSpotsList.split(',')[0] || '부산'}와(과) 함께하는 패밀리 가이드투어》 입니다.
+저희 모둠이 부산 \${currentRegion.name} 구역을 친구들한테 당당하게 추천하고 홍보하기 위해 정한 여행 제목은 《\${maxSpotsList.split(',')[0] || '부산'}와(과) 함께 떠나는 신나는 여행》입니다.
 
-우리가 이 계획을 디자인하게 된 명확한 수학적·지리학적 근거는, 부산 백지도를 다같이 전수로 수수께끼 조사하고 막대그래프로 나타내어 비교분석했기 때문입니다. 우리 권역은 다른 속성들보다 [${categoryEmojis[maxCategoryKey]} ${categoryNames[maxCategoryKey]}] 탐색지가 총 ${counts[maxCategoryKey]}곳으로 제일 넓고 풍요롭게 발달해 있었습니다!
+우리가 이렇게 여행 코스를 정하게 된 명확한 수학적·지리학적 근거는, 부산 백지도를 열심히 구석구석 조사하고 막대그래프로 나타내어 비교해 보았기 때문이에요. 분석해 본 결과, 우리 구역은 다른 종류보다 [\${categoryEmojis[maxCategoryKey]} \${categoryNames[maxCategoryKey]}] 탐색지가 총 \${counts[maxCategoryKey]}곳이나 있어서 가장 많고 풍성했답니다!
 
-이에 따라 우리 모둠의 합리적 의사결정은 이 자부심 넘치는 매력자원을 가장 눈에 띄게 부각하는 마케팅 홍보 전략을 세우는 것이 기회비용과 경제성 측면에서 제일 효율적이라는 최종 결론에 도달하였습니다. [${maxSpotsList}]과(와) 같이 찬란하게 빛나는 자랑거리 명소들을 전면 배치하여 더 많은 관광객이 찾아올 수 있도록 발표지에 멋지게 그릴 예정입니다. 감사합니다!`;
+그래서 우리 모둠은 이 가장 멋지고 풍성한 매력을 한껏 뽐낼 수 있는 최고의 추천 여행을 만들기로 결정했습니다. [\${maxSpotsList}] 같이 즐겁고 매력적인 자랑거리들을 많이 소개해 드릴 테니 꼭 한번 놀러 오세요. 들어주셔서 감사합니다!`;
 
+  // 가장 적은 개수를 보완하기 대본
   const minSpeech = `안녕하세요 여러분! 저희는 [우리 모둠]입니다.
 
-저희 모둠이 관할하여 심층 탐색한 부산 ${currentRegion.name} 구역의 숨은 비경을 골고루 가꾸는 균형 발전 계획안 제목은 《${minSpotsList.split(',')[0] || '부산'}를 더 이롭게 즐기는 가치 투어》 입니다.
+저희 모둠이 부산 \${currentRegion.name} 구역의 숨은 매력을 골고루 살리는 상생 발전 계획의 제목은 《숨은 보석, \${minSpotsList.split(',')[0] || '부산'}를 골고루 사랑하는 가치 투어》입니다.
 
-우리가 이 나눔 계획을 제안하게 된 주축 기하학적 통계 수치는, 직접 수집한 분류표를 막대그래프 기둥 높이로 대조한 결과입니다. 우리 구역은 [${categoryEmojis[minCategoryKey]} ${categoryNames[minCategoryKey]}] 구역 수가 단 ${counts[minCategoryKey]}곳만 포착되어 상대적으로 놀이·여가 자원이나 시설 밀집도가 상당히 낮은 상황을 확인하였습니다!
+우리가 이 나눔 계획을 제안하게 된 근거는, 직접 수집한 개수 분류표를 막대그래프 기둥 높이로 비교해 본 결과입니다. 우리 구역은 [\${categoryEmojis[minCategoryKey]} \${categoryNames[minCategoryKey]}] 장소가 단 \${counts[minCategoryKey]}곳밖에 발견되지 않아서 상대적으로 숫자가 아주 적었습니다.
 
-따라서 우리 모둠은 "모든 구역이 골고루 이로운 혜택을 함께 나누어야 한다"는 사회 정의적 관점에서, 이 부족함을 그대로 방치하지 않고 [${minSpotsList}]을(를) 중심으로 맞춤형 보완·개발 투자를 요청하거나 혹은 자연 환경을 훼손하지 않으면서 시민들이 다채롭게 이용하도록 칭찬 인프라를 가꾸는 것을 최종 정책 의사결정으로 통과시켰습니다. 감사합니다!`;
+그래서 우리 모둠은 "어느 동네든 골고루 놀거리도 많고 행복해야 한다"는 생각으로 결정을 내렸습니다. 개수나 시설이 상대적으로 부족한 [\${minSpotsList}] 주변을 더 가꾸고 알려서, 모두가 함께 행복할 수 있도록 힘쓰겠습니다. 감사합니다!`;
 
   return (
     <div className="space-y-6" id="presentation-assistant-section">
@@ -109,15 +110,15 @@ export default function PresentationAssistant({
           📢
         </div>
         <div className="relative space-y-3.5 max-w-3xl">
-          <span className="bg-white/20 text-white border border-white/20 text-sm sm:text-base font-black px-3.5 py-1.5 rounded-full uppercase tracking-wider">
-            🎤 3단계: 우리 모둠이 토의하는 의사결정 스테이지
+          <span className="bg-white/20 text-white border border-white/20 text-sm sm:text-base font-black px-3.5 py-1.5 rounded-full uppercase tracking-wider animate-pulse">
+            🎤 3단계: 우리 모둠 발표 대본 완성하기
           </span>
           <h3 className="text-2xl sm:text-3xl md:text-4xl font-black leading-tight">
-            부산 {{all: '각 구역', north: '북부 구역🌲', west: '서부 구역🌅', south: '남부 구역⚓', haeundae: '해운대 구역🏖️', dongnae: '동래 구역♨️', gijang_suyeong: '기장/수영 구역🌉'}[selectedRegion]} 여행 홍보대사 발표 안내
+            부산 {{all: '각 구역', north: '북부 구역🌲', west: '서부 구역🌅', south: '남부 구역⚓', haeundae: '해운대 구역🏖️', dongnae: '동래 구역♨️', gijang_suyeong: '기장/수영 구역🌉'}[selectedRegion]} 여행 홍보대사 대본실 🧭
           </h3>
           <p className="text-sm sm:text-base md:text-lg text-indigo-100 font-semibold leading-relaxed">
-            막대그래프에서 완성해 내신 통계 분석을 바탕으로, 어디에 집중할지 합리적인 결정을 내리는 법을 알아봅시다. 
-            <strong className="underline text-yellow-300"> 실제 발표지와 스케치북에는 우리 모둠이 내린 결정과 대본을 참고</strong>하여 멋지게 꾸며 발표해 주세요.
+            막대그래프 결과를 활용해 우리 구역의 매력을 어떻게 소개할지 모둠 친구들과 직접 결정을 내려 보는 단계예요! <br />
+            <strong className="underline text-yellow-300">아래의 대본 예시와 의사결정 기록지</strong>를 참고하여, 실제 스케치북에 그래프를 채워 넣고 멋지게 발표해 볼까요?
           </p>
         </div>
       </div>
@@ -127,16 +128,16 @@ export default function PresentationAssistant({
         <div className="lg:col-span-5 bg-white rounded-3xl p-6 sm:p-8 shadow-xs border border-slate-100 space-y-6">
           <div className="flex items-center gap-2 border-b border-slate-100 pb-4">
             <BookOpen className="w-6 h-6 text-indigo-600" />
-            <h4 className="font-extrabold text-slate-850 text-base sm:text-lg md:text-xl">📝 칠판/스케치북 발표 보드 꾸미는 법</h4>
+            <h4 className="font-extrabold text-slate-850 text-base sm:text-lg md:text-xl">📝 발표 스케치북 멋지게 그리는 팁!</h4>
           </div>
 
           <div className="space-y-4.5">
             <div className="flex gap-4 items-start bg-slate-50 p-5 rounded-2xl border border-slate-150">
               <span className="bg-indigo-600 text-white rounded-full w-7 h-7 flex items-center justify-center font-black text-sm shrink-0 mt-0.5">1</span>
               <div>
-                <h5 className="text-sm sm:text-base md:text-lg font-black text-slate-850">탐사 지역 및 수집 통계표 작성</h5>
+                <h5 className="text-sm sm:text-base md:text-lg font-black text-slate-850">모은 도장 개수 표로 정리하기</h5>
                 <p className="text-sm sm:text-base text-slate-650 leading-relaxed mt-2 font-bold">
-                  1단계에서 직접 지도를 탐색하고 세어본 부산 구역별 5대 테마 분류표를 발표 보드 왼쪽에 직접 적습니다.
+                  1단계 지도에서 친구들과 함께 비밀 퀴즈를 풀며 모은 테마별 도장 개수를 스케치북 왼쪽에 깔끔히 적어요.
                 </p>
               </div>
             </div>
@@ -144,9 +145,9 @@ export default function PresentationAssistant({
             <div className="flex gap-4 items-start bg-slate-50 p-5 rounded-2xl border border-slate-150">
               <span className="bg-indigo-600 text-white rounded-full w-7 h-7 flex items-center justify-center font-black text-sm shrink-0 mt-0.5">2</span>
               <div>
-                <h5 className="text-sm sm:text-base md:text-lg font-black text-slate-850">직접 고른 눈금 크기로 그래프 그리기</h5>
+                <h5 className="text-sm sm:text-base md:text-lg font-black text-slate-850">알맞은 막대그래프 예쁘게 그리기</h5>
                 <p className="text-sm sm:text-base text-slate-650 leading-relaxed mt-2 font-bold">
-                  2단계에서 스마트 빌더로 배운 가장 적당한 눈금 한 칸의 크기(1, 2, 5 단위)를 이용해 막대그래프를 그립니다.
+                  2단계 빌더로 직접 구상한 가장 알맞은 눈금 한 칸의 크기(1, 2, 5 단위)를 축으로 삼아 높이를 맞춰 막대를 그려요.
                 </p>
               </div>
             </div>
@@ -154,9 +155,9 @@ export default function PresentationAssistant({
             <div className="flex gap-4 items-start bg-slate-50 p-5 rounded-2xl border border-slate-150">
               <span className="bg-indigo-600 text-white rounded-full w-7 h-7 flex items-center justify-center font-black text-sm shrink-0 mt-0.5">3</span>
               <div>
-                <h5 className="text-sm sm:text-base md:text-lg font-black text-slate-850">합리적 판단과 선택의 결론 도출</h5>
+                <h5 className="text-sm sm:text-base md:text-lg font-black text-slate-850">우리 모둠만의 발표 전략 정정하기</h5>
                 <p className="text-sm sm:text-base text-slate-650 leading-relaxed mt-2 font-bold">
-                  가장 많은 곳을 자랑스럽게 홍보할지, 혹은 가장 적은 곳을 도와줘서 골고루 채울지 의사결정의 이점과 특징을 정리합니다.
+                  가장 자랑스러운 자원을 힘껏 홍보할지, 개수가 한 발 적은 자원을 도와 골고루 가꿀지 정해서 적습니다.
                 </p>
               </div>
             </div>
@@ -165,11 +166,11 @@ export default function PresentationAssistant({
           {/* 꼬마 도향 안내판 */}
           <div className="p-5.5 bg-emerald-50 border border-emerald-100 rounded-2xl space-y-2">
             <h5 className="text-sm sm:text-base md:text-lg font-black text-emerald-900 flex items-center gap-1.5 select-none">
-              🎓 지리학자 초등 사회 한마디!
+              🎓 지리학자 사회 공부 한마디!
             </h5>
             <p className="text-sm sm:text-base md:text-lg text-emerald-950 font-bold leading-relaxed">
-              부산의 명소 분포를 막대그래프로 나타내면 무엇이 가장 많은지, 무엇이 가장 적은지 단번에 눈에 띄게 됩니다. 
-              가장 많은 부분과 가장 적은 부분을 활용해 소중한 부산이 골고루 상생 발전하는 법을 모둠 친구들과 직접 의논해 보세요!
+              부산의 명소 분포를 막대그래프로 나타내면 무엇이 가장 많은지, 무엇이 가장 적은지 단번에 보이게 됩니다. 
+              가장 많은 부분과 가장 적은 부분을 이용해 소중한 부산이 골고루 이롭게 상생(상호 양보하며 살아가기)하는 법을 모둠 친구들과 직접 의논해 보세요!
             </p>
           </div>
         </div>

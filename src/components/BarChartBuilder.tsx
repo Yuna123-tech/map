@@ -165,13 +165,13 @@ export default function BarChartBuilder({
 
   return (
     <div className="space-y-6" id="barchart-builder-section">
-      {/* 아침 미션 약점 오답 대시보드 힌트 박스 */}
-      <div className="bg-indigo-950 text-purple-100 py-4.5 px-6 rounded-2xl text-sm sm:text-base md:text-lg font-bold flex flex-col xl:flex-row items-center gap-3 shadow-md border border-indigo-900">
-        <span className="bg-yellow-400 text-indigo-950 px-3 py-1 rounded-lg text-xs sm:text-sm font-black animate-pulse shrink-0">
-          💡 AIDT 아침 약점 피드백
+      {/* 재미있는 수학 퀴즈 힌트 박스 */}
+      <div className="bg-indigo-900 text-purple-50 py-4 px-5 rounded-2xl text-sm sm:text-base font-bold flex flex-col xl:flex-row items-center gap-3 shadow-3xs border border-indigo-850">
+        <span className="bg-amber-400 text-indigo-950 px-3 py-1 rounded-lg text-xs sm:text-sm font-black shrink-0 animate-pulse">
+          🎯 중요한 수학 미션!
         </span>
-        <p className="text-left leading-relaxed">
-          우리 4학년 5반은 아침 미션에서 <strong className="underline text-yellow-300">"자료에 알맞은 눈금 한 칸의 크기 정하기"</strong> 문항 오답률이 35%로 가장 높았습니다! Y축 눈금을 1개, 2개, 5개 중 어떤 것으로 선택해야 보기에 깔끔할지 직접 분석해 보세요.
+        <p className="text-left leading-relaxed text-sm sm:text-base">
+          가장 많은 명소 숫자에 맞춰 <strong className="text-amber-300 font-black">“세로 눈금 한 칸의 양(1, 2, 5)”</strong>을 알맞게 고르는 것이 중요해요! 눈금 하나를 바꿀 때마다 막대의 모양이 어떻게 변하는지 눈으로 탐구해 보아요.
         </p>
       </div>
 
@@ -180,11 +180,11 @@ export default function BarChartBuilder({
         <div className="space-y-2 text-center md:text-left">
           <h3 className="text-xl sm:text-2xl font-black text-slate-900 flex items-center gap-2 justify-center md:justify-start">
             <span>📊</span>
-            <span>[활동 2] 스마트 막대그래프 융합 빌더</span>
+            <span>2단계: 똑똑한 막대그래프 만들기</span>
           </h3>
           <p className="text-sm sm:text-base md:text-lg text-slate-600 font-bold leading-relaxed max-w-2xl">
-            1단계 지도에서 직접 파악하고 분류한 테마별 수치를 빈칸에 기재해 주세요. <br />
-            개수 수치에 맞춤화해 막대그래프 기둥이 실시간으로 조율되며, 아이들의 자주적 통계 이해도를 높여줍니다 ✨
+            1단계 지도에서 관찰하여 기입했던 개수들을 아래 빈칸에 적어주세요. <br />
+            숫자를 입력하면 여러분의 나만의 막대그래프 기둥이 실시간으로 쑥쑥 자라난답니다! ⭐
           </p>
         </div>
       </div>
@@ -260,7 +260,7 @@ export default function BarChartBuilder({
                     </span>
                     <div>
                       <h5 className="text-sm sm:text-base font-black text-slate-850">{cat.name}</h5>
-                      <span className="text-xs sm:text-sm text-slate-505 font-bold">{cat.stamp} 마커 아이콘</span>
+                      <span className="text-xs sm:text-sm text-slate-500 font-bold">지도에서 파란색 [{cat.stamp}] 도장 세기</span>
                     </div>
                   </div>
 
@@ -351,7 +351,7 @@ export default function BarChartBuilder({
                 <span>🎨</span>
                 <span>우리 교실 막대그래프 보드</span>
               </h4>
-              <p className="text-xs sm:text-sm md:text-base text-slate-600 mt-1 font-bold">숫자에 따라 막대가 즉각적으로 멋지게 자라나며 한눈에 비교됩니다.</p>
+              <p className="text-xs sm:text-sm md:text-base text-slate-600 mt-1 font-bold">숫자를 적으면 막대가 마법처럼 쑥쑥 자라나 한눈에 비교됩니다! 📈</p>
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
