@@ -1,12 +1,31 @@
 @import "tailwindcss";
 
 /* 
-  각기 다른 해상도나 기기에서 레이아웃이 급격히 다르게 깨져 보이는 문제를 해결하기 위해,
-  루트 html font-size의 과도한 미디어 쿼리 비례 스케일링을 표준 값(16px)으로 고정하여
-  모든 컴퓨터와 모바일 기기에서 동일하고 일관된 비례로 출력되도록 최적화합니다.
+  [기기별 폰트 스케일 및 레이아웃 최적화]
+  1. 모바일 기기: 화면 폭이 좁은 모바일에서는 과도한 폰트 스케일링으로 인한 레이아웃 깨짐을 방지하기 위해 14.5px 컴퓨터/패드 최적 배율을 사용합니다.
+  2. 태블릿 및 아이패드: 640px ~ 1024px 구간에서 16px ~ 17.5px로 안전하게 자동 교정합니다.
+  3. 일반 PC 및 노트북 화면 (1024px 이상): 사용자가 요청하신 가장 웅장하고 편안한 '130% 확대' 비율인 20.8px로 고정하여 표시합니다.
 */
 html {
-  font-size: 20.8px; /* 130% scaling of standard 16px, kept uniform for identical PC and mobile proportions */
+  font-size: 14.5px !important; /* 기본 모바일 최적화 크기 */
+}
+
+@media (min-width: 640px) {
+  html {
+    font-size: 16px !important;
+  }
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 17.5px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  html {
+    font-size: 20.8px !important; /* PC 화면에서 130% 완벽 확대 유지 */
+  }
 }
 
 body {
