@@ -194,27 +194,27 @@ export default function BusanMap({
       {/* 왼쪽: 지능형 맵 및 컨트롤 (8칸) */}
       <div className="lg:col-span-8 space-y-4">
         {/* 헤더 간판 */}
-        <div className="bg-white rounded-3xl p-5 shadow-xs border border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="bg-white rounded-3xl p-6 sm:p-7 shadow-xs border border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
-              <Compass className="w-5.5 h-5.5 text-sky-500 animate-spin-slow" />
-              <span>[활동 1] 부산 구석구석을 누리며 명소 개수를 모아보아요!</span>
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-slate-900 flex items-center gap-2.5">
+              <Compass className="w-7 h-7 text-sky-500 animate-spin-slow shrink-0" />
+              <span>1단계: 부산 구석구석을 누리며 명소 개수를 모아보아요! 🕵️</span>
             </h3>
-            <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-slate-600 mt-2 font-extrabold leading-relaxed">
               알록달록한 지도의 아이콘들을 콕 터치해 보세요. 실제 부산광역시 100대 지리·경제 정보의 장소 가치를 찾아가고 퀴즈를 풀어 장소를 획득할 수 있습니다.
             </p>
           </div>
-          <div className="flex items-center gap-2 text-xs font-bold text-slate-600 bg-emerald-50 px-3.5 py-2 rounded-full self-start md:self-auto shrink-0 border border-emerald-100 shadow-3xs">
-            <CheckCircle className="w-4 h-4 text-emerald-500" />
+          <div className="flex items-center gap-2.5 text-base sm:text-lg font-black text-slate-850 bg-emerald-50 px-5 py-3.5 rounded-2xl self-start md:self-auto shrink-0 border border-emerald-150 shadow-3xs">
+            <CheckCircle className="w-5 h-5 text-emerald-500" />
             <span>수집 완료 명소: {collectedSpots.length} / {BUSAN_SPOTS.length} 곳</span>
           </div>
         </div>
 
         {/* 돋보기 행정구역 특화 필터 판넬 (장소감 형성 최대치) */}
-        <div className="bg-white rounded-3xl p-4.5 shadow-xs border border-slate-100 space-y-3.5">
-          <div className="space-y-1.5">
-            <span className="text-xs sm:text-sm font-black text-slate-700 block">🔍 우리 동네나 관심있는 행정구역 모아보기 (구별 돋보기 필터):</span>
-            <div className="flex flex-wrap gap-1.5 max-h-[100px] overflow-y-auto p-1.5 bg-slate-50 rounded-xl border border-slate-100">
+        <div className="bg-white rounded-3xl p-6 shadow-xs border border-slate-100 space-y-4">
+          <div className="space-y-2">
+            <span className="text-base sm:text-lg md:text-xl font-black text-slate-800 block">🔍 우리 동네나 관심있는 행정구역 모아보기 (구별 돋보기 필터):</span>
+            <div className="flex flex-wrap gap-2 max-h-[140px] overflow-y-auto p-2.5 bg-slate-50 rounded-2xl border border-slate-100">
               {districts.map((dist, idx) => {
                 const currentRegion = REGIONS[selectedRegion] || REGIONS['all'];
                 const isDistInRegion = selectedRegion === 'all' || dist === 'all' || currentRegion.districts.includes(dist);
@@ -227,7 +227,7 @@ export default function BusanMap({
                       setActiveSpot(null);
                     }}
                     title={!isDistInRegion ? '우리 모둠의 관심 조사 범위가 아닙니다.' : ''}
-                    className={`px-3 py-1.5 rounded-lg text-xs md:text-sm font-bold transition-all cursor-pointer ${
+                    className={`px-4.5 py-2 rounded-xl text-sm sm:text-base md:text-lg font-black transition-all cursor-pointer ${
                       !isDistInRegion 
                         ? 'opacity-25 line-through cursor-not-allowed text-slate-400 border border-slate-100'
                         : selectedDistrict === dist 
@@ -248,7 +248,7 @@ export default function BusanMap({
                 setSelectedCategory('all');
                 setActiveSpot(null);
               }}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 cursor-pointer ${
+              className={`px-4.5 py-2.5 rounded-2xl text-sm sm:text-base md:text-lg font-black transition-all flex items-center gap-1.5 cursor-pointer ${
                 selectedCategory === 'all'
                   ? 'bg-sky-500 text-white shadow-xs'
                   : 'bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-100'
@@ -263,10 +263,10 @@ export default function BusanMap({
                   setSelectedCategory(cat.key);
                   setActiveSpot(null);
                 }}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 cursor-pointer ${
+                className={`px-4 py-2.5 rounded-2xl text-sm sm:text-base md:text-lg font-black transition-all flex items-center gap-1.5 cursor-pointer ${
                   selectedCategory === cat.key
                     ? `${cat.key === 'food' ? 'bg-rose-500' : cat.key === 'traffic' ? 'bg-cyan-500' : cat.key === 'play' ? 'bg-amber-500' : cat.key === 'history' ? 'bg-emerald-600' : 'bg-blue-500'} text-white shadow-xs`
-                    : 'bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-100'
+                    : 'bg-slate-50 text-slate-650 hover:bg-slate-100 border border-slate-100'
                 }`}
               >
                 <span>{cat.emoji}</span>
@@ -276,7 +276,7 @@ export default function BusanMap({
           </div>
 
           <div className="relative">
-            <Search className="absolute left-4 top-3.5 w-4.5 h-4.5 text-slate-400" />
+            <Search className="absolute left-4.5 top-4.5 w-5.5 h-5.5 text-slate-400" />
             <input
               type="text"
               placeholder="장소 이름이나 동네 명칭을 검색하여 실시간 가이드해 보세요..."
@@ -285,7 +285,7 @@ export default function BusanMap({
                 setSearchQuery(e.target.value);
                 setActiveSpot(null);
               }}
-              className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-150 rounded-2xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-sky-400 focus:bg-white transition-all text-slate-700 font-bold placeholder:text-slate-400"
+              className="w-full pl-13 pr-5 py-4 bg-slate-50 border border-slate-150 rounded-2xl text-xs sm:text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-sky-400 focus:bg-white transition-all text-slate-700 font-bold placeholder:text-slate-400"
             />
           </div>
         </div>
