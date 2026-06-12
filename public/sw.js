@@ -1,4 +1,4 @@
-const CACHE_NAME = 'busan-map-pwa-v1';
+const CACHE_NAME = 'busan-map-pwa-v3';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
@@ -34,12 +34,10 @@ self.addEventListener('fetch', (event) => {
     return;
   }
   
+  // Network-First Strategy: Try to fetch from network first, falling back to cache if offline
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-      return fetch(event.request).then((networkResponse) => {
+    fetch(event.request)
+      .then((networkResponse) => {
         if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
           return networkResponse;
         }
@@ -48,12 +46,16 @@ self.addEventListener('fetch', (event) => {
           cache.put(event.request, responseToCache);
         });
         return networkResponse;
-      }).catch(() => {
-        // Fallback for document requests when offline
-        if (event.request.headers.get('accept').includes('text/html')) {
-          return caches.match('/');
-        }
-      });
-    })
+      })
+      .catch(() => {
+        return caches.match(event.request).then((cachedResponse) => {
+          if (cachedResponse) {
+            return cachedResponse;
+          }
+          if (event.request.headers.get('accept') && event.request.headers.get('accept').includes('text/html')) {
+            return caches.match('/');
+          }
+        });
+      })
   );
 });
