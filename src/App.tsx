@@ -168,7 +168,7 @@ export default function App() {
 
       {/* 헤더 바 */}
       <header className="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-slate-150 shadow-2xs">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex flex-col xl:flex-row items-center justify-between gap-5">
+        <div className="max-w-[1850px] 2xl:max-w-[1920px] mx-auto px-4 md:px-8 py-5 flex flex-col xl:flex-row items-center justify-between gap-6">
           
           {/* 타이틀 명가 */}
           <div className="flex items-center gap-4">
@@ -221,7 +221,7 @@ export default function App() {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto w-full px-4 md:px-6 py-6 flex-1 space-y-7">
+      <main className="max-w-[1850px] 2xl:max-w-[1920px] mx-auto w-full px-4 md:px-8 py-8 flex-1 space-y-8">
         
         {/* 모둠별 조사 범위(권역) 커스텀 선택 장치 (고민 완벽 해결책) */}
         <div className="bg-white rounded-3xl p-8 md:p-10 border border-slate-150/80 shadow-3xs hover:shadow-2xs transition-shadow">
@@ -710,10 +710,10 @@ export default function App() {
       </main>
 
       {/* 푸터 (메이드 윤아 기재) */}
-      <footer className="bg-white border-t border-slate-150 py-4 text-center text-slate-400 text-[10px] font-bold">
-        <div className="max-w-7xl mx-auto px-4 space-y-1">
+      <footer className="bg-white border-t border-slate-150 py-6 text-center text-slate-500 text-xs sm:text-sm font-bold">
+        <div className="max-w-[1850px] 2xl:max-w-[1920px] mx-auto px-4 space-y-1.5">
           <p>© 2026 made by 윤아 · 초등 4학년 사회 · 수학 융합 교재</p>
-          <p className="text-slate-350 font-semibold">
+          <p className="text-slate-450 font-semibold">
             아름다운 부산을 찾은 전 세계 모든 방문객 친구들의 기분 좋은 발자국을 응원합니다 🏖️🧭
           </p>
         </div>

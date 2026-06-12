@@ -165,40 +165,12 @@ export default function BarChartBuilder({
 
   return (
     <div className="space-y-6" id="barchart-builder-section">
-      {/* 재미있는 수학 퀴즈 힌트 박스 */}
-      <div className="bg-indigo-900 text-purple-50 py-4 px-5 rounded-2xl text-sm sm:text-base font-bold flex flex-col xl:flex-row items-center gap-3 shadow-3xs border border-indigo-850">
-        <span className="bg-amber-400 text-indigo-950 px-3 py-1 rounded-lg text-xs sm:text-sm font-black shrink-0 animate-pulse">
-          🎯 중요한 수학 미션!
-        </span>
-        <p className="text-left leading-relaxed text-sm sm:text-base">
-          가장 많은 명소 숫자에 맞춰 <strong className="text-amber-300 font-black">“세로 눈금 한 칸의 양(1, 2, 5)”</strong>을 알맞게 고르는 것이 중요해요! 눈금 하나를 바꿀 때마다 막대의 모양이 어떻게 변하는지 눈으로 탐구해 보아요.
-        </p>
-      </div>
-
-      {/* 안내 교구판 */}
-      <div className="bg-white rounded-3xl p-6 md:p-8 shadow-xs border border-slate-100 flex flex-col md:flex-row items-center justify-between gap-4">
-        <div className="space-y-2 text-center md:text-left">
-          <h3 className="text-xl sm:text-2xl font-black text-slate-900 flex items-center gap-2 justify-center md:justify-start">
-            <span>📊</span>
-            <span>2단계: 똑똑한 막대그래프 만들기</span>
-          </h3>
-          <p className="text-sm sm:text-base md:text-lg text-slate-600 font-bold leading-relaxed max-w-2xl">
-            1단계 지도에서 관찰하여 기입했던 개수들을 아래 빈칸에 적어주세요. <br />
-            숫자를 입력하면 여러분의 나만의 막대그래프 기둥이 실시간으로 쑥쑥 자라난답니다! ⭐
-          </p>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* 왼쪽: 학생 직접 숫자 입력 테이블 (5칸) */}
-        <div className="lg:col-span-5 bg-white rounded-3xl p-6 sm:p-8 shadow-xs border border-slate-100 space-y-5">
-          
-          {/* 수학 탐구: 눈금 크기 정하기 */}
-          <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200">
-            <span className="block text-sm sm:text-base md:text-lg font-black text-slate-805 mb-3">
+      {/* 재미�          {/* 수학 탐구: 눈금 크기 정하기 */}
+          <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+            <span className="block text-base sm:text-lg md:text-xl font-black text-slate-900 mb-4">
               📏 [수학 탐구] 세로 눈금 한 칸의 크기를 얼마로 선택할까요?
             </span>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-3 gap-3">
               {[
                 { value: '1', label: '눈금 1개' },
                 { value: '2', label: '눈금 2개' },
@@ -206,10 +178,10 @@ export default function BarChartBuilder({
               ].map((opt) => (
                 <label
                   key={opt.value}
-                  className={`flex items-center justify-center gap-1.5 p-3 rounded-xl border text-xs sm:text-sm font-black cursor-pointer transition-all ${
+                  className={`flex items-center justify-center gap-1.5 p-4 rounded-xl border text-sm sm:text-base font-black cursor-pointer transition-all ${
                     stepSize === opt.value
                       ? 'bg-slate-800 border-slate-900 text-white shadow-3xs'
-                      : 'bg-white border-slate-200 hover:bg-slate-100 text-slate-655'
+                      : 'bg-white border-slate-200 hover:bg-slate-100 text-slate-600'
                   }`}
                 >
                   <input
@@ -226,21 +198,21 @@ export default function BarChartBuilder({
             </div>
 
             {/* 실시간 탐정 멘트 박스 */}
-            <div className="mt-4 bg-indigo-50 border border-indigo-150 p-4 sm:p-5 rounded-xl text-sm sm:text-base md:text-lg leading-relaxed text-indigo-955 font-bold">
+            <div className="mt-4 bg-indigo-50 border border-indigo-150 p-5 rounded-xl text-sm sm:text-base md:text-lg leading-relaxed text-indigo-950 font-bold">
               📢 윤아 쌤의 수학 꿀팁: {stepFeedback}
             </div>
           </div>
 
-          <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
-            <h4 className="font-extrabold text-slate-800 text-sm sm:text-base flex items-center gap-1">
+          <div className="flex items-center justify-between border-b border-slate-150 pb-3">
+            <h4 className="font-extrabold text-slate-900 text-base sm:text-lg flex items-center gap-1.5">
               <span>✏️</span>
               <span>수집한 개수를 입력해 보세요</span>
             </h4>
-            <span className="text-xs sm:text-sm text-slate-600 font-bold">최대 35개까지</span>
+            <span className="text-sm sm:text-base text-slate-600 font-bold">최대 35개까지</span>
           </div>
 
           {/* 입력 폼 리스트 */}
-          <div className="space-y-3.5">
+          <div className="space-y-4">
             {CATEGORY_LIST.map((cat) => {
               const currentVal = counts[cat.key];
               const isWrong = hasChecked && currentVal !== CURRENT_REAL_COUNTS[cat.key];
@@ -248,13 +220,50 @@ export default function BarChartBuilder({
               return (
                 <div
                   key={cat.key}
-                  className={`flex items-center justify-between p-4 rounded-2xl border transition-all ${
+                  className={`flex items-center justify-between p-5 rounded-2xl border transition-all ${
                     isWrong
                       ? 'bg-rose-50 border-rose-300 animate-shake'
-                      : 'bg-slate-50/60 border-slate-150 hover:border-slate-200'
+                      : 'bg-slate-50/70 border-slate-200 hover:border-slate-350'
                   }`}
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3.5">
+                    <span className="text-3xl leading-none bg-white w-12 h-12 rounded-full shadow-3xs flex items-center justify-center border border-slate-200 shrink-0">
+                      {cat.emoji}
+                    </span>
+                    <div>
+                      <h5 className="text-base sm:text-lg md:text-xl font-black text-slate-900">{cat.name}</h5>
+                      <span className="text-xs sm:text-sm md:text-base text-slate-500 font-bold">지도에서 파란색 [{cat.stamp}] 도장 세기</span>
+                    </div>
+                  </div>
+
+                  {/* 수치 조정 증감 박스 */}
+                  <div className="flex items-center gap-2.5 bg-white p-1.5 rounded-xl border border-slate-250 shrink-0">
+                    <button
+                      onClick={() => handleCountChange(cat.key, currentVal - 1)}
+                      className="w-11 h-11 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-700 font-black text-lg flex items-center justify-center cursor-pointer border border-slate-200 active:scale-95 transition-transform"
+                    >
+                      -
+                    </button>
+                    <input
+                      type="text"
+                      value={currentVal === 0 ? '' : currentVal}
+                      onChange={(e) => {
+                        const parsed = parseInt(e.target.value);
+                        handleCountChange(cat.key, isNaN(parsed) ? 0 : parsed);
+                      }}
+                      placeholder="0"
+                      className="w-12 text-center font-black text-slate-900 bg-transparent text-base sm:text-lg md:text-xl focus:outline-none"
+                    />
+                    <button
+                      onClick={() => handleCountChange(cat.key, currentVal + 1)}
+                      className="w-11 h-11 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-700 font-black text-lg flex items-center justify-center cursor-pointer border border-slate-200 active:scale-95 transition-transform"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              );
+            })}"flex items-center gap-3">
                     <span className="text-2xl leading-none bg-white w-10 h-10 rounded-full shadow-3xs flex items-center justify-center border border-slate-100">
                       {cat.emoji}
                     </span>

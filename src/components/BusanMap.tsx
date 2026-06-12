@@ -515,42 +515,42 @@ export default function BusanMap({
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
-              className="bg-white rounded-3xl p-5.5 shadow-xs border border-slate-100 space-y-4 flex flex-col justify-between"
-              style={{ minHeight: '480px' }}
+              className="bg-white rounded-3xl p-7 sm:p-8 shadow-xs border border-slate-100 space-y-6 flex flex-col justify-between"
+              style={{ minHeight: '520px' }}
               id="active-spot-card"
             >
               {/* 스팟 명칭 및 카테고리 기재 */}
-              <div className="space-y-3.5">
-                <div className="flex items-center justify-between gap-1.5 flex-wrap">
-                  <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-black border flex items-center gap-1 ${
+              <div className="space-y-4.5">
+                <div className="flex items-center justify-between gap-2.5 flex-wrap">
+                  <span className={`px-4 py-1.5 rounded-full text-xs sm:text-sm md:text-base font-black border flex items-center gap-1.5 ${
                     CATEGORY_LIST.find((c) => c.key === activeSpot.category)?.bgColor
                   }`}>
                     <span>{CATEGORY_LIST.find((c) => c.key === activeSpot.category)?.emoji}</span>
                     <span>{CATEGORY_LIST.find((c) => c.key === activeSpot.category)?.name}</span>
                   </span>
-                  <span className="text-[10px] text-slate-500 font-extrabold bg-slate-100 px-2.5 py-0.5 rounded-lg border border-slate-150">
+                  <span className="text-xs sm:text-sm md:text-base text-slate-600 font-extrabold bg-slate-100 px-3.5 py-1.5 rounded-xl border border-slate-150">
                     📍 {activeSpot.district}
                   </span>
                 </div>
 
-                <h3 className="text-base font-black text-slate-800 leading-tight">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-slate-900 leading-tight">
                   {activeSpot.name}
                 </h3>
 
                 {/* 지리적 경제 정보 설명 상자 */}
-                <div className="p-3 bg-slate-50 rounded-2xl border border-slate-150">
-                  <p className="text-[11px] text-slate-600 font-semibold leading-relaxed">
+                <div className="p-4.5 bg-slate-50 rounded-2xl border border-slate-200">
+                  <p className="text-sm sm:text-base md:text-lg text-slate-700 font-extrabold leading-relaxed">
                     {activeSpot.description}
                   </p>
                 </div>
 
                 {/* 꼬마 탐정 꿀팁 상자 */}
                 {activeSpot.funFact && (
-                  <div className="p-3 bg-amber-50/50 border border-amber-100 rounded-2xl space-y-0.5">
-                    <h5 className="text-[10px] font-black text-amber-700 flex items-center gap-1">
+                  <div className="p-4 bg-amber-50/70 border border-amber-200 rounded-2xl space-y-1">
+                    <h5 className="text-xs sm:text-sm md:text-base font-black text-amber-850 flex items-center gap-1.5">
                       💡 똑똑한 탐험가를 위한 비법!
                     </h5>
-                    <p className="text-[10px] text-amber-900 leading-relaxed font-semibold">
+                    <p className="text-xs sm:text-sm md:text-base text-amber-950 leading-relaxed font-bold">
                       {activeSpot.funFact}
                     </p>
                   </div>
@@ -559,14 +559,14 @@ export default function BusanMap({
 
               {/* 퀴즈 섹션 */}
               {activeSpot.quiz && (
-                <div className="border-t border-slate-100 pt-3.5 mt-2 space-y-3">
+                <div className="border-t border-slate-100 pt-5 mt-3 space-y-4">
                   <div className="flex items-center justify-between">
-                    <h4 className="text-xs font-black text-slate-800 flex items-center gap-1">
-                      <HelpCircle className="w-3.5 h-3.5 text-sky-500" />
+                    <h4 className="text-sm sm:text-base md:text-lg font-black text-slate-800 flex items-center gap-2">
+                      <HelpCircle className="w-5 h-5 text-sky-500" />
                       <span>도전! 골든벨 퀴즈</span>
                     </h4>
                     {quizState[activeSpot.id]?.solved && (
-                      <span className={`text-[9px] font-black px-2 py-0.5 rounded border ${
+                      <span className={`text-xs sm:text-sm font-black px-3 py-1 rounded border ${
                         quizState[activeSpot.id].isCorrect 
                           ? 'bg-emerald-50 border-emerald-200 text-emerald-800' 
                           : 'bg-rose-50 border-rose-200 text-rose-850'
@@ -576,11 +576,11 @@ export default function BusanMap({
                     )}
                   </div>
 
-                  <p className="text-[11px] font-bold text-slate-705 leading-relaxed bg-sky-50/45 p-2.5 rounded-xl border border-sky-100/40">
+                  <p className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-slate-800 leading-relaxed bg-sky-50/70 p-3.5 rounded-xl border border-sky-150">
                     Q. {activeSpot.quiz.question}
                   </p>
 
-                  <div className="space-y-1.5">
+                  <div className="space-y-2">
                     {activeSpot.quiz.options.map((option, idx) => {
                       const spotQuiz = activeSpot.quiz!;
                       const isSolved = quizState[activeSpot.id]?.solved;
@@ -588,16 +588,16 @@ export default function BusanMap({
                       const isCorrectOption = idx === spotQuiz.answerIndex;
                       const isSelected = selectedIdx === idx;
 
-                      let btnClass = 'bg-slate-50 border-slate-150 hover:bg-slate-100 text-slate-650 font-bold';
+                      let btnClass = 'bg-slate-50 border-slate-150 hover:bg-slate-100 text-slate-700 font-extrabold';
                       let statusIcon = null;
 
                       if (isSolved) {
                         if (isCorrectOption) {
-                          btnClass = 'bg-emerald-50 border-emerald-300 text-emerald-800 font-black';
-                          statusIcon = <CheckCircle className="w-4 h-4 text-emerald-600 inline ml-auto shrink-0" />;
+                          btnClass = 'bg-emerald-50 border-emerald-300 text-emerald-800 font-extrabold';
+                          statusIcon = <CheckCircle className="w-5 h-5 text-emerald-600 inline ml-auto shrink-0" />;
                         } else if (isSelected) {
-                          btnClass = 'bg-rose-50 border-rose-300 text-rose-800 font-black';
-                          statusIcon = <AlertCircle className="w-4 h-4 text-rose-600 inline ml-auto shrink-0" />;
+                          btnClass = 'bg-rose-50 border-rose-300 text-rose-800 font-extrabold';
+                          statusIcon = <AlertCircle className="w-5 h-5 text-rose-600 inline ml-auto shrink-0" />;
                         } else {
                           btnClass = 'bg-slate-50 border-slate-100 text-slate-400 opacity-60';
                         }
@@ -609,11 +609,11 @@ export default function BusanMap({
                           id={`quiz-option-${activeSpot.id}-${idx}`}
                           disabled={isSolved}
                           onClick={() => handleQuizAnswer(activeSpot, idx)}
-                          className={`w-full text-left p-2 rounded-xl text-[10px] border transition-all flex items-center justify-start gap-1.5 ${btnClass} ${
+                          className={`w-full text-left p-3.5 rounded-xl text-xs sm:text-sm md:text-base border transition-all flex items-center justify-start gap-2.5 ${btnClass} ${
                             !isSolved ? 'cursor-pointer hover:translate-x-1' : 'cursor-default'
                           }`}
                         >
-                          <span className="font-black flex items-center justify-center w-4 h-4 rounded-full bg-white/60 text-[9px] text-slate-600 border">
+                          <span className="font-black flex items-center justify-center w-5 h-5 rounded-full bg-white/60 text-xs text-slate-600 border shrink-0">
                             {idx + 1}
                           </span>
                           <span className="flex-1 truncate">{option}</span>
@@ -628,15 +628,15 @@ export default function BusanMap({
                     <motion.div
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: 'auto' }}
-                      className="p-2.5 bg-emerald-50/50 text-emerald-900 border border-emerald-200 rounded-xl"
+                      className="p-3.5 bg-emerald-50/50 text-emerald-900 border border-emerald-200 rounded-xl"
                     >
-                      <div className="font-black text-[10px] flex items-center gap-1 mb-0.5">
+                      <div className="font-black text-xs sm:text-sm flex items-center gap-1.5 mb-1">
                         <span>📢 풀이 주머니:</span>
-                        <span className={quizState[activeSpot.id].isCorrect ? 'text-emerald-700' : 'text-rose-600'}>
+                        <span className={quizState[activeSpot.id].isCorrect ? 'text-emerald-700 font-black' : 'text-rose-600 font-black'}>
                           {quizState[activeSpot.id].isCorrect ? '훌륭한 탐험가네요! 🎉' : '괜찮아요, 알아가는 중이에요!'}
                         </span>
                       </div>
-                      <p className="text-[10px] leading-relaxed font-semibold">
+                      <p className="text-xs sm:text-sm md:text-base leading-relaxed font-bold">
                         {activeSpot.quiz.explanation}
                       </p>
                     </motion.div>
@@ -650,22 +650,22 @@ export default function BusanMap({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="bg-white rounded-3xl p-8 shadow-xs border border-slate-100 flex flex-col items-center justify-center text-center h-full"
-              style={{ minHeight: '480px' }}
+              className="bg-white rounded-3xl p-8 sm:p-10 shadow-xs border border-slate-100 flex flex-col items-center justify-center text-center h-full"
+              style={{ minHeight: '520px' }}
             >
-              <div className="w-14 h-14 rounded-full bg-sky-50 flex items-center justify-center mb-4 text-3xl animate-bounce">
+              <div className="w-16 h-16 rounded-full bg-sky-50 flex items-center justify-center mb-5 text-4xl animate-bounce">
                 🗺️
               </div>
-              <h3 className="text-sm font-black text-slate-800">지도의 마커를 터치해 가이드해 볼까요?</h3>
-              <p className="text-[10px] text-slate-400 mt-2 max-w-xs leading-relaxed font-semibold">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-black text-slate-800">지도의 마커를 터치해 가이드해 볼까요?</h3>
+              <p className="text-xs sm:text-sm md:text-base text-slate-500 mt-3 max-w-sm leading-relaxed font-extrabold">
                 부산 전역에 흩어진 100대 명소 핀을 클릭하면 실제 지리·경제 가치 이야기와 퀴즈 챌린지가 펼쳐집니다!
               </p>
-              <div className="mt-8 flex flex-wrap gap-1.5 justify-center max-w-sm">
-                <span className="bg-rose-50 text-rose-600 border border-rose-100 text-[8px] px-2 py-0.5 rounded-full font-black">🍰 블루리본 고장 맛</span>
-                <span className="bg-cyan-50 text-cyan-700 border border-cyan-100 text-[8px] px-2 py-0.5 rounded-full font-black">🚌 편리한 교통</span>
-                <span className="bg-amber-50 text-amber-600 border border-amber-100 text-[8px] px-2 py-0.5 rounded-full font-black">🎡 놀이 오락 체험</span>
-                <span className="bg-emerald-50 text-emerald-700 border border-emerald-100 text-[8px] px-2 py-0.5 rounded-full font-black">🌲 역사 자연 유적</span>
-                <span className="bg-blue-50 text-blue-700 border border-blue-100 text-[8px] px-2 py-0.5 rounded-full font-black">🏖️ 해수욕장 명승 바다</span>
+              <div className="mt-10 flex flex-wrap gap-2.5 justify-center max-w-sm">
+                <span className="bg-rose-50 text-rose-600 border border-rose-100 text-[11px] sm:text-[13px] px-3.5 py-1.5 rounded-full font-black">🍰 블루리본 고장 맛</span>
+                <span className="bg-cyan-50 text-cyan-700 border border-cyan-100 text-[11px] sm:text-[13px] px-3.5 py-1.5 rounded-full font-black">🚌 편리한 교통</span>
+                <span className="bg-amber-50 text-amber-600 border border-amber-100 text-[11px] sm:text-[13px] px-3.5 py-1.5 rounded-full font-black">🎡 놀이 오락 체험</span>
+                <span className="bg-emerald-50 text-emerald-700 border border-emerald-100 text-[11px] sm:text-[13px] px-3.5 py-1.5 rounded-full font-black">🌲 역사 자연 유적</span>
+                <span className="bg-blue-50 text-blue-700 border border-blue-100 text-[11px] sm:text-[13px] px-3.5 py-1.5 rounded-full font-black">🏖️ 해수욕장 명승 바다</span>
               </div>
             </motion.div>
           )}
