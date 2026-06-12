@@ -17,8 +17,6 @@ interface BarChartBuilderProps {
   onUpdateTableCounts: (counts: Record<CategoryKey, number>) => void;
 }
 
-type RenderMode = 'bar' | 'block';
-
 export default function BarChartBuilder({
   onCompleteCounts,
   savedCounts,
@@ -62,7 +60,6 @@ export default function BarChartBuilder({
 
   const [hasChecked, setHasChecked] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
-  const [renderMode, setRenderMode] = useState<RenderMode>('bar');
   const [barDecoration, setBarDecoration] = useState<'normal' | 'cookie' | 'star'>('normal');
   const [stepSize, setStepSize] = useState<string>('2');
   const [stepFeedback, setStepFeedback] = useState<string>('');
@@ -326,36 +323,15 @@ export default function BarChartBuilder({
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
-              <div className="bg-slate-100 p-1 rounded-xl flex gap-1 border border-slate-200">
-                <button
-                  onClick={() => setRenderMode('bar')}
-                  className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-black cursor-pointer transition-all ${
-                    renderMode === 'bar' ? 'bg-white text-slate-800 shadow-xs' : 'text-slate-500 hover:text-slate-700'
-                  }`}
-                >
-                  막대 모드
-                </button>
-                <button
-                  onClick={() => setRenderMode('block')}
-                  className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-black cursor-pointer transition-all ${
-                    renderMode === 'block' ? 'bg-white text-slate-800 shadow-xs' : 'text-slate-500 hover:text-slate-700'
-                  }`}
-                >
-                  블록 쌓기
-                </button>
-              </div>
-
-              {renderMode === 'bar' && (
-                <select
-                  value={barDecoration}
-                  onChange={(e: any) => setBarDecoration(e.target.value)}
-                  className="bg-slate-50 border border-slate-200 text-xs sm:text-sm font-black text-slate-700 px-3 py-1.5 rounded-lg focus:outline-none cursor-pointer hover:bg-slate-100"
-                >
-                  <option value="normal">🎨 기본 막대</option>
-                  <option value="cookie">🍬 알탕 막대</option>
-                  <option value="star">⭐ 별빛 막대</option>
-                </select>
-              )}
+              <select
+                value={barDecoration}
+                onChange={(e: any) => setBarDecoration(e.target.value)}
+                className="bg-slate-50 border border-slate-200 text-xs sm:text-sm font-black text-slate-700 px-3 py-1.5 rounded-lg focus:outline-none cursor-pointer hover:bg-slate-100 shadow-3xs"
+              >
+                <option value="normal">🎨 기본 막대</option>
+                <option value="cookie">🍬 알탕 막대</option>
+                <option value="star">⭐ 별빛 막대</option>
+              </select>
             </div>
           </div>
 
@@ -397,52 +373,27 @@ export default function BarChartBuilder({
                       </div>
                     )}
 
-                    {renderMode === 'bar' ? (
-                      <motion.div
-                        initial={{ height: 0 }}
-                        animate={{ height: `${heightPercentage}%` }}
-                        transition={{ type: 'spring', damping: 16 }}
-                        className={`w-full max-w-[36px] rounded-t-lg relative overflow-hidden flex flex-col justify-end ${
-                          cat.key === 'food' ? 'bg-gradient-to-t from-rose-400 to-rose-300' : cat.key === 'traffic' ? 'bg-gradient-to-t from-cyan-400 to-cyan-300' : cat.key === 'play' ? 'bg-gradient-to-t from-amber-400 to-amber-300' : cat.key === 'history' ? 'bg-gradient-to-t from-emerald-500 to-emerald-400' : 'bg-gradient-to-t from-blue-400 to-blue-300'
-                        }`}
-                        style={{ minHeight: countVal > 0 ? '6px' : '0' }}
-                      >
-                        {barDecoration === 'cookie' && (
-                          <div className="absolute inset-x-0 bottom-0 top-0 flex flex-col justify-around items-center opacity-45 pointer-events-none">
-                            {Array.from({ length: 4 }).map((_, i) => (
-                              <span key={i} className="text-[10px] select-none">🟡</span>
-                            ))}
-                          </div>
-                        )}
-                        {barDecoration === 'star' && (
-                          <div className="absolute inset-0 bg-[radial-gradient(circle,_rgba(255,255,255,0.75)_0.8px,_transparent_0.8px)] bg-[size:6px_6px] opacity-45" />
-                        )}
-                        <div className="absolute top-0 inset-x-0 h-0.5 bg-white/40" />
-                      </motion.div>
-                    ) : (
-                      /* 쌓아올리기 블록 모드 (1개 블록당 가치 3~5개 환산 혹은 실제 스탬프) */
-                      <div className="w-full flex flex-col justify-end items-center gap-1 overflow-y-auto max-h-[85%] pr-0.5">
-                        {countVal > 0 ? (
-                          Array.from({ length: countVal }).map((_, idx) => (
-                            <motion.div
-                              key={idx}
-                              initial={{ scale: 0, y: 10 }}
-                              animate={{ scale: 1, y: 0 }}
-                              transition={{ delay: idx * 0.015 }}
-                              className={`w-6 h-4 sm:w-8 sm:h-5 rounded-xs flex items-center justify-center border text-[10px] font-black shadow-3xs shrink-0 ${
-                                cat.key === 'food' ? 'bg-rose-100 border-rose-300 text-rose-700' : cat.key === 'traffic' ? 'bg-cyan-100 border-cyan-300 text-cyan-800' : cat.key === 'play' ? 'bg-amber-100 border-amber-300 text-amber-700' : cat.key === 'history' ? 'bg-emerald-100 border-emerald-300 text-emerald-800' : 'bg-blue-100 border-blue-300 text-blue-700'
-                              }`}
-                            >
-                              {cat.stamp}
-                            </motion.div>
-                          ))
-                        ) : (
-                          <div className="text-[10px] text-slate-300 font-bold border border-dashed border-slate-200 w-6 h-4 sm:w-8 sm:h-5 rounded-xs flex items-center justify-center bg-white">
-                            0
-                          </div>
-                        )}
-                      </div>
-                    )}
+                    <motion.div
+                      initial={{ height: 0 }}
+                      animate={{ height: `${heightPercentage}%` }}
+                      transition={{ type: 'spring', damping: 16 }}
+                      className={`w-full max-w-[36px] rounded-t-lg relative overflow-hidden flex flex-col justify-end ${
+                        cat.key === 'food' ? 'bg-gradient-to-t from-rose-400 to-rose-300' : cat.key === 'traffic' ? 'bg-gradient-to-t from-cyan-400 to-cyan-300' : cat.key === 'play' ? 'bg-gradient-to-t from-amber-400 to-amber-300' : cat.key === 'history' ? 'bg-gradient-to-t from-emerald-500 to-emerald-400' : 'bg-gradient-to-t from-blue-400 to-blue-300'
+                      }`}
+                      style={{ minHeight: countVal > 0 ? '6px' : '0' }}
+                    >
+                      {barDecoration === 'cookie' && (
+                        <div className="absolute inset-x-0 bottom-0 top-0 flex flex-col justify-around items-center opacity-45 pointer-events-none">
+                          {Array.from({ length: 4 }).map((_, i) => (
+                            <span key={i} className="text-[10px] select-none">🟡</span>
+                          ))}
+                        </div>
+                      )}
+                      {barDecoration === 'star' && (
+                        <div className="absolute inset-0 bg-[radial-gradient(circle,_rgba(255,255,255,0.75)_0.8px,_transparent_0.8px)] bg-[size:6px_6px] opacity-45" />
+                      )}
+                      <div className="absolute top-0 inset-x-0 h-0.5 bg-white/40" />
+                    </motion.div>
                   </div>
                 );
               })}
@@ -456,8 +407,11 @@ export default function BarChartBuilder({
           <div className="grid grid-cols-5 gap-3.5 left-16 right-2 relative text-center">
             {CATEGORY_LIST.map((cat) => (
               <div key={cat.key} className="flex flex-col items-center">
-                <span className="text-base select-none mb-0.5">{cat.emoji}</span>
-                <span className="text-sm sm:text-base font-black text-slate-700 block line-clamp-1">{cat.name}</span>
+                <span className="text-sm sm:text-base select-none mb-0.5">{cat.emoji}</span>
+                <span className="text-[10px] sm:text-sm md:text-base font-black text-slate-700 block line-clamp-1">
+                  <span className="hidden sm:inline">{cat.name}</span>
+                  <span className="inline sm:hidden">{cat.shortName || cat.name}</span>
+                </span>
               </div>
             ))}
           </div>

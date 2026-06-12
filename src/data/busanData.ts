@@ -9,6 +9,7 @@ export const CATEGORIES: Record<string, CategoryInfo> = {
   food: {
     key: 'food',
     name: '블루리본 맛집',
+    shortName: '맛집',
     emoji: '🍰',
     color: 'text-rose-500',
     bgColor: 'bg-rose-50 border-rose-200',
@@ -19,6 +20,7 @@ export const CATEGORIES: Record<string, CategoryInfo> = {
   traffic: {
     key: 'traffic',
     name: '교통 편의',
+    shortName: '교통',
     emoji: '🚌',
     color: 'text-cyan-500',
     bgColor: 'bg-cyan-50 border-cyan-200',
@@ -29,6 +31,7 @@ export const CATEGORIES: Record<string, CategoryInfo> = {
   play: {
     key: 'play',
     name: '체험 놀거리',
+    shortName: '놀거리',
     emoji: '🎡',
     color: 'text-amber-500',
     bgColor: 'bg-amber-50 border-amber-200',
@@ -39,6 +42,7 @@ export const CATEGORIES: Record<string, CategoryInfo> = {
   history: {
     key: 'history',
     name: '역사 및 자연 볼거리',
+    shortName: '역사자연',
     emoji: '🌲',
     color: 'text-emerald-500',
     bgColor: 'bg-emerald-50 border-emerald-200',
@@ -49,6 +53,7 @@ export const CATEGORIES: Record<string, CategoryInfo> = {
   beach: {
     key: 'beach',
     name: '해수욕장 바다',
+    shortName: '바다',
     emoji: '🏖️',
     color: 'text-blue-500',
     bgColor: 'bg-blue-50 border-blue-200',

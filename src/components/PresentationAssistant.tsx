@@ -87,20 +87,20 @@ export default function PresentationAssistant({
   // 가장 많은 개수를 자랑하기 대본
   const maxSpeech = `안녕하세요 여러분! 저희는 [우리 모둠]입니다.
 
-저희 모둠이 부산 \${currentRegion.name} 구역을 친구들한테 당당하게 추천하고 홍보하기 위해 정한 여행 제목은 《\${maxSpotsList.split(',')[0] || '부산'}와(과) 함께 떠나는 신나는 여행》입니다.
+저희 모둠이 부산 ${currentRegion.name} 구역을 친구들한테 당당하게 추천하고 홍보하기 위해 정한 여행 제목은 《${maxSpotsList.split(',')[0] || '부산'}와(과) 함께 떠나는 신나는 여행》입니다.
 
-우리가 이렇게 여행 코스를 정하게 된 명확한 수학적·지리학적 근거는, 부산 백지도를 열심히 구석구석 조사하고 막대그래프로 나타내어 비교해 보았기 때문이에요. 분석해 본 결과, 우리 구역은 다른 종류보다 [\${categoryEmojis[maxCategoryKey]} \${categoryNames[maxCategoryKey]}] 탐색지가 총 \${counts[maxCategoryKey]}곳이나 있어서 가장 많고 풍성했답니다!
+우리가 이렇게 여행 코스를 정하게 된 명확한 수학적·지리학적 근거는, 부산 백지도를 열심히 구석구석 조사하고 막대그래프로 나타내어 비교해 보았기 때문이에요. 분석해 본 결과, 우리 구역은 다른 종류보다 [${categoryEmojis[maxCategoryKey]} ${categoryNames[maxCategoryKey]}] 탐색지가 총 ${counts[maxCategoryKey]}곳이나 있어서 가장 많고 풍성했답니다!
 
-그래서 우리 모둠은 이 가장 멋지고 풍성한 매력을 한껏 뽐낼 수 있는 최고의 추천 여행을 만들기로 결정했습니다. [\${maxSpotsList}] 같이 즐겁고 매력적인 자랑거리들을 많이 소개해 드릴 테니 꼭 한번 놀러 오세요. 들어주셔서 감사합니다!`;
+그래서 우리 모둠은 이 가장 멋지고 풍성한 매력을 한껏 뽐낼 수 있는 최고의 추천 여행을 만들기로 결정했습니다. [${maxSpotsList}] 같이 즐겁고 매력적인 자랑거리들을 많이 소개해 드릴 테니 꼭 한번 놀러 오세요. 들어주셔서 감사합니다!`;
 
   // 가장 적은 개수를 보완하기 대본
   const minSpeech = `안녕하세요 여러분! 저희는 [우리 모둠]입니다.
 
-저희 모둠이 부산 \${currentRegion.name} 구역의 숨은 매력을 골고루 살리는 상생 발전 계획의 제목은 《숨은 보석, \${minSpotsList.split(',')[0] || '부산'}를 골고루 사랑하는 가치 투어》입니다.
+저희 모둠이 부산 ${currentRegion.name} 구역의 숨은 매력을 골고루 살리는 상생 발전 계획의 제목은 《숨은 보석, ${minSpotsList.split(',')[0] || '부산'}를 골고루 사랑하는 가치 투어》입니다.
 
-우리가 이 나눔 계획을 제안하게 된 근거는, 직접 수집한 개수 분류표를 막대그래프 기둥 높이로 비교해 본 결과입니다. 우리 구역은 [\${categoryEmojis[minCategoryKey]} \${categoryNames[minCategoryKey]}] 장소가 단 \${counts[minCategoryKey]}곳밖에 발견되지 않아서 상대적으로 숫자가 아주 적었습니다.
+우리가 이 나눔 계획을 제안하게 된 근거는, 직접 수집한 개수 분류표를 막대그래프 기둥 높이로 비교해 본 결과입니다. 우리 구역은 [${categoryEmojis[minCategoryKey]} ${categoryNames[minCategoryKey]}] 장소가 단 ${counts[minCategoryKey]}곳밖에 발견되지 않아서 상대적으로 숫자가 아주 적었습니다.
 
-그래서 우리 모둠은 "어느 동네든 골고루 놀거리도 많고 행복해야 한다"는 생각으로 결정을 내렸습니다. 개수나 시설이 상대적으로 부족한 [\${minSpotsList}] 주변을 더 가꾸고 알려서, 모두가 함께 행복할 수 있도록 힘쓰겠습니다. 감사합니다!`;
+그래서 우리 모둠은 "어느 동네든 골고루 놀거리도 많고 행복해야 한다"는 생각으로 결정을 내렸습니다. 개수나 시설이 상대적으로 부족한 [${minSpotsList}] 주변을 더 가꾸고 알려서, 모두가 함께 행복할 수 있도록 힘쓰겠습니다. 감사합니다!`;
 
   return (
     <div className="space-y-6" id="presentation-assistant-section">
@@ -176,7 +176,7 @@ export default function PresentationAssistant({
         </div>
 
         {/* 오른쪽: 우리 모둠 전용 Dynamic 발표 예시 대본 (7칸) */}
-        <div className="lg:col-span-12 xl:col-span-7 bg-white rounded-3xl p-6 sm:p-8 shadow-xs border border-slate-100 flex flex-col justify-between space-y-5">
+        <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 shadow-xs border border-slate-100 flex flex-col justify-between space-y-5">
           <div className="space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3.5">
               <div>

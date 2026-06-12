@@ -9,6 +9,7 @@ export type CategoryKey = 'food' | 'traffic' | 'play' | 'history' | 'beach';
 export interface CategoryInfo {
   key: CategoryKey;
   name: string;
+  shortName?: string; // Optional short label for mobile displays
   emoji: string;
   color: string; // Tailwind class
   bgColor: string; // bg & border classes

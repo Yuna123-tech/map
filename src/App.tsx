@@ -224,20 +224,20 @@ export default function App() {
       <main className="w-[98%] max-w-[2100px] mx-auto w-full px-4 md:px-8 py-8 flex-1 space-y-8">
         
         {/* 모둠별 조사 범위(권역) 커스텀 선택 장치 (고민 완벽 해결책) */}
-        <div className="bg-white rounded-2xl p-8 border border-slate-150 shadow-3xs hover:shadow-2xs transition-shadow animate-fade-in">
+        <div className="bg-white rounded-2xl p-4 sm:p-6 md:p-8 border border-slate-150 shadow-3xs hover:shadow-2xs transition-shadow animate-fade-in animate-once">
           <div className="flex flex-row items-center justify-between gap-4 border-b border-slate-100 pb-4 mb-5">
             <div className="space-y-1.5">
-              <h3 className="text-2xl font-black text-slate-900 flex items-center gap-2.5 flex-wrap">
+              <h3 className="text-xl sm:text-2xl font-black text-slate-900 flex items-center gap-2.5 flex-wrap">
                 <span className="p-1 py-0.5 px-2 bg-indigo-50 text-indigo-750 text-sm rounded-md border border-indigo-150 font-bold shrink-0">활동 1</span>
                 <span>모둠의 부산 탐험 조사 범위 선택하기 🧭</span>
               </h3>
-              <p className="text-sm text-slate-500 font-bold leading-normal">
+              <p className="text-xs sm:text-sm text-slate-500 font-bold leading-normal">
                 조사 구역을 변경하면 지도의 명소 목록과 통계 대시보드가 실시간 동기화 교정됩니다.
               </p>
             </div>
           </div>
 
-          <div className="grid grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {REGION_LIST.map((rg) => {
               const isSelected = selectedRegion === rg.key;
               return (
