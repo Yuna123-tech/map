@@ -436,21 +436,13 @@ export default function BusanMap({
                   disabled={!isSpotInRegion}
                   className={`absolute -translate-x-1/2 -translate-y-1/2 focus:outline-none transition-all duration-300 ${
                     isSpotInRegion
-                      ? 'cursor-pointer z-10 hover:z-30'
+                      ? `cursor-pointer ${isSelected ? 'z-40' : 'z-20 hover:z-30'}`
                       : 'opacity-15 pointer-events-none scale-65 grayscale z-0'
                   }`}
                 >
                   <div className="relative flex flex-col items-center group">
-                    {/* 확대/마커명 표시 - 호버 및 초등 맞춤형 크기 */}
-                    <div className={`px-2 py-0.5 rounded-md text-[10px] sm:text-xs font-black shadow-xs whitespace-nowrap mb-0.5 border select-none transition-all duration-200 ${
-                      isSelected
-                        ? 'bg-slate-800 text-white border-slate-900 scale-105'
-                        : 'bg-white text-slate-700 border-slate-200 opacity-85 group-hover:opacity-100'
-                    }`}>
-                      {spot.name.split(' (')[0]}
-                    </div>
-
-                    <div className="relative">
+                    {/* 본래의 마커 핀 구 (이것이 중심점의 위치에 오도록 배치) */}
+                    <div className="relative z-20">
                       {/* 파도형 후광 장식 */}
                       <span className={`absolute -inset-1 rounded-full blur-xs opacity-55 animate-ping pointer-events-none ${
                         spot.category === 'food' ? 'bg-rose-400' : spot.category === 'traffic' ? 'bg-cyan-400' : spot.category === 'play' ? 'bg-amber-400' : spot.category === 'history' ? 'bg-emerald-400' : 'bg-blue-400'
@@ -471,6 +463,15 @@ export default function BusanMap({
                           ✓
                         </div>
                       )}
+                    </div>
+
+                    {/* 확대/마커명 표시 - 절대 좌표로 띄워서 아이콘 중심 정렬 유지 및 가시성 개선 */}
+                    <div className={`absolute bottom-full mb-1 left-1/2 -translate-x-1/2 px-1.5 py-0.5 rounded-md text-[7.5px] sm:text-[9.5px] font-black shadow-3xs whitespace-nowrap border select-none pointer-events-none transition-all duration-200 ${
+                      isSelected
+                        ? 'bg-slate-900 text-white border-slate-950 scale-105 opacity-100 z-30'
+                        : 'bg-white/90 text-slate-700 border-slate-200 opacity-55 group-hover:opacity-100 group-hover:scale-102 group-hover:z-30'
+                    }`}>
+                      {spot.name.split(' (')[0]}
                     </div>
                   </div>
                 </button>
