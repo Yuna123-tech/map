@@ -201,7 +201,7 @@ export default function BusanMap({
               <span>1단계: 부산 구석구석을 누리며 명소 개수를 모아보아요! 🕵️</span>
             </h3>
             <p className="text-base sm:text-lg md:text-xl text-slate-600 mt-2 font-extrabold leading-relaxed">
-              알록달록한 지도의 아이콘들을 콕 터치해 보세요. 실제 부산광역시 100대 지리·경제 정보의 장소 가치를 찾아가고 퀴즈를 풀어 장소를 획득할 수 있습니다.
+              알록달록한 지도의 아이콘들을 콕 터치해 보세요. 실제 부산광역시 300대 지리·경제 정보의 장소 가치를 찾아가고 퀴즈를 풀어 장소를 획득할 수 있습니다.
             </p>
           </div>
           <div className="flex items-center gap-2.5 text-base sm:text-lg font-black text-slate-850 bg-emerald-50 px-5 py-3.5 rounded-2xl self-start md:self-auto shrink-0 border border-emerald-150 shadow-3xs">
@@ -658,7 +658,7 @@ export default function BusanMap({
               </div>
               <h3 className="text-lg sm:text-xl md:text-2xl font-black text-slate-800">지도의 마커를 터치해 가이드해 볼까요?</h3>
               <p className="text-xs sm:text-sm md:text-base text-slate-500 mt-3 max-w-sm leading-relaxed font-extrabold">
-                부산 전역에 흩어진 100대 명소 핀을 클릭하면 실제 지리·경제 가치 이야기와 퀴즈 챌린지가 펼쳐집니다!
+                부산 전역에 흩어진 300대 명소 핀을 클릭하면 실제 지리·경제 가치 이야기와 퀴즈 챌린지가 펼쳐집니다!
               </p>
               <div className="mt-10 flex flex-wrap gap-2.5 justify-center max-w-sm">
                 <span className="bg-rose-50 text-rose-600 border border-rose-100 text-[11px] sm:text-[13px] px-3.5 py-1.5 rounded-full font-black">🍰 블루리본 고장 맛</span>

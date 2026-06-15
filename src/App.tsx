@@ -185,7 +185,7 @@ export default function App() {
                 </span>
               </div>
               <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight mt-2.5 animate-fade-in flex items-center gap-3">
-                <span>막대그래프로 소개하는 부산 100대 명소 지리 지도</span>
+                <span>막대그래프로 소개하는 부산 300대 명소 지리 지도</span>
                 <Sparkles className="w-7 h-7 text-sky-500 animate-pulse shrink-0" />
               </h1>
             </div>
