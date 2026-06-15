@@ -215,7 +215,7 @@ export default function BusanMap({
         <div className="bg-white rounded-3xl p-6 shadow-xs border border-slate-100 space-y-4">
           <div className="space-y-2">
             <span className="text-base sm:text-lg md:text-xl font-black text-slate-800 block">🔍 우리 동네나 관심있는 행정구역 모아보기 (구별 돋보기 필터):</span>
-            <div className="flex flex-wrap gap-2 max-h-[140px] overflow-y-auto p-2.5 bg-slate-50 rounded-2xl border border-slate-100">
+            <div className="flex flex-wrap gap-2 p-2.5 bg-slate-50 rounded-2xl border border-slate-100">
               {districts.map((dist, idx) => {
                 const currentRegion = REGIONS[selectedRegion] || REGIONS['all'];
                 const isDistInRegion = selectedRegion === 'all' || dist === 'all' || currentRegion.districts.includes(dist);

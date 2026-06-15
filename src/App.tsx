@@ -237,7 +237,7 @@ export default function App() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {REGION_LIST.map((rg) => {
               const isSelected = selectedRegion === rg.key;
               return (
@@ -261,12 +261,12 @@ export default function App() {
                   {/* 구 표시 장식 */}
                   <div className="mt-4 pt-2.5 border-t border-slate-200/80 flex flex-wrap gap-1 pointer-events-none">
                     {rg.districts.slice(0, 3).map((dist, dIdx) => (
-                      <span key={dIdx} className="text-xs px-2 py-0.5 bg-white text-slate-750 rounded-lg border border-slate-300 font-heavy">
+                      <span key={dIdx} className="text-xs px-2 py-0.5 bg-white text-slate-700 rounded-lg border border-slate-300 font-bold">
                         {dist.replace('구', '').replace('군', '')}
                       </span>
                     ))}
                     {rg.districts.length > 3 && (
-                      <span className="text-sm text-slate-500 font-bold">...</span>
+                      <span className="text-xs text-slate-500 font-bold px-1.5 py-0.5 bg-slate-100 rounded-lg">+{rg.districts.length - 3}</span>
                     )}
                   </div>
  
