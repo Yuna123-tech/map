@@ -319,11 +319,15 @@ export default function App() {
                     친구들과 의논해서 동일한 관심 구역(예: 동래, 수영 등)을 정해 <strong>위에서 똑같이</strong> 눌러주세요.
                   </p>
                 </div>
-                <p className="text-xs sm:text-sm font-black mt-2">
+                <p className="mt-2 text-center">
                   {selectedRegion !== 'all' ? (
-                    <span className="text-emerald-800 bg-emerald-100/50 px-2.5 py-1 rounded-lg border border-emerald-300">📍 [{REGIONS[selectedRegion].name}] 선택 완료!</span>
+                    <span className="text-emerald-800 bg-emerald-100/50 px-2 py-1.5 rounded-lg border border-emerald-300 block text-center text-[10px] sm:text-xs xl:text-sm whitespace-nowrap overflow-hidden text-ellipsis" title={`📍 [${REGIONS[selectedRegion].name}] 선택 완료!`}>
+                      📍 [{REGIONS[selectedRegion].name}] 선택 완료!
+                    </span>
                   ) : (
-                    <span className="text-rose-600 bg-rose-50 px-2.5 py-1 rounded-lg border border-rose-200 animate-pulse">⚠️ 위에서 구역을 골라보세요!</span>
+                    <span className="text-rose-600 bg-rose-50 px-2 py-1.5 rounded-lg border border-rose-200 animate-pulse block text-center text-[10.5px] sm:text-xs xl:text-sm whitespace-nowrap overflow-hidden text-ellipsis">
+                      ⚠️ 위에서 구역을 골라보세요!
+                    </span>
                   )}
                 </p>
               </div>
