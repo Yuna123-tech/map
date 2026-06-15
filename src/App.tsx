@@ -321,11 +321,11 @@ export default function App() {
                 </div>
                 <p className="mt-2 text-center">
                   {selectedRegion !== 'all' ? (
-                    <span className="text-emerald-800 bg-emerald-100/50 px-2 py-1.5 rounded-lg border border-emerald-300 block text-center text-[10px] sm:text-xs xl:text-sm whitespace-nowrap overflow-hidden text-ellipsis" title={`📍 [${REGIONS[selectedRegion].name}] 선택 완료!`}>
+                    <span className="text-emerald-800 bg-emerald-100/50 px-1 py-1.5 rounded-lg border border-emerald-300 block text-center text-[9px] min-[380px]:text-[10px] sm:text-xs lg:text-[9.5px] xl:text-[11px] 2xl:text-xs font-bold tracking-tighter whitespace-nowrap" title={`📍 [${REGIONS[selectedRegion].name}] 선택 완료!`}>
                       📍 [{REGIONS[selectedRegion].name}] 선택 완료!
                     </span>
                   ) : (
-                    <span className="text-rose-600 bg-rose-50 px-2 py-1.5 rounded-lg border border-rose-200 animate-pulse block text-center text-[10.5px] sm:text-xs xl:text-sm whitespace-nowrap overflow-hidden text-ellipsis">
+                    <span className="text-rose-600 bg-rose-50 px-1 py-1.5 rounded-lg border border-rose-200 animate-pulse block text-center text-[9px] min-[380px]:text-[10px] sm:text-xs lg:text-[9.5px] xl:text-[11px] 2xl:text-xs font-bold tracking-tighter whitespace-nowrap">
                       ⚠️ 위에서 구역을 골라보세요!
                     </span>
                   )}
