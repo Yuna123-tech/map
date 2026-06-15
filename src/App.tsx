@@ -167,61 +167,61 @@ export default function App() {
       <div className="h-2 bg-gradient-to-r from-sky-400 via-indigo-400 to-teal-400" />
 
       {/* 헤더 바 */}
-      <header className="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-slate-150 shadow-2xs">
-        <div className="w-[98%] max-w-[2100px] mx-auto px-4 md:px-8 py-5 flex flex-col xl:flex-row items-center justify-between gap-6">
+      <header className="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200 shadow-2xs">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col xl:flex-row items-center justify-between gap-6">
           
           {/* 타이틀 명가 */}
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 bg-gradient-to-br from-indigo-505 to-sky-600 bg-sky-500 rounded-2xl flex items-center justify-center text-white shadow-md transform hover:rotate-6 transition-transform shrink-0">
+            <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-sky-600 bg-sky-500 rounded-2xl flex items-center justify-center text-white shadow-md transform hover:rotate-6 transition-transform shrink-0">
               <span className="text-4xl select-none">🧭</span>
             </div>
             <div>
               <div className="flex items-center gap-3 flex-wrap">
-                <span className="bg-indigo-100 text-indigo-850 text-xs sm:text-sm md:text-base font-black px-4 py-2 rounded-full select-none shadow-3xs">
+                <span className="bg-indigo-100 text-indigo-805 text-xs sm:text-sm font-bold px-3 py-1.5 rounded-full select-none shadow-3xs">
                   🏫 {presentation?.teamName ? `👥 ${presentation?.teamName} 모둠` : '초등 4학년 활기찬 교실'}
                 </span>
-                <span className="bg-sky-100 text-sky-900 text-xs sm:text-sm md:text-base font-black px-4 py-2 rounded-full select-none shadow-3xs">
+                <span className="bg-sky-100 text-sky-900 text-xs sm:text-sm font-bold px-3 py-1.5 rounded-full select-none shadow-3xs">
                   사회 · 수학 융합 교과
                 </span>
               </div>
-              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight mt-2.5 animate-fade-in flex items-center gap-3">
+              <h1 className="text-lg sm:text-xl md:text-2xl font-black text-slate-900 tracking-tight mt-2 animate-fade-in flex items-center gap-2">
                 <span>막대그래프로 소개하는 부산 300대 명소 지리 지도</span>
-                <Sparkles className="w-7 h-7 text-sky-500 animate-pulse shrink-0" />
+                <Sparkles className="w-5 h-5 text-sky-500 animate-pulse shrink-0" />
               </h1>
             </div>
           </div>
 
           {/* 스코어 리포트 대시보드 */}
-          <div className="flex items-center gap-5 text-base md:text-lg flex-wrap xl:flex-nowrap">
-            <div className="flex items-center gap-5 bg-slate-50 border border-slate-200 px-6 py-4 rounded-2xl shadow-3xs">
+          <div className="flex items-center gap-4 text-sm md:text-base flex-wrap xl:flex-nowrap">
+            <div className="flex items-center gap-4 bg-slate-50 border border-slate-200 px-5 py-3 rounded-2xl shadow-3xs">
               <div className="text-center">
-                <p className="text-sm sm:text-base md:text-lg text-slate-600 font-extrabold leading-none mb-2">
+                <p className="text-xs sm:text-sm text-slate-500 font-medium leading-none mb-1.5">
                   {(REGIONS[selectedRegion] || REGIONS['all']).emoji} 조사 범위 발견율
                 </p>
-                <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-black text-slate-850">
-                  🔑 <span className="text-indigo-650 font-black">{regionCollectedCount}</span> / {currentRegionSpots.length} <span className="text-sm sm:text-base text-slate-500 font-bold">곳</span>
+                <p className="text-base sm:text-lg md:text-xl font-bold text-slate-800">
+                  🔑 <span className="text-indigo-600 font-black">{regionCollectedCount}</span> / {currentRegionSpots.length} <span className="text-xs text-slate-400 font-normal">곳</span>
                 </p>
               </div>
-              <div className="h-10 w-px bg-slate-350" />
+              <div className="h-8 w-px bg-slate-200" />
               <div className="text-center">
-                <p className="text-sm sm:text-base md:text-lg text-slate-600 font-extrabold leading-none mb-2">골든벨 점수</p>
-                <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-black text-emerald-600">💯 {correctQuizCount} / {quizSolvedCount} <span className="text-xs sm:text-sm text-slate-500 font-bold">개</span></p>
+                <p className="text-xs sm:text-sm text-slate-500 font-medium leading-none mb-1.5">골든벨 점수</p>
+                <p className="text-base sm:text-lg md:text-xl font-bold text-emerald-600">💯 {correctQuizCount} / {quizSolvedCount} <span className="text-xs text-slate-400 font-normal">개</span></p>
               </div>
             </div>
 
             <button
               onClick={handleReset}
-              className="flex items-center gap-3 px-6 py-4 bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-650 rounded-2xl text-base sm:text-lg md:text-xl lg:text-2xl font-black transition-all cursor-pointer shadow-sm hover:shadow-md"
+              className="flex items-center gap-2 px-4 py-3 bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-600 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer shadow-3xs"
               title="모든 조사 데이터를 처음으로 초기화합니다"
             >
-              <RefreshCw className="w-6 h-6 animate-spin-slow" />
+              <RefreshCw className="w-4 h-4 animate-spin-slow" />
               <span>🎒 처음부터 다시 조사 (초기화)</span>
             </button>
           </div>
         </div>
       </header>
 
-      <main className="w-[98%] max-w-[2100px] mx-auto w-full px-4 md:px-8 py-8 flex-1 space-y-8">
+      <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 flex-1 space-y-8">
         
         {/* 모둠별 조사 범위(권역) 커스텀 선택 장치 (고민 완벽 해결책) */}
         <div className="bg-white rounded-2xl p-8 border border-slate-150 shadow-3xs hover:shadow-2xs transition-shadow animate-fade-in animate-once">
@@ -504,28 +504,28 @@ export default function App() {
                     </div>
                   </div>
 
-                  <div className="overflow-x-auto">
+                  <div className="overflow-x-auto animate-fade-in">
                     <table className="w-full text-left text-xs sm:text-sm border-collapse">
                       <thead>
-                        <tr className="border-b-2 border-slate-200 bg-slate-50/50 text-slate-600 text-xs sm:text-sm font-black uppercase">
-                          <th className="py-3.5 px-5 font-black">탐색 테마</th>
-                          <th className="py-3.5 px-5 text-center font-black">장소 스탬프</th>
-                          <th className="py-3.5 px-5 text-center font-black">우리가 세어본 분류 개수</th>
-                          <th className="py-3.5 px-5 font-black">의견 의사결정 탐정단 코멘트</th>
+                        <tr className="border-b-2 border-slate-200 bg-slate-50/50 text-slate-600 text-xs sm:text-sm font-semibold uppercase">
+                          <th className="py-3.5 px-5 font-bold">탐색 테마</th>
+                          <th className="py-3.5 px-5 text-center font-bold">장소 스탬프</th>
+                          <th className="py-3.5 px-5 text-center font-bold">우리가 세어본 분류 개수</th>
+                          <th className="py-3.5 px-5 font-bold">의견 의사결정 탐정단 코멘트</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-slate-150/40 font-bold text-slate-705 text-sm sm:text-base">
+                      <tbody className="divide-y divide-slate-200 font-medium text-slate-700 text-sm sm:text-base">
                         {CATEGORY_LIST.map((cat) => {
                           const count = tableCounts[cat.key] || 0;
                           return (
-                            <tr key={cat.key} className="hover:bg-slate-50/20 transition-colors">
+                            <tr key={cat.key} className="hover:bg-slate-50/50 transition-colors">
                               <td className="py-4 px-5 flex items-center gap-3">
                                 <span className="text-2xl select-none">{cat.emoji}</span>
-                                <span className="font-extrabold text-slate-850 text-sm sm:text-base">{cat.name}</span>
+                                <span className="font-semibold text-slate-800 text-sm sm:text-base">{cat.name}</span>
                               </td>
                               <td className="py-4 px-5 text-center text-sm sm:text-base select-none">{cat.stamp}</td>
                               <td className="py-4 px-5 text-center">
-                                <div className="inline-flex items-center gap-2 bg-slate-50 p-1.5 rounded-xl border border-slate-250">
+                                <div className="inline-flex items-center gap-2 bg-slate-50 p-1.5 rounded-xl border border-slate-200">
                                   <button
                                     onClick={() => {
                                       const next = Math.max(0, count - 1);
@@ -533,7 +533,7 @@ export default function App() {
                                       handleUpdateTableCounts(nextCounts);
                                       setTableChecked(false);
                                     }}
-                                    className="w-8 h-8 rounded-lg bg-white hover:bg-slate-100 text-slate-700 font-extrabold text-sm sm:text-base flex items-center justify-center cursor-pointer select-none border border-slate-200"
+                                    className="w-8 h-8 rounded-lg bg-white hover:bg-slate-100 text-slate-700 font-bold text-sm sm:text-base flex items-center justify-center cursor-pointer select-none border border-slate-200"
                                   >
                                     -
                                   </button>
@@ -548,7 +548,7 @@ export default function App() {
                                       setTableChecked(false);
                                     }}
                                     placeholder="0"
-                                    className="w-10 text-center font-black text-slate-800 bg-transparent text-sm sm:text-base focus:outline-none"
+                                    className="w-10 text-center font-bold text-slate-800 bg-transparent text-sm sm:text-base focus:outline-none"
                                   />
                                   <button
                                     onClick={() => {
@@ -557,7 +557,7 @@ export default function App() {
                                       handleUpdateTableCounts(nextCounts);
                                       setTableChecked(false);
                                     }}
-                                    className="w-8 h-8 rounded-lg bg-white hover:bg-slate-100 text-slate-700 font-extrabold text-sm sm:text-base flex items-center justify-center cursor-pointer select-none border border-slate-200"
+                                    className="w-8 h-8 rounded-lg bg-white hover:bg-slate-100 text-slate-700 font-bold text-sm sm:text-base flex items-center justify-center cursor-pointer select-none border border-slate-200"
                                   >
                                     +
                                   </button>
@@ -566,14 +566,14 @@ export default function App() {
                               <td className="py-4 px-5 text-xs sm:text-sm text-slate-600">
                                 {count > 0 ? (
                                   count === realRegionCounts[cat.key] ? (
-                                    <span className="text-emerald-700 font-black flex items-center gap-1.5">
+                                    <span className="text-emerald-700 font-bold flex items-center gap-1.5 animate-bounce-once">
                                       <span>✓</span> <span>완벽해요! 실제 명소 개수와 정확히 일치합니다.</span>
                                     </span>
                                   ) : (
-                                    <span className="text-slate-500 font-bold">실제 지도와 비교하여 숫자를 맞춰보아요!</span>
+                                    <span className="text-slate-500 font-medium">실제 지도와 비교하여 숫자를 맞춰보아요!</span>
                                   )
                                 ) : (
-                                  <span className="text-slate-400 font-bold">개수 파악 대기 중</span>
+                                  <span className="text-slate-400 font-medium">개수 파악 대기 중</span>
                                 )}
                               </td>
                             </tr>
@@ -583,7 +583,7 @@ export default function App() {
                     </table>
                   </div>
 
-                  <div className="pt-2 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+                  <div className="pt-2 border-t border-slate-250 flex flex-col sm:flex-row items-center justify-between gap-3">
                     <div className="flex items-center gap-2 flex-wrap">
                       <button
                         onClick={() => {
@@ -596,13 +596,13 @@ export default function App() {
                           setTableChecked(true);
                           setTableCorrect(matches);
                         }}
-                        className="px-5 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm sm:text-base font-black transition-all cursor-pointer shadow-3xs"
+                        className="px-5 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm sm:text-base font-bold transition-all cursor-pointer shadow-3xs"
                       >
                         🔎 작성한 관찰 기록표 채점 및 검정하기
                       </button>
 
                       {tableChecked && (
-                        <span className={`text-xs sm:text-sm md:text-base font-black px-4 py-2 rounded-xl border ${
+                        <span className={`text-xs sm:text-sm md:text-base font-bold px-4 py-2 rounded-xl border ${
                           tableCorrect 
                             ? 'bg-emerald-50 border-emerald-250 text-emerald-800' 
                             : 'bg-rose-50 border-rose-250 text-rose-800'

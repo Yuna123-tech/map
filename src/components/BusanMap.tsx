@@ -48,6 +48,7 @@ export default function BusanMap({
   const [activeSpot, setActiveSpot] = useState<BusanSpot | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedDistrict, setSelectedDistrict] = useState<string | 'all'>('all');
+  const [showLabels, setShowLabels] = useState<boolean>(true);
 
   // 지도의 확대/축소 및 패닝 상태 (축척 제어)
   const [zoom, setZoom] = useState<number>(1);
@@ -194,17 +195,17 @@ export default function BusanMap({
       {/* 왼쪽: 지능형 맵 및 컨트롤 (8칸) */}
       <div className="lg:col-span-8 space-y-4">
         {/* 헤더 간판 */}
-        <div className="bg-white rounded-3xl p-6 sm:p-7 shadow-xs border border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="bg-white rounded-3xl p-6 sm:p-7 shadow-xs border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-slate-900 flex items-center gap-2.5">
-              <Compass className="w-7 h-7 text-sky-500 animate-spin-slow shrink-0" />
+            <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-slate-900 flex items-center gap-2.5">
+              <Compass className="w-6 h-6 text-sky-500 animate-spin-slow shrink-0" />
               <span>1단계: 부산 구석구석을 누리며 명소 개수를 모아보아요! 🕵️</span>
             </h3>
-            <p className="text-base sm:text-lg md:text-xl text-slate-600 mt-2 font-extrabold leading-relaxed">
+            <p className="text-sm sm:text-base text-slate-600 mt-2 font-medium leading-relaxed">
               알록달록한 지도의 아이콘들을 콕 터치해 보세요. 실제 부산광역시 300대 지리·경제 정보의 장소 가치를 찾아가고 퀴즈를 풀어 장소를 획득할 수 있습니다.
             </p>
           </div>
-          <div className="flex items-center gap-2.5 text-base sm:text-lg font-black text-slate-850 bg-emerald-50 px-5 py-3.5 rounded-2xl self-start md:self-auto shrink-0 border border-emerald-150 shadow-3xs">
+          <div className="flex items-center gap-2 text-sm sm:text-base font-bold text-slate-800 bg-emerald-50/60 px-5 py-3.5 rounded-2xl self-start md:self-auto shrink-0 border border-emerald-200 shadow-3xs">
             <CheckCircle className="w-5 h-5 text-emerald-500" />
             <span>수집 완료 명소: {collectedSpots.length} / {BUSAN_SPOTS.length} 곳</span>
           </div>
@@ -293,25 +294,40 @@ export default function BusanMap({
         {/* 인터랙티브 줌 & 패닝 축척 정밀 백지도 가든 */}
         <div className="relative bg-teal-50/10 rounded-3xl border-4 border-white shadow-md overflow-hidden select-none" onWheel={handleWheel}>
           {/* 드래그 줌 슬라이더 제어 패널 */}
-          <div className="absolute top-4 left-4 z-25 flex items-center bg-white/95 backdrop-blur-md px-3 py-2 rounded-2xl border border-slate-200/80 shadow-md gap-2">
-            <span className="text-[10px] sm:text-xs font-black text-slate-600">🔍 드래그 축척:</span>
-            <input
-              type="range"
-              min="1"
-              max="4"
-              step="0.05"
-              value={zoom}
-              onChange={(e) => {
-                const nextZoom = parseFloat(e.target.value);
-                setZoom(nextZoom);
-                if (nextZoom === 1) {
-                  setPanX(0);
-                  setPanY(0);
-                }
-              }}
-              className="w-16 sm:w-24 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-sky-500"
-            />
-            <span className="text-[10px] sm:text-xs font-mono font-black text-slate-750">{zoom.toFixed(1)}x</span>
+          <div className="absolute top-4 left-4 z-25 flex flex-wrap items-center bg-white/95 backdrop-blur-md px-3 py-2.5 rounded-2xl border border-slate-200 shadow-md gap-3">
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] sm:text-xs font-semibold text-slate-600">🔍 지도 확대:</span>
+              <input
+                type="range"
+                min="1"
+                max="4"
+                step="0.05"
+                value={zoom}
+                onChange={(e) => {
+                  const nextZoom = parseFloat(e.target.value);
+                  setZoom(nextZoom);
+                  if (nextZoom === 1) {
+                    setPanX(0);
+                    setPanY(0);
+                  }
+                }}
+                className="w-16 sm:w-24 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-sky-500"
+              />
+              <span className="text-[10px] sm:text-xs font-mono font-bold text-slate-700">{zoom.toFixed(1)}x</span>
+            </div>
+
+            <div className="h-4 w-px bg-slate-200 hidden sm:block" />
+
+            <button
+              onClick={() => setShowLabels(!showLabels)}
+              className={`px-2.5 py-1 rounded-lg text-[10px] sm:text-xs font-bold transition-all flex items-center gap-1 cursor-pointer border ${
+                showLabels
+                  ? 'bg-sky-50 border-sky-200 text-sky-700 shadow-3xs'
+                  : 'bg-slate-100 border-slate-300 text-slate-500'
+              }`}
+            >
+              <span>{showLabels ? '🏷️ 이름 항상 보임' : '🏷️ 이름 감춤 (스탬프 세기용)'}</span>
+            </button>
           </div>
 
           {/* 줌인 줌아웃 축척 조작 플로팅 버튼바 */}
@@ -466,10 +482,12 @@ export default function BusanMap({
                     </div>
 
                     {/* 확대/마커명 표시 - 절대 좌표로 띄워서 아이콘 중심 정렬 유지 및 가시성 개선 */}
-                    <div className={`absolute bottom-full mb-1 left-1/2 -translate-x-1/2 px-1.5 py-0.5 rounded-md text-[7.5px] sm:text-[9.5px] font-black shadow-3xs whitespace-nowrap border select-none pointer-events-none transition-all duration-200 ${
+                    <div className={`absolute bottom-full mb-1 left-1/2 -translate-x-1/2 px-1.5 py-0.5 rounded-md text-[8.5px] sm:text-[10px] font-bold shadow-3xs whitespace-nowrap border select-none pointer-events-none transition-all duration-200 ${
                       isSelected
                         ? 'bg-slate-900 text-white border-slate-950 scale-105 opacity-100 z-30'
-                        : 'bg-white/90 text-slate-700 border-slate-200 opacity-55 group-hover:opacity-100 group-hover:scale-102 group-hover:z-30'
+                        : showLabels
+                          ? 'bg-white text-slate-800 border-slate-200 opacity-95 group-hover:opacity-100 group-hover:scale-102 group-hover:z-30'
+                          : 'opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 group-hover:bg-white group-hover:text-slate-850 group-hover:border-slate-200 group-hover:z-30'
                     }`}>
                       {spot.name.split(' (')[0]}
                     </div>
@@ -540,7 +558,7 @@ export default function BusanMap({
 
                 {/* 지리적 경제 정보 설명 상자 */}
                 <div className="p-4.5 bg-slate-50 rounded-2xl border border-slate-200">
-                  <p className="text-sm sm:text-base md:text-lg text-slate-700 font-extrabold leading-relaxed">
+                  <p className="text-sm sm:text-base md:text-lg text-slate-700 font-medium leading-relaxed">
                     {activeSpot.description}
                   </p>
                 </div>
@@ -548,10 +566,10 @@ export default function BusanMap({
                 {/* 꼬마 탐정 꿀팁 상자 */}
                 {activeSpot.funFact && (
                   <div className="p-4 bg-amber-50/70 border border-amber-200 rounded-2xl space-y-1">
-                    <h5 className="text-xs sm:text-sm md:text-base font-black text-amber-850 flex items-center gap-1.5">
+                    <h5 className="text-xs sm:text-sm md:text-base font-bold text-amber-900 flex items-center gap-1.5">
                       💡 똑똑한 탐험가를 위한 비법!
                     </h5>
-                    <p className="text-xs sm:text-sm md:text-base text-amber-950 leading-relaxed font-bold">
+                    <p className="text-xs sm:text-sm md:text-base text-amber-900 leading-relaxed font-medium">
                       {activeSpot.funFact}
                     </p>
                   </div>
