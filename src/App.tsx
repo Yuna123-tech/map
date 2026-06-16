@@ -204,37 +204,37 @@ export default function App() {
                   사회 · 수학 융합 교과
                 </span>
               </div>
-              <h1 className="text-lg sm:text-xl md:text-2xl font-black text-slate-900 tracking-tight mt-2 animate-fade-in flex items-center gap-2">
+              <h1 className="text-sm min-[400px]:text-base sm:text-lg md:text-xl lg:text-2xl font-black text-slate-900 tracking-tight mt-3 animate-fade-in flex items-center gap-1.5 whitespace-nowrap overflow-x-auto no-scrollbar">
                 <span>막대그래프로 소개하는 부산 300대 명소 지리 지도</span>
-                <Sparkles className="w-5 h-5 text-sky-500 animate-pulse shrink-0" />
+                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-sky-500 animate-pulse shrink-0" />
               </h1>
             </div>
           </div>
 
           {/* 스코어 리포트 대시보드 */}
-          <div className="flex items-center gap-4 text-sm md:text-base flex-wrap xl:flex-nowrap">
-            <div className="flex items-center gap-4 bg-slate-50 border border-slate-200 px-5 py-3 rounded-2xl shadow-3xs">
-              <div className="text-center">
-                <p className="text-xs sm:text-sm text-slate-500 font-medium leading-none mb-1.5">
+          <div className="flex items-center gap-4 text-sm md:text-base flex-wrap xl:flex-nowrap shrink-0">
+            <div className="flex items-center gap-4 bg-slate-50 border border-slate-200 px-5 py-3 rounded-2xl shadow-3xs shrink-0 select-none">
+              <div className="text-center min-w-[110px]">
+                <p className="text-xs sm:text-sm text-slate-500 font-bold leading-none mb-1.5 whitespace-nowrap">
                   {(REGIONS[selectedRegion] || REGIONS['all']).emoji} 조사 범위 발견율
                 </p>
-                <p className="text-base sm:text-lg md:text-xl font-bold text-slate-800">
+                <p className="text-base sm:text-lg md:text-xl font-bold text-slate-800 whitespace-nowrap">
                   🔑 <span className="text-indigo-600 font-black">{regionCollectedCount}</span> / {currentRegionSpots.length} <span className="text-xs text-slate-400 font-normal">곳</span>
                 </p>
               </div>
-              <div className="h-8 w-px bg-slate-200" />
-              <div className="text-center">
-                <p className="text-xs sm:text-sm text-slate-500 font-medium leading-none mb-1.5">골든벨 점수</p>
-                <p className="text-base sm:text-lg md:text-xl font-bold text-emerald-600">💯 {correctQuizCount} / {quizSolvedCount} <span className="text-xs text-slate-400 font-normal">개</span></p>
+              <div className="h-8 w-px bg-slate-200 self-center" />
+              <div className="text-center min-w-[90px]">
+                <p className="text-xs sm:text-sm text-slate-500 font-bold leading-none mb-1.5 whitespace-nowrap">골든벨 점수</p>
+                <p className="text-base sm:text-lg md:text-xl font-bold text-emerald-600 whitespace-nowrap">💯 {correctQuizCount} / {quizSolvedCount} <span className="text-xs text-slate-400 font-normal">개</span></p>
               </div>
             </div>
 
             <button
               onClick={handleReset}
-              className="flex items-center gap-2 px-4 py-3 bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-600 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer shadow-3xs"
+              className="flex items-center gap-2 px-4 py-3 bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-600 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer shadow-3xs shrink-0 whitespace-nowrap"
               title="모든 조사 데이터를 처음으로 초기화합니다"
             >
-              <RefreshCw className="w-4 h-4 animate-spin-slow" />
+              <RefreshCw className="w-4 h-4 animate-spin-slow shrink-0" />
               <span>🎒 처음부터 다시 조사 (초기화)</span>
             </button>
           </div>
