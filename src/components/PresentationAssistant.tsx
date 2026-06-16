@@ -124,54 +124,44 @@ export default function PresentationAssistant({
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* 왼쪽: 교과 융합 슬라이드/발표 보드 구성법 (5칸) */}
+        {/* 왼쪽: 교과 융합 사회 학습 가이드 (5칸) */}
         <div className="lg:col-span-5 bg-white rounded-3xl p-6 sm:p-8 shadow-xs border border-slate-200 space-y-6">
           <div className="flex items-center gap-2 border-b border-slate-100 pb-4">
             <BookOpen className="w-6 h-6 text-indigo-600" />
-            <h4 className="font-bold text-slate-800 text-base sm:text-lg md:text-xl animate-fade-in">📝 발표 스케치북 멋지게 그리는 팁!</h4>
-          </div>
-
-          <div className="space-y-4.5">
-            <div className="flex gap-4 items-start bg-slate-50 p-5 rounded-2xl border border-slate-200">
-              <span className="bg-indigo-600 text-white rounded-full w-7 h-7 flex items-center justify-center font-bold text-sm shrink-0 mt-0.5 animate-pulse">1</span>
-              <div>
-                <h5 className="text-sm sm:text-base md:text-lg font-bold text-slate-800">모은 도장 개수 표로 정리하기</h5>
-                <p className="text-sm sm:text-base text-slate-600 leading-relaxed mt-2 font-medium">
-                  1단계 지도에서 친구들과 함께 비밀 퀴즈를 풀며 모은 테마별 도장 개수를 스케치북 왼쪽에 깔끔히 적어요.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex gap-4 items-start bg-slate-50 p-5 rounded-2xl border border-slate-200">
-              <span className="bg-indigo-600 text-white rounded-full w-7 h-7 flex items-center justify-center font-bold text-sm shrink-0 mt-0.5 animate-pulse">2</span>
-              <div>
-                <h5 className="text-sm sm:text-base md:text-lg font-bold text-slate-800">알맞은 막대그래프 예쁘게 그리기</h5>
-                <p className="text-sm sm:text-base text-slate-600 leading-relaxed mt-2 font-medium">
-                  2단계 빌더로 직접 구상한 가장 알맞은 눈금 한 칸의 크기(1, 2, 5 단위)를 축으로 삼아 높이를 맞춰 막대를 그려요.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex gap-4 items-start bg-slate-50 p-5 rounded-2xl border border-slate-200">
-              <span className="bg-indigo-600 text-white rounded-full w-7 h-7 flex items-center justify-center font-bold text-sm shrink-0 mt-0.5 animate-pulse">3</span>
-              <div>
-                <h5 className="text-sm sm:text-base md:text-lg font-bold text-slate-800">우리 모둠만의 발표 전략 결정하기</h5>
-                <p className="text-sm sm:text-base text-slate-600 leading-relaxed mt-2 font-medium">
-                  가장 자랑스러운 자원을 힘껏 홍보할지, 개수가 한 발 적은 자원을 도와 골고루 가꿀지 정해서 적습니다.
-                </p>
-              </div>
-            </div>
+            <h4 className="font-bold text-slate-800 text-base sm:text-lg md:text-xl animate-fade-in">🗺️ 초등 지리학자 탐구의 문 🧭</h4>
           </div>
 
           {/* 꼬마 도향 안내판 */}
-          <div className="p-5.5 bg-emerald-50 border border-emerald-100 rounded-2xl space-y-2">
+          <div className="p-5.5 bg-emerald-50 border border-emerald-100 rounded-3xl space-y-3.5">
             <h5 className="text-sm sm:text-base md:text-lg font-black text-emerald-900 flex items-center gap-1.5 select-none">
               🎓 지리학자 사회 공부 한마디!
             </h5>
-            <p className="text-sm sm:text-base md:text-lg text-emerald-950 font-bold leading-relaxed">
-              부산의 명소 분포를 막대그래프로 나타내면 무엇이 가장 많은지, 무엇이 가장 적은지 단번에 보이게 됩니다. 
+            <p className="text-xs sm:text-sm md:text-base text-emerald-950 font-bold leading-relaxed">
+              부산의 명소 분포를 막대그래프로 나타내면 무엇이 가장 많은지, 무엇이 가장 적은지 단번에 보이게 됩니다. <br />
               가장 많은 부분과 가장 적은 부분을 이용해 소중한 부산이 골고루 이롭게 상생(상호 양보하며 살아가기)하는 법을 모둠 친구들과 직접 의논해 보세요!
             </p>
+          </div>
+
+          {/* 발표 자세 체크리스트 */}
+          <div className="bg-slate-50 border border-slate-200/80 rounded-3xl p-5.5 space-y-4">
+            <h5 className="font-extrabold text-slate-800 text-sm sm:text-base flex items-center gap-1.5">
+              <span>🎤</span>
+              <span>멋진 발표를 위한 모둠원 행동 약속!</span>
+            </h5>
+            <ul className="space-y-3 text-xs sm:text-sm text-slate-700 font-semibold leading-relaxed">
+              <li className="flex gap-2 items-start">
+                <span className="text-emerald-500 shrink-0">✔</span>
+                <span>막대그래프의 <strong>장소 개수 수치</strong>를 정확하게 소리 내어 읽어요.</span>
+              </li>
+              <li className="flex gap-2 items-start">
+                <span className="text-emerald-500 shrink-0">✔</span>
+                <span>모둠에서 함께 구상한 <strong>홍보 상생 계획</strong>을 당당하고 우렁차게 알려요.</span>
+              </li>
+              <li className="flex gap-2 items-start">
+                <span className="text-emerald-500 shrink-0">✔</span>
+                <span>경청하는 다른 모둠 친구들과 다정하게 눈을 맞추며 이야기해요.</span>
+              </li>
+            </ul>
           </div>
         </div>
 

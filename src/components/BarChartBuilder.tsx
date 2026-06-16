@@ -299,9 +299,9 @@ export default function BarChartBuilder({
                   <>
                     <AlertTriangle className="w-5 h-5 text-rose-500 shrink-0 mt-0.5" />
                      <div className="space-y-0.5">
-                       <h6 className="text-sm sm:text-base font-black text-rose-900">앗! 일치하지 않는 숫자가 있어요! 🧐</h6>
-                       <p className="text-xs sm:text-sm md:text-base leading-relaxed font-bold text-rose-800">
-                         빨갛게 표시된 카테고리의 개수를 다시 조심히 세어가며 정정해 보아요. 1단계 지도를 확대해서 개수를 세어보면 편리합니다!
+                       <h6 className="text-sm sm:text-base font-black text-rose-900 font-black">앗! 지도에서 자원 명소 개수를 잘못 셌거나 다르게 적었나 봐요! 🧐</h6>
+                       <p className="text-xs sm:text-sm leading-relaxed font-bold text-rose-800">
+                         빨갛게 표시된 카테고리의 개수가 실제 지도에 표시된 파란색 도장(스탬프) 개수와 다른 부분이 있어요. 1쪽 지도로 다시 돌아가 개수를 조심히 확인하며 고쳐 보아요! (지도를 확대해서 개수를 세어보면 더욱 편리합니다!)
                        </p>
                      </div>
                   </>

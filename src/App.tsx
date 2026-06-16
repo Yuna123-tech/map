@@ -30,6 +30,14 @@ export default function App() {
     history: 0,
     beach: 0,
   });
+  // 1단계 분류표 내 모둠별 코멘트/메모 보드 상태
+  const [tableMemos, setTableMemos] = useState<Record<CategoryKey, string>>({
+    food: '',
+    traffic: '',
+    play: '',
+    history: '',
+    beach: '',
+  });
   const [tableChecked, setTableChecked] = useState(false);
   const [tableCorrect, setTableCorrect] = useState(false);
   // 학생들이 검증 완료한 수치
@@ -51,6 +59,7 @@ export default function App() {
     const savedQuiz = localStorage.getItem('busan_quiz_state');
     const savedCounts = localStorage.getItem('busan_verified_counts');
     const savedTableCounts = localStorage.getItem('busan_table_counts');
+    const savedTableMemos = localStorage.getItem('busan_table_memos');
     const savedPresentation = localStorage.getItem('busan_presentation_state');
 
     if (savedRegion && REGIONS[savedRegion]) {
@@ -62,6 +71,7 @@ export default function App() {
     if (savedQuiz) setQuizState(JSON.parse(savedQuiz));
     if (savedCounts) setVerifiedCounts(JSON.parse(savedCounts));
     if (savedTableCounts) setTableCounts(JSON.parse(savedTableCounts));
+    if (savedTableMemos) setTableMemos(JSON.parse(savedTableMemos));
     if (savedPresentation) setPresentation(JSON.parse(savedPresentation));
   }, []);
 
@@ -78,6 +88,9 @@ export default function App() {
     const resetCounts = { food: 0, traffic: 0, play: 0, history: 0, beach: 0 };
     setTableCounts(resetCounts);
     localStorage.setItem('busan_table_counts', JSON.stringify(resetCounts));
+    const resetMemos = { food: '', traffic: '', play: '', history: '', beach: '' };
+    setTableMemos(resetMemos);
+    localStorage.setItem('busan_table_memos', JSON.stringify(resetMemos));
     setTableChecked(false);
     setTableCorrect(false);
     setShowRegionConfirm(null);
@@ -108,6 +121,12 @@ export default function App() {
     localStorage.setItem('busan_table_counts', JSON.stringify(newCounts));
   };
 
+  const handleUpdateTableMemos = (key: CategoryKey, text: string) => {
+    const nextMemos = { ...tableMemos, [key]: text };
+    setTableMemos(nextMemos);
+    localStorage.setItem('busan_table_memos', JSON.stringify(nextMemos));
+  };
+
   const handleCompleteCounts = (counts: Record<CategoryKey, number>) => {
     setVerifiedCounts(counts);
     localStorage.setItem('busan_verified_counts', JSON.stringify(counts));
@@ -128,6 +147,7 @@ export default function App() {
     setQuizState({});
     setVerifiedCounts(null);
     setTableCounts({ food: 0, traffic: 0, play: 0, history: 0, beach: 0 });
+    setTableMemos({ food: '', traffic: '', play: '', history: '', beach: '' });
     setTableChecked(false);
     setTableCorrect(false);
     setPresentation(null);
@@ -237,16 +257,63 @@ export default function App() {
             </div>
           </div>
 
+          {/* 전역 통합 조사 단독 특수 배치 */}
+          {(() => {
+            const allRegion = REGION_LIST.find((rg) => rg.key === 'all');
+            if (!allRegion) return null;
+            const isSelected = selectedRegion === 'all';
+            return (
+              <div className="mb-6">
+                <button
+                  type="button"
+                  onClick={() => handleRegionChange('all')}
+                  className={`w-full p-6 sm:p-7 rounded-3xl border-3 text-left transition-all relative overflow-hidden group cursor-pointer ${
+                    isSelected
+                      ? 'bg-gradient-to-br from-indigo-50/90 to-sky-50 bg-indigo-50 border-indigo-500 ring-4 ring-indigo-200/50 shadow-md'
+                      : 'bg-slate-50/40 border-slate-200 hover:bg-slate-50/90 hover:border-indigo-300 hover:shadow-2xs'
+                  }`}
+                >
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div className="flex items-center gap-4.5">
+                      <span className="text-4xl sm:text-5xl select-none group-hover:scale-110 transition-transform shrink-0">🧭</span>
+                      <div>
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="text-lg sm:text-xl font-black text-indigo-950 tracking-tight">{allRegion.name}</span>
+                          <span className="bg-rose-500 text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider animate-pulse">전체 조사권역 ⭐</span>
+                        </div>
+                        <p className="text-xs sm:text-sm md:text-base font-bold text-slate-700 mt-1.5 leading-relaxed">
+                          {allRegion.description}
+                        </p>
+                      </div>
+                    </div>
+                    
+                    {/* 구 표시 장식 */}
+                    <div className="pt-2 md:pt-0 flex flex-wrap gap-1 pointer-events-none self-start md:self-center shrink-0">
+                      <span className="text-xs px-3 py-1 bg-white text-indigo-700 rounded-xl border border-indigo-200 font-extrabold shadow-3xs">
+                        부산 16개 구 · 군 전체 탐험학습용
+                      </span>
+                    </div>
+                  </div>
+                  {isSelected && (
+                    <div className="absolute top-2 right-2 w-3 h-3 rounded-full bg-indigo-600 animate-ping" />
+                  )}
+                </button>
+              </div>
+            );
+          })()}
+
+          {/* 일반 조사 구역들 (3개씩 그리드 배치) */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {REGION_LIST.map((rg) => {
+            {REGION_LIST.filter((rg) => rg.key !== 'all').map((rg) => {
               const isSelected = selectedRegion === rg.key;
               return (
                 <button
                   key={rg.key}
+                  type="button"
                   onClick={() => handleRegionChange(rg.key)}
                   className={`p-5 rounded-2xl border text-left transition-all relative overflow-hidden group cursor-pointer ${
                     isSelected
-                      ? 'bg-indigo-50/75 border-indigo-400 ring-2 ring-indigo-200/50 shadow-md'
+                      ? 'bg-emerald-50/80 border-emerald-500 ring-4 ring-emerald-100 shadow-md'
                       : 'bg-slate-50/60 border-slate-200 hover:bg-slate-50/90 hover:shadow-2xs'
                   }`}
                 >
@@ -261,7 +328,7 @@ export default function App() {
                   {/* 구 표시 장식 */}
                   <div className="mt-4 pt-2.5 border-t border-slate-200/80 flex flex-wrap gap-1 pointer-events-none">
                     {rg.districts.slice(0, 3).map((dist, dIdx) => (
-                      <span key={dIdx} className="text-xs px-2 py-0.5 bg-white text-slate-700 rounded-lg border border-slate-300 font-bold">
+                      <span key={dIdx} className="text-xs px-2 py-0.5 bg-white text-slate-700 rounded-lg border border-slate-305 font-bold">
                         {dist.replace('구', '').replace('군', '')}
                       </span>
                     ))}
@@ -269,9 +336,9 @@ export default function App() {
                       <span className="text-xs text-slate-500 font-bold px-1.5 py-0.5 bg-slate-100 rounded-lg">+{rg.districts.length - 3}</span>
                     )}
                   </div>
- 
+
                   {isSelected && (
-                    <div className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-indigo-600 animate-ping" />
+                    <div className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-emerald-600 animate-ping" />
                   )}
                 </button>
               );
@@ -305,85 +372,140 @@ export default function App() {
           </button>
 
           {showGuide && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-5 pt-5 border-t border-amber-200 transition-all">
-              {/* Step 1: 구역 통일 */}
-              <div className={`p-4 sm:p-5 rounded-2xl border-2 transition-all flex flex-col justify-between space-y-3 ${
-                selectedRegion !== 'all' ? 'bg-emerald-50/80 border-emerald-300 shadow-3xs' : 'bg-white border-slate-200'
-              }`}>
-                <div>
-                  <div className="flex items-center gap-2.5 border-b border-rose-105 pb-2">
-                    <span className="w-7 h-7 rounded-full bg-slate-900 text-white text-xs sm:text-sm font-black flex items-center justify-center shrink-0">1</span>
-                    <span className="text-sm sm:text-base md:text-lg font-black text-slate-950">모둠 구역 정하기</span>
+            <div className="mt-5 pt-5 border-t border-amber-200 transition-all space-y-6">
+              {/* 🏫 오늘의 디지털 수학 사회 지형 융합 수업 흐름도 (도입 ➡️ 전개 ➡️ 정리) */}
+              <div className="bg-slate-900 text-white rounded-3xl p-5 shadow-xs border border-slate-700 animate-fade-in">
+                <h4 className="text-sm sm:text-base font-black text-indigo-300 flex items-center gap-2 select-none mb-3.5">
+                  <span>🏫 오늘의 수업 흐름 한 눈에 보기</span>
+                  <span className="bg-indigo-600 text-[10px] text-white px-2 py-0.5 rounded-full font-bold">도입 - 전개 - 정리 약속</span>
+                </h4>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
+                  {/* 도입 */}
+                  <div className="bg-white/5 p-4 rounded-2xl border border-white/10 flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="bg-sky-505 bg-sky-500/20 text-sky-300 text-xs px-2.5 py-0.5 rounded-full font-black select-none">도입 🎯</span>
+                        <strong className="text-xs sm:text-sm font-extrabold text-white">중요 개념 같이 짚기</strong>
+                      </div>
+                      <p className="text-[11px] sm:text-xs text-slate-300 font-semibold leading-relaxed mt-2.5">
+                        선생님과 함께 AIDT 단원평가에서 한 번 더 확인하고 싶은 내용이나, 많은 학생들이 헷갈려했던 핵심 오답 및 필수 그래프 개념들을 다 같이 칠판에서 짚어보고 탐험을 시작해요!
+                      </p>
+                    </div>
                   </div>
-                  <p className="text-xs sm:text-sm md:text-base font-bold text-slate-700 mt-2.5 leading-relaxed">
-                    친구들과 의논해서 동일한 관심 구역(예: 동래, 수영 등)을 정해 <strong>위에서 똑같이</strong> 눌러주세요.
-                  </p>
+
+                  {/* 전개 */}
+                  <div className="bg-white/5 p-4 rounded-2xl border border-white/10 flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="bg-amber-500/20 text-amber-300 text-xs px-2.5 py-0.5 rounded-full font-black select-none">전개 🗺️</span>
+                        <strong className="text-xs sm:text-sm font-extrabold text-white">수집 ➡️ 종이 작도 ➡️ 대조</strong>
+                      </div>
+                      <ol className="text-[11px] sm:text-xs text-slate-300 font-semibold leading-relaxed mt-2.5 list-decimal list-inside space-y-1.5">
+                        <li>모둠에서 고른 구역의 백지도를 보며 숨겨진 스탬프 개수를 꼼꼼히 분류표에 조사해요.</li>
+                        <li><strong className="text-rose-400">✨ 필수 미션!! 2쪽으로 가기 전에, 각자 준비된 종이 학습지(공책/스케치북)에 자 대고 직접 직접 손으로 그리기!</strong></li>
+                        <li>디지털 빌더로 대치하여 정답 채점합니다.</li>
+                        <li>가장 많은/적은 곳의 비교 해석 대본을 쓰고 보드에 올립니다.</li>
+                      </ol>
+                    </div>
+                  </div>
+
+                  {/* 정리 */}
+                  <div className="bg-white/5 p-4 rounded-2xl border border-white/10 flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="bg-emerald-500/20 text-emerald-300 text-xs px-2.5 py-0.5 rounded-full font-black select-none">정리 ✍️</span>
+                        <strong className="text-xs sm:text-sm font-extrabold text-white">AIDT 형성평가 해결</strong>
+                      </div>
+                      <p className="text-[11px] sm:text-xs text-slate-300 font-semibold leading-relaxed mt-2.5">
+                        협동 작전을 완벽하게 마친 뒤 AIDT 코너로 이동해 오늘의 형성평가를 해결해요! 빨리 공부를 마친 멋쟁이 대원들은 AI 추천 추가 문제를 한 걸음 더 풀어 봅니다!
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <p className="mt-2 text-center">
-                  {selectedRegion !== 'all' ? (
-                    <span className="text-emerald-800 bg-emerald-100/50 px-1 py-1.5 rounded-lg border border-emerald-300 block text-center text-[9px] min-[380px]:text-[10px] sm:text-xs lg:text-[9.5px] xl:text-[11px] 2xl:text-xs font-bold tracking-tighter whitespace-nowrap" title={`📍 [${REGIONS[selectedRegion].name}] 선택 완료!`}>
-                      📍 [{REGIONS[selectedRegion].name}] 선택 완료!
-                    </span>
-                  ) : (
-                    <span className="text-rose-600 bg-rose-50 px-1 py-1.5 rounded-lg border border-rose-200 animate-pulse block text-center text-[9px] min-[380px]:text-[10px] sm:text-xs lg:text-[9.5px] xl:text-[11px] 2xl:text-xs font-bold tracking-tighter whitespace-nowrap">
-                      ⚠️ 위에서 구역을 골라보세요!
-                    </span>
-                  )}
-                </p>
               </div>
 
-              {/* Step 2: 공동 수집 지도조사 */}
-              <div className={`p-4 sm:p-5 rounded-2xl border-2 transition-all flex flex-col justify-between space-y-3 ${
-                regionCollectedCount > 0 ? 'bg-sky-50/80 border-sky-305 shadow-3xs' : 'bg-white border-slate-200'
-              }`}>
-                <div>
-                  <div className="flex items-center gap-2.5 border-b border-rose-105 pb-2">
-                    <span className="w-7 h-7 rounded-full bg-slate-900 text-white text-xs sm:text-sm font-black flex items-center justify-center shrink-0">2</span>
-                    <span className="text-sm sm:text-base md:text-lg font-black text-slate-950">지도 탐험 & 퀴즈</span>
+              {/* 4개 세부 협동 공부 순서지 */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-left">
+                {/* Step 1: 구역 통일 */}
+                <div className={`p-4 sm:p-5 rounded-2xl border-2 transition-all flex flex-col justify-between space-y-3 ${
+                  selectedRegion !== 'all' ? 'bg-emerald-50/80 border-emerald-300 shadow-3xs' : 'bg-white border-slate-200'
+                }`}>
+                  <div>
+                    <div className="flex items-center gap-2.5 border-b border-rose-105 pb-2">
+                      <span className="w-7 h-7 rounded-full bg-slate-900 text-white text-xs sm:text-sm font-black flex items-center justify-center shrink-0">1</span>
+                      <span className="text-sm sm:text-base md:text-lg font-black text-slate-950">모둠 구역 정하기</span>
+                    </div>
+                    <p className="text-xs sm:text-sm md:text-base font-semibold text-slate-700 mt-2.5 leading-relaxed">
+                      친구들과 의논해서 동일한 관심 구역(예: 동래, 수영 등)을 정해 <strong>위에서 똑같이</strong> 눌러주세요.
+                    </p>
                   </div>
-                  <p className="text-xs sm:text-sm md:text-base font-bold text-slate-700 mt-2.5 leading-relaxed">
-                    1단계 지도에서 관심 명소를 터치하여 공부하고 상식 퀴즈를 해결하세요.
+                  <p className="mt-2 text-center">
+                    {selectedRegion !== 'all' ? (
+                      <span className="text-emerald-800 bg-emerald-100/50 px-1 py-1.5 rounded-lg border border-emerald-300 block text-center text-[9px] min-[380px]:text-[10px] sm:text-xs lg:text-[9.5px] xl:text-[11px] 2xl:text-xs font-bold tracking-tighter whitespace-nowrap" title={`📍 [${REGIONS[selectedRegion].name}] 선택 완료!`}>
+                        📍 [{REGIONS[selectedRegion].name}] 선택 완료!
+                      </span>
+                    ) : (
+                      <span className="text-rose-600 bg-rose-50 px-1 py-1.5 rounded-lg border border-rose-200 animate-pulse block text-center text-[9px] min-[380px]:text-[10px] sm:text-xs lg:text-[9.5px] xl:text-[11px] 2xl:text-xs font-bold tracking-tighter whitespace-nowrap">
+                        ⚠️ 위에서 구역을 골라보세요!
+                      </span>
+                    )}
                   </p>
                 </div>
-                <p className="text-xs sm:text-sm font-black mt-2 text-sky-850 bg-sky-100/50 px-2.5 py-1 rounded-lg border border-sky-300">
-                  수집 개수: {regionCollectedCount} / {currentRegionSpots.length} 곳
-                </p>
-              </div>
 
-              {/* Step 3: 개별 막대 작도 */}
-              <div className={`p-4 sm:p-5 rounded-2xl border-2 transition-all flex flex-col justify-between space-y-3 ${
-                verifiedCounts ? 'bg-emerald-50/80 border-emerald-300 shadow-3xs' : 'bg-white border-slate-200'
-              }`}>
-                <div>
-                  <div className="flex items-center gap-2.5 border-b border-rose-105 pb-2">
-                    <span className="w-7 h-7 rounded-full bg-slate-900 text-white text-xs sm:text-sm font-black flex items-center justify-center shrink-0">3</span>
-                    <span className="text-sm sm:text-base md:text-lg font-black text-slate-950">나만의 그래프 그리기</span>
+                {/* Step 2: 공동 수집 지도조사 */}
+                <div className={`p-4 sm:p-5 rounded-2xl border-2 transition-all flex flex-col justify-between space-y-3 ${
+                  regionCollectedCount > 0 ? 'bg-sky-50/80 border-sky-305 shadow-3xs' : 'bg-white border-slate-200'
+                }`}>
+                  <div>
+                    <div className="flex items-center gap-2.5 border-b border-rose-105 pb-2">
+                      <span className="w-7 h-7 rounded-full bg-slate-900 text-white text-xs sm:text-sm font-black flex items-center justify-center shrink-0">2</span>
+                      <span className="text-sm sm:text-base md:text-lg font-black text-slate-950">지도 탐험 & 퀴즈</span>
+                    </div>
+                    <p className="text-xs sm:text-sm md:text-base font-semibold text-slate-700 mt-2.5 leading-relaxed">
+                      1단계 부산 지도에서 관심 장소를 골라 터치하여 세부 내용을 탐사하고, 명소 상식 퀴즈를 해결하며 스탬프를 모읍니다.
+                    </p>
                   </div>
-                  <p className="text-xs sm:text-sm md:text-base font-bold text-slate-700 mt-2.5 leading-relaxed">
-                    모든 카테고리별 명소 수를 세어 그래프를 작성하고 채점 결과를 확인하세요.
+                  <p className="text-xs sm:text-sm font-black mt-2 text-sky-850 bg-sky-100/50 px-2.5 py-1 rounded-lg border border-sky-300 text-center">
+                    수집 개수: {regionCollectedCount} / {currentRegionSpots.length} 곳
                   </p>
                 </div>
-                <p className="text-xs sm:text-sm font-black mt-2 text-slate-800 bg-slate-100 px-2.5 py-1 rounded-lg border border-slate-300">
-                  {verifiedCounts ? '✅ 채점 통과 완료!' : '📊 2단계 버튼을 눌러 하세요!'}
-                </p>
-              </div>
 
-              {/* Step 4: 공동 발표 해석 */}
-              <div className={`p-4 sm:p-5 rounded-2xl border-2 transition-all flex flex-col justify-between space-y-3 ${
-                presentation ? 'bg-indigo-50/80 border-indigo-305 shadow-3xs' : 'bg-white border-slate-200'
-              }`}>
-                <div>
-                  <div className="flex items-center gap-2.5 border-b border-rose-105 pb-2">
-                    <span className="w-7 h-7 rounded-full bg-slate-900 text-white text-xs sm:text-sm font-black flex items-center justify-center shrink-0">4</span>
-                    <span className="text-sm sm:text-base md:text-lg font-black text-slate-950">모둠 대본 작성</span>
+                {/* Step 3: 개별 막대 작도 */}
+                <div className={`p-4 sm:p-5 rounded-2xl border-2 transition-all flex flex-col justify-between space-y-3 ${
+                  verifiedCounts ? 'bg-emerald-50/80 border-emerald-300 shadow-3xs' : 'bg-white border-slate-200'
+                }`}>
+                  <div>
+                    <div className="flex items-center gap-2.5 border-b border-rose-105 pb-2">
+                      <span className="w-7 h-7 rounded-full bg-slate-900 text-white text-xs sm:text-sm font-black flex items-center justify-center shrink-0">3</span>
+                      <span className="text-sm sm:text-base md:text-lg font-black text-slate-950">종이 직접 그리기 ✏️</span>
+                    </div>
+                    <p className="text-xs sm:text-sm md:text-base font-semibold text-slate-700 mt-2.5 leading-relaxed">
+                      <strong className="text-rose-600 block mb-1">⚠️ 필수 미션:</strong> 2단계 버튼을 눌러 디지털 입력을 대치하기 전에, <strong>개별 공책이나 종이 학습지에 직접 연필과 자로 막대그래프를 직접 완성</strong>하고 나서 이곳에서 검토 채점해 봅니다!
+                    </p>
                   </div>
-                  <p className="text-xs sm:text-sm md:text-base font-bold text-slate-700 mt-2.5 leading-relaxed">
-                    친구들과 의논하여 명소를 추천하고, 멋진 발표 원고 대본을 완성해 보세요.
+                  <p className="text-xs sm:text-sm font-black mt-2 text-rose-800 bg-rose-50 px-2.5 py-1 rounded-lg border border-rose-200 text-center">
+                    {verifiedCounts ? '✅ 채점 통과 완료!' : '✏️ 종이에 그린 그래프 정답 대조!'}
                   </p>
                 </div>
-                <p className="text-xs sm:text-sm font-black mt-2 text-indigo-850 bg-indigo-100/50 px-2.5 py-1 rounded-lg border border-indigo-300">
-                  {presentation ? '🎉 제출 성공! 연습해요' : '✏️ 3단계에서 대본 쓰기'}
-                </p>
+
+                {/* Step 4: 공동 발표 해석 */}
+                <div className={`p-4 sm:p-5 rounded-2xl border-2 transition-all flex flex-col justify-between space-y-3 ${
+                  presentation ? 'bg-indigo-50/80 border-indigo-305 shadow-3xs' : 'bg-white border-slate-200'
+                }`}>
+                  <div>
+                    <div className="flex items-center gap-2.5 border-b border-rose-105 pb-2">
+                      <span className="w-7 h-7 rounded-full bg-slate-900 text-white text-xs sm:text-sm font-black flex items-center justify-center shrink-0">4</span>
+                      <span className="text-sm sm:text-base md:text-lg font-black text-slate-950">모둠 발표 & 전송</span>
+                    </div>
+                    <p className="text-xs sm:text-sm md:text-base font-semibold text-slate-700 mt-2.5 leading-relaxed">
+                      가장 수치가 큰 부분과 작아 보충이 필요한 지역 명물들을 비교 분석하여 멋진 발표 스크립트 대본을 쓰고, 모둠 협동 공유판에 올려 발표 연습을 시작해 봐요!
+                    </p>
+                  </div>
+                  <p className="text-xs sm:text-sm font-black mt-2 text-indigo-850 bg-indigo-100/50 px-2.5 py-1 rounded-lg border border-indigo-300 text-center">
+                    {presentation ? '🎉 제출 성공! 발표 준비' : '✏️ 3단계에서 대본 쓰기'}
+                  </p>
+                </div>
               </div>
             </div>
           )}
@@ -475,6 +597,103 @@ export default function App() {
           </button>
         </div>
 
+        {/* 📖 어린이 친화적 학습지 책장 넘기기 제어기 (상단) */}
+        <div id="workbook-top-pagination" className="bg-amber-100/60 border-2 border-amber-300 rounded-3xl p-4.5 flex flex-col sm:flex-row items-center justify-between shadow-3xs gap-4 mt-3 animate-fade-in">
+          <button
+            type="button"
+            id="book-prev-btn-top"
+            disabled={activeStep === 1}
+            onClick={() => {
+              setActiveStep((prev) => Math.max(1, prev - 1) as any);
+              const element = document.getElementById('workbook-top-pagination');
+              if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }}
+            className={`w-full sm:w-auto px-5 py-3 rounded-2xl font-black text-sm border-2 transition-all flex items-center justify-center gap-2 cursor-pointer select-none ${
+              activeStep === 1
+                ? 'bg-slate-100/80 text-slate-400 border-slate-200 cursor-not-allowed opacity-60'
+                : 'bg-white text-slate-800 border-amber-400 hover:bg-amber-50 shadow-3xs active:scale-95'
+            }`}
+          >
+            <span>◀️ 이전 쪽으로</span>
+          </button>
+
+          <div className="flex flex-col items-center gap-1.5 shrink-0 text-center">
+            <div className="flex items-center gap-2.5">
+              <button
+                type="button"
+                id="book-page1-btn-top"
+                onClick={() => {
+                  setActiveStep(1);
+                  const element = document.getElementById('workbook-top-pagination');
+                  if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }}
+                className={`w-10 h-10 rounded-full font-black text-xs sm:text-sm flex items-center justify-center transition-all cursor-pointer ${
+                  activeStep === 1
+                    ? 'bg-sky-500 text-white shadow-md ring-4 ring-sky-100 scale-110'
+                    : 'bg-white border-2 border-slate-250 text-slate-600 hover:bg-slate-100'
+                }`}
+              >
+                1쪽
+              </button>
+              <div className="w-5 h-1 bg-slate-300 rounded-full" />
+              <button
+                type="button"
+                id="book-page2-btn-top"
+                onClick={() => {
+                  setActiveStep(2);
+                  const element = document.getElementById('workbook-top-pagination');
+                  if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }}
+                className={`w-10 h-10 rounded-full font-black text-xs sm:text-sm flex items-center justify-center transition-all cursor-pointer ${
+                  activeStep === 2
+                    ? 'bg-amber-500 text-white shadow-md ring-4 ring-amber-100 scale-110'
+                    : 'bg-white border-2 border-slate-250 text-slate-600 hover:bg-slate-100'
+                }`}
+              >
+                2쪽
+              </button>
+              <div className="w-5 h-1 bg-slate-300 rounded-full" />
+              <button
+                type="button"
+                id="book-page3-btn-top"
+                onClick={() => {
+                  setActiveStep(3);
+                  const element = document.getElementById('workbook-top-pagination');
+                  if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }}
+                className={`w-10 h-10 rounded-full font-black text-xs sm:text-sm flex items-center justify-center transition-all cursor-pointer ${
+                  activeStep === 3
+                    ? 'bg-indigo-500 text-white shadow-md ring-4 ring-indigo-100 scale-110'
+                    : 'bg-white border-2 border-slate-250 text-slate-600 hover:bg-slate-100'
+                }`}
+              >
+                3쪽
+              </button>
+            </div>
+            <span className="text-[11px] sm:text-xs font-black text-slate-700 select-none">
+              총 3단계 중 <strong className="text-slate-950 font-black text-xs sm:text-sm underline decoration-amber-500 decoration-2">{activeStep}쪽 ({activeStep === 1 ? '백지도 탐정단' : activeStep === 2 ? '그래프 빌더' : '여행 홍보대사'})</strong>을 학습하는 중이에요!
+            </span>
+          </div>
+
+          <button
+            type="button"
+            id="book-next-btn-top"
+            disabled={activeStep === 3}
+            onClick={() => {
+              setActiveStep((prev) => Math.min(3, prev + 1) as any);
+              const element = document.getElementById('workbook-top-pagination');
+              if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }}
+            className={`w-full sm:w-auto px-5 py-3 rounded-2xl font-black text-sm border-2 transition-all flex items-center justify-center gap-2 cursor-pointer select-none ${
+              activeStep === 3
+                ? 'bg-slate-100/80 text-slate-400 border-slate-200 cursor-not-allowed opacity-60'
+                : 'bg-white text-slate-800 border-indigo-400 hover:bg-indigo-50 shadow-3xs active:scale-95'
+            }`}
+          >
+            <span>다음 쪽으로 ▶️</span>
+          </button>
+        </div>
+
         {/* 렌더러 전환 */}
         <div className="transition-all duration-200">
           <AnimatePresence mode="wait">
@@ -515,7 +734,7 @@ export default function App() {
                           <th className="py-3.5 px-5 font-bold">탐색 테마</th>
                           <th className="py-3.5 px-5 text-center font-bold">장소 스탬프</th>
                           <th className="py-3.5 px-5 text-center font-bold">우리가 세어본 분류 개수</th>
-                          <th className="py-3.5 px-5 font-bold">의견 의사결정 탐정단 코멘트</th>
+                          <th className="py-3.5 px-5 font-bold">우리 모둠 관찰 메모 및 토의 내용</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-slate-200 font-medium text-slate-700 text-sm sm:text-base">
@@ -567,18 +786,14 @@ export default function App() {
                                   </button>
                                 </div>
                               </td>
-                              <td className="py-4 px-5 text-xs sm:text-sm text-slate-600">
-                                {count > 0 ? (
-                                  count === realRegionCounts[cat.key] ? (
-                                    <span className="text-emerald-700 font-bold flex items-center gap-1.5 animate-bounce-once">
-                                      <span>✓</span> <span>완벽해요! 실제 명소 개수와 정확히 일치합니다.</span>
-                                    </span>
-                                  ) : (
-                                    <span className="text-slate-500 font-medium">실제 지도와 비교하여 숫자를 맞춰보아요!</span>
-                                  )
-                                ) : (
-                                  <span className="text-slate-400 font-medium">개수 파악 대기 중</span>
-                                )}
+                              <td className="py-4 px-5">
+                                <textarea
+                                  value={tableMemos[cat.key] || ''}
+                                  onChange={(e) => handleUpdateTableMemos(cat.key, e.target.value)}
+                                  placeholder="지도에서 발견한 수치나 모둠 친구들과 이야기 나눈 특징을 메모해 두세요!"
+                                  rows={1}
+                                  className="w-full text-xs sm:text-sm font-semibold text-slate-700 bg-slate-50/60 border border-slate-200 focus:bg-white focus:border-indigo-300 focus:outline-none p-2 rounded-xl resize-y placeholder:text-slate-400 font-medium transition-all"
+                                />
                               </td>
                             </tr>
                           );
@@ -587,49 +802,18 @@ export default function App() {
                     </table>
                   </div>
 
-                  <div className="pt-2 border-t border-slate-250 flex flex-col sm:flex-row items-center justify-between gap-3">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <button
-                        onClick={() => {
-                          let matches = true;
-                          for (const key of Object.keys(realRegionCounts) as CategoryKey[]) {
-                            if (tableCounts[key] !== realRegionCounts[key]) {
-                              matches = false;
-                            }
-                          }
-                          setTableChecked(true);
-                          setTableCorrect(matches);
-                        }}
-                        className="px-5 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm sm:text-base font-bold transition-all cursor-pointer shadow-3xs"
-                      >
-                        🔎 작성한 관찰 기록표 채점 및 검정하기
-                      </button>
-
-                      {tableChecked && (
-                        <span className={`text-xs sm:text-sm md:text-base font-bold px-4 py-2 rounded-xl border ${
-                          tableCorrect 
-                            ? 'bg-emerald-50 border-emerald-250 text-emerald-800' 
-                            : 'bg-rose-50 border-rose-250 text-rose-800'
-                        }`}>
-                          {tableCorrect 
-                            ? '🎉 오예! 우리 모둠의 분류표 숫자가 실제 명소 수량과 100% 완벽하게 일치합니다!' 
-                            : '🧐 앗, 분류표 숫자와 실제 지명 명소 수량이 다른 곳이 있어요! 다시 세어보세요.'}
-                        </span>
-                      )}
-                    </div>
+                  <div className="pt-4 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <p className="text-xs sm:text-sm md:text-base font-bold text-slate-500 leading-relaxed text-center sm:text-left">
+                      🧭 <strong>우리 모둠 관찰 분류 끝!</strong> 분류표의 입력을 모두 마치셨나요? <br />
+                      이제 <strong>오른쪽 버튼</strong>을 눌러, 작성한 분류 결과를 2단계 막대그래프 빌더로 넘겨서 실물과 대조 채점해 보아요!
+                    </p>
 
                     <button
                       onClick={() => {
-                        let matches = true;
-                        for (const key of Object.keys(realRegionCounts) as CategoryKey[]) {
-                          if (tableCounts[key] !== realRegionCounts[key]) {
-                            matches = false;
-                          }
-                        }
                         handleCompleteCounts(tableCounts);
                         setActiveStep(2);
                       }}
-                      className="px-6 py-4 bg-slate-800 hover:bg-slate-900 text-white rounded-2xl text-sm sm:text-base font-black transition-all cursor-pointer flex items-center gap-2 shadow-3xs"
+                      className="w-full sm:w-auto px-7 py-4.5 bg-slate-900 hover:bg-black active:scale-95 text-white rounded-2xl text-sm sm:text-base font-black transition-all cursor-pointer flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
                     >
                       <span>2단계 그래프 그리기로 연동 ➡️</span>
                     </button>
@@ -672,6 +856,103 @@ export default function App() {
               </motion.div>
             )}
           </AnimatePresence>
+        </div>
+
+        {/* 📖 어린이 친화적 학습지 책장 넘기기 제어기 (하단) */}
+        <div id="workbook-bottom-pagination" className="bg-amber-100/60 border-2 border-amber-300 rounded-3xl p-4.5 flex flex-col sm:flex-row items-center justify-between shadow-3xs gap-4 mt-1 animate-fade-in">
+          <button
+            type="button"
+            id="book-prev-btn-bottom"
+            disabled={activeStep === 1}
+            onClick={() => {
+              setActiveStep((prev) => Math.max(1, prev - 1) as any);
+              const element = document.getElementById('workbook-top-pagination');
+              if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }}
+            className={`w-full sm:w-auto px-5 py-3 rounded-2xl font-black text-sm border-2 transition-all flex items-center justify-center gap-2 cursor-pointer select-none ${
+              activeStep === 1
+                ? 'bg-slate-100/80 text-slate-400 border-slate-200 cursor-not-allowed opacity-60'
+                : 'bg-white text-slate-800 border-amber-400 hover:bg-amber-50 shadow-3xs active:scale-95'
+            }`}
+          >
+            <span>◀️ 이전 쪽으로</span>
+          </button>
+
+          <div className="flex flex-col items-center gap-1.5 shrink-0 text-center">
+            <div className="flex items-center gap-2.5">
+              <button
+                type="button"
+                id="book-page1-btn-bottom"
+                onClick={() => {
+                  setActiveStep(1);
+                  const element = document.getElementById('workbook-top-pagination');
+                  if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }}
+                className={`w-10 h-10 rounded-full font-black text-xs sm:text-sm flex items-center justify-center transition-all cursor-pointer ${
+                  activeStep === 1
+                    ? 'bg-sky-500 text-white shadow-md ring-4 ring-sky-100 scale-110'
+                    : 'bg-white border-2 border-slate-250 text-slate-600 hover:bg-slate-100'
+                }`}
+              >
+                1쪽
+              </button>
+              <div className="w-5 h-1 bg-slate-300 rounded-full" />
+              <button
+                type="button"
+                id="book-page2-btn-bottom"
+                onClick={() => {
+                  setActiveStep(2);
+                  const element = document.getElementById('workbook-top-pagination');
+                  if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }}
+                className={`w-10 h-10 rounded-full font-black text-xs sm:text-sm flex items-center justify-center transition-all cursor-pointer ${
+                  activeStep === 2
+                    ? 'bg-amber-500 text-white shadow-md ring-4 ring-amber-100 scale-110'
+                    : 'bg-white border-2 border-slate-250 text-slate-600 hover:bg-slate-100'
+                }`}
+              >
+                2쪽
+              </button>
+              <div className="w-5 h-1 bg-slate-300 rounded-full" />
+              <button
+                type="button"
+                id="book-page3-btn-bottom"
+                onClick={() => {
+                  setActiveStep(3);
+                  const element = document.getElementById('workbook-top-pagination');
+                  if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }}
+                className={`w-10 h-10 rounded-full font-black text-xs sm:text-sm flex items-center justify-center transition-all cursor-pointer ${
+                  activeStep === 3
+                    ? 'bg-indigo-500 text-white shadow-md ring-4 ring-indigo-100 scale-110'
+                    : 'bg-white border-2 border-slate-250 text-slate-600 hover:bg-slate-100'
+                }`}
+              >
+                3쪽
+              </button>
+            </div>
+            <span className="text-[11px] sm:text-xs font-black text-slate-700 select-none">
+              총 3단계 중 <strong className="text-slate-950 font-black text-xs sm:text-sm underline decoration-amber-500 decoration-2">{activeStep}쪽 ({activeStep === 1 ? '백지도 탐정단' : activeStep === 2 ? '그래프 빌더' : '여행 홍보대사'})</strong>을 학습하는 중이에요!
+            </span>
+          </div>
+
+          <button
+            type="button"
+            id="book-next-btn-bottom"
+            disabled={activeStep === 3}
+            onClick={() => {
+              setActiveStep((prev) => Math.min(3, prev + 1) as any);
+              const element = document.getElementById('workbook-top-pagination');
+              if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }}
+            className={`w-full sm:w-auto px-5 py-3 rounded-2xl font-black text-sm border-2 transition-all flex items-center justify-center gap-2 cursor-pointer select-none ${
+              activeStep === 3
+                ? 'bg-slate-100/80 text-slate-400 border-slate-200 cursor-not-allowed opacity-60'
+                : 'bg-white text-slate-800 border-indigo-400 hover:bg-indigo-50 shadow-3xs active:scale-95'
+            }`}
+          >
+            <span>다음 쪽으로 ▶️</span>
+          </button>
         </div>
 
         {/* 교육적 배움 팁 상자 */}

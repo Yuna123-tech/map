@@ -6,7 +6,7 @@
 import { useState, useRef, MouseEvent, TouchEvent, WheelEvent } from 'react';
 import { BusanSpot, CategoryKey, QuizState, RegionKey } from '../types';
 import { BUSAN_SPOTS, CATEGORY_LIST, REGIONS } from '../data/busanData';
-import { Compass, CheckCircle, HelpCircle, AlertCircle, Search, ZoomIn, ZoomOut, Maximize2, RefreshCw } from 'lucide-react';
+import { Compass, CheckCircle, HelpCircle, AlertCircle, Search, ZoomIn, ZoomOut, Maximize2, Minimize2, RefreshCw } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 // 흐릿하게 지도를 장식할 구역별 워터마크 데이터
@@ -49,6 +49,7 @@ export default function BusanMap({
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedDistrict, setSelectedDistrict] = useState<string | 'all'>('all');
   const [showLabels, setShowLabels] = useState<boolean>(true);
+  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
 
   // 지도의 확대/축소 및 패닝 상태 (축척 제어)
   const [zoom, setZoom] = useState<number>(1);
@@ -292,7 +293,30 @@ export default function BusanMap({
         </div>
 
         {/* 인터랙티브 줌 & 패닝 축척 정밀 백지도 가든 */}
-        <div className="relative bg-teal-50/10 rounded-3xl border-4 border-white shadow-md overflow-hidden select-none" onWheel={handleWheel}>
+        <div 
+          className={isFullscreen 
+            ? "fixed inset-0 z-50 bg-slate-900/95 flex flex-col justify-center items-center w-screen h-screen overflow-hidden p-4 select-none animate-fade-in" 
+            : "relative bg-teal-50/10 rounded-3xl border-4 border-white shadow-md overflow-hidden select-none"
+          } 
+          onWheel={handleWheel}
+        >
+          {isFullscreen && (
+            <div className="absolute top-4 left-4 z-30 bg-slate-950/95 text-white px-3 py-2 rounded-2xl flex items-center gap-2 border border-slate-700 shadow-xl select-none">
+              <span className="text-sm">🧭</span>
+              <span className="text-[10px] sm:text-xs md:text-sm font-black text-slate-100">우리 반 부산 백지도 큰 화면 탐사 모드</span>
+            </div>
+          )}
+
+          {isFullscreen && (
+            <button
+              onClick={() => setIsFullscreen(false)}
+              className="absolute top-4 right-18 z-30 bg-rose-500 hover:bg-rose-600 active:scale-95 text-white font-black text-[10px] sm:text-xs px-3.5 py-2 rounded-2xl flex items-center gap-1.5 shadow-lg cursor-pointer transition-all border border-rose-400"
+            >
+              <Minimize2 className="w-4 h-4" />
+              <span>크게 보기 닫기</span>
+            </button>
+          )}
+
           {/* 드래그 줌 슬라이더 제어 패널 */}
           <div className="absolute top-4 left-4 z-25 flex flex-wrap items-center bg-white/95 backdrop-blur-md px-3 py-2.5 rounded-2xl border border-slate-200 shadow-md gap-3">
             <div className="flex items-center gap-2">
@@ -351,7 +375,14 @@ export default function BusanMap({
               className="p-1.5 hover:bg-slate-100 text-slate-700 rounded-lg transition-colors cursor-pointer border-t border-slate-100 mt-1"
               title="지도 위치 초기화"
             >
-              <Maximize2 className="w-4 h-4" />
+              <RefreshCw className="w-4 h-4 text-emerald-500" />
+            </button>
+            <button
+              onClick={() => setIsFullscreen(!isFullscreen)}
+              className="p-1.5 hover:bg-slate-100 text-slate-700 rounded-lg transition-colors cursor-pointer border-t border-slate-100 mt-1"
+              title={isFullscreen ? "원래 크기로 복귀" : "지도만 아주 크게 보기"}
+            >
+              {isFullscreen ? <Minimize2 className="w-4 h-4 text-rose-500 font-black animate-pulse" /> : <Maximize2 className="w-4 h-4 text-sky-500 font-black" />}
             </button>
             <div className="text-[10px] font-black text-slate-500 text-center border-t border-slate-100 mt-1 pt-1">
               {zoom.toFixed(1)}x
@@ -372,7 +403,10 @@ export default function BusanMap({
               transform: `scale(${zoom}) translate(${panX}px, ${panY}px)`,
               cursor: zoom > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default',
             }}
-            className="relative aspect-[4/3] w-full origin-center transition-transform duration-250 ease-out"
+            className={isFullscreen 
+              ? "relative aspect-[4/3] w-auto h-[92vh] max-w-full origin-center transition-transform duration-250 ease-out flex-shrink-0"
+              : "relative aspect-[4/3] w-full origin-center transition-transform duration-250 ease-out"
+            }
           >
             {/* 귀여운 지도 수계 및 바다 백그라운드 디자인 */}
             <div className="absolute inset-0 bg-blue-50/30 opacity-80 pointer-events-none" />
