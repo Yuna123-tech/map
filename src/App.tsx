@@ -181,8 +181,73 @@ export default function App() {
   };
   const realRegionCounts = getRealRegionCounts();
 
+  // activeStep에 따른 동적 배경 테마 클래스 지정 (창 전환 분위기 인지 돕기)
+  const getStepBgClass = () => {
+    switch (activeStep) {
+      case 1:
+        return 'from-sky-50/80 via-slate-50 to-sky-50/40';
+      case 2:
+        return 'from-amber-100/50 via-slate-50 to-amber-50/20';
+      case 3:
+        return 'from-indigo-100/50 via-slate-50 to-purple-50/35';
+      default:
+        return 'from-slate-50 via-slate-50 to-slate-50';
+    }
+  };
+
+  // activeStep에 따른 페이지네이션 및 워크북 테마 스타일 맵
+  const getPaginationStyles = () => {
+    switch (activeStep) {
+      case 1:
+        return {
+          wrapper: 'bg-sky-100/40 border-2 border-sky-300 text-sky-950',
+          btnPrev: 'bg-white text-slate-800 border-sky-300 hover:bg-sky-50 shadow-3xs active:scale-95',
+          btnNext: 'bg-white text-slate-800 border-sky-450 hover:bg-sky-50 shadow-3xs active:scale-95',
+          num1: 'bg-sky-500 text-white shadow-md ring-4 ring-sky-100 scale-110',
+          num2: 'bg-white border-2 border-slate-250 text-slate-600 hover:bg-slate-100',
+          num3: 'bg-white border-2 border-slate-250 text-slate-600 hover:bg-slate-100',
+          lineColor: 'bg-sky-200',
+          underline: 'decoration-sky-500'
+        };
+      case 2:
+        return {
+          wrapper: 'bg-amber-100/60 border-2 border-amber-355 text-amber-955',
+          btnPrev: 'bg-white text-slate-800 border-sky-450 hover:bg-sky-50 shadow-3xs active:scale-95',
+          btnNext: 'bg-white text-slate-800 border-indigo-400 hover:bg-indigo-50 shadow-3xs active:scale-95',
+          num1: 'bg-white border-2 border-slate-250 text-slate-600 hover:bg-slate-100',
+          num2: 'bg-amber-500 text-white shadow-md ring-4 ring-amber-100 scale-110',
+          num3: 'bg-white border-2 border-slate-250 text-slate-600 hover:bg-slate-100',
+          lineColor: 'bg-amber-200',
+          underline: 'decoration-amber-500'
+        };
+      case 3:
+        return {
+          wrapper: 'bg-indigo-100/60 border-2 border-indigo-300 text-indigo-950',
+          btnPrev: 'bg-white text-slate-800 border-amber-450 hover:bg-amber-50 shadow-3xs active:scale-95',
+          btnNext: 'bg-white text-slate-800 border-indigo-305 hover:bg-indigo-50 shadow-3xs active:scale-95',
+          num1: 'bg-white border-2 border-slate-250 text-slate-600 hover:bg-slate-100',
+          num2: 'bg-white border-2 border-slate-250 text-slate-600 hover:bg-slate-100',
+          num3: 'bg-indigo-500 text-white shadow-md ring-4 ring-indigo-100 scale-110',
+          lineColor: 'bg-indigo-200',
+          underline: 'decoration-indigo-500'
+        };
+      default:
+        return {
+          wrapper: 'bg-slate-100 border-2 border-slate-300 text-slate-800',
+          btnPrev: 'bg-white text-slate-800 border-slate-300 hover:bg-slate-50',
+          btnNext: 'bg-white text-slate-800 border-slate-300 hover:bg-slate-50',
+          num1: 'bg-white border-2 border-slate-250 text-slate-600 hover:bg-slate-100',
+          num2: 'bg-white border-2 border-slate-250 text-slate-600 hover:bg-slate-100',
+          num3: 'bg-white border-2 border-slate-250 text-slate-600 hover:bg-slate-100',
+          lineColor: 'bg-slate-100',
+          underline: 'decoration-slate-500'
+        };
+    }
+  };
+  const theme = getPaginationStyles();
+
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col justify-between selection:bg-purple-100 font-sans" id="applet-container">
+    <div className={`min-h-screen bg-gradient-to-b ${getStepBgClass()} flex flex-col justify-between selection:bg-purple-100 font-sans transition-all duration-700 ease-in-out`} id="applet-container">
       {/* 귀여운 물결 그라데이션 가로선 */}
       <div className="h-2 bg-gradient-to-r from-sky-400 via-indigo-400 to-teal-400" />
 
@@ -598,7 +663,7 @@ export default function App() {
         </div>
 
         {/* 📖 어린이 친화적 학습지 책장 넘기기 제어기 (상단) */}
-        <div id="workbook-top-pagination" className="bg-amber-100/60 border-2 border-amber-300 rounded-3xl p-4.5 flex flex-col sm:flex-row items-center justify-between shadow-3xs gap-4 mt-3 animate-fade-in">
+        <div id="workbook-top-pagination" className={`${theme.wrapper} rounded-3xl p-4.5 flex flex-col sm:flex-row items-center justify-between shadow-3xs gap-4 mt-3 animate-fade-in`}>
           <button
             type="button"
             id="book-prev-btn-top"
@@ -610,8 +675,8 @@ export default function App() {
             }}
             className={`w-full sm:w-auto px-5 py-3 rounded-2xl font-black text-sm border-2 transition-all flex items-center justify-center gap-2 cursor-pointer select-none ${
               activeStep === 1
-                ? 'bg-slate-100/80 text-slate-400 border-slate-200 cursor-not-allowed opacity-60'
-                : 'bg-white text-slate-800 border-amber-400 hover:bg-amber-50 shadow-3xs active:scale-95'
+                ? 'bg-slate-150 text-slate-400 border-slate-200 cursor-not-allowed opacity-60'
+                : theme.btnPrev
             }`}
           >
             <span>◀️ 이전 쪽으로</span>
@@ -627,15 +692,11 @@ export default function App() {
                   const element = document.getElementById('workbook-top-pagination');
                   if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }}
-                className={`w-10 h-10 rounded-full font-black text-xs sm:text-sm flex items-center justify-center transition-all cursor-pointer ${
-                  activeStep === 1
-                    ? 'bg-sky-500 text-white shadow-md ring-4 ring-sky-100 scale-110'
-                    : 'bg-white border-2 border-slate-250 text-slate-600 hover:bg-slate-100'
-                }`}
+                className={`w-10 h-10 rounded-full font-black text-xs sm:text-sm flex items-center justify-center transition-all cursor-pointer ${theme.num1}`}
               >
                 1쪽
               </button>
-              <div className="w-5 h-1 bg-slate-300 rounded-full" />
+              <div className={`w-5 h-1 ${theme.lineColor} rounded-full`} />
               <button
                 type="button"
                 id="book-page2-btn-top"
@@ -644,15 +705,11 @@ export default function App() {
                   const element = document.getElementById('workbook-top-pagination');
                   if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }}
-                className={`w-10 h-10 rounded-full font-black text-xs sm:text-sm flex items-center justify-center transition-all cursor-pointer ${
-                  activeStep === 2
-                    ? 'bg-amber-500 text-white shadow-md ring-4 ring-amber-100 scale-110'
-                    : 'bg-white border-2 border-slate-250 text-slate-600 hover:bg-slate-100'
-                }`}
+                className={`w-10 h-10 rounded-full font-black text-xs sm:text-sm flex items-center justify-center transition-all cursor-pointer ${theme.num2}`}
               >
                 2쪽
               </button>
-              <div className="w-5 h-1 bg-slate-300 rounded-full" />
+              <div className={`w-5 h-1 ${theme.lineColor} rounded-full`} />
               <button
                 type="button"
                 id="book-page3-btn-top"
@@ -661,17 +718,13 @@ export default function App() {
                   const element = document.getElementById('workbook-top-pagination');
                   if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }}
-                className={`w-10 h-10 rounded-full font-black text-xs sm:text-sm flex items-center justify-center transition-all cursor-pointer ${
-                  activeStep === 3
-                    ? 'bg-indigo-500 text-white shadow-md ring-4 ring-indigo-100 scale-110'
-                    : 'bg-white border-2 border-slate-250 text-slate-600 hover:bg-slate-100'
-                }`}
+                className={`w-10 h-10 rounded-full font-black text-xs sm:text-sm flex items-center justify-center transition-all cursor-pointer ${theme.num3}`}
               >
                 3쪽
               </button>
             </div>
             <span className="text-[11px] sm:text-xs font-black text-slate-700 select-none">
-              총 3단계 중 <strong className="text-slate-950 font-black text-xs sm:text-sm underline decoration-amber-500 decoration-2">{activeStep}쪽 ({activeStep === 1 ? '백지도 탐정단' : activeStep === 2 ? '그래프 빌더' : '여행 홍보대사'})</strong>을 학습하는 중이에요!
+              총 3단계 중 <strong className={`text-slate-950 font-black text-xs sm:text-sm underline ${theme.underline} decoration-2`}>{activeStep}쪽 ({activeStep === 1 ? '백지도 탐정단' : activeStep === 2 ? '그래프 빌더' : '여행 홍보대사'})</strong>을 학습하는 중이에요!
             </span>
           </div>
 
@@ -686,8 +739,8 @@ export default function App() {
             }}
             className={`w-full sm:w-auto px-5 py-3 rounded-2xl font-black text-sm border-2 transition-all flex items-center justify-center gap-2 cursor-pointer select-none ${
               activeStep === 3
-                ? 'bg-slate-100/80 text-slate-400 border-slate-200 cursor-not-allowed opacity-60'
-                : 'bg-white text-slate-800 border-indigo-400 hover:bg-indigo-50 shadow-3xs active:scale-95'
+                ? 'bg-slate-150 text-slate-400 border-slate-200 cursor-not-allowed opacity-60'
+                : theme.btnNext
             }`}
           >
             <span>다음 쪽으로 ▶️</span>
@@ -859,7 +912,7 @@ export default function App() {
         </div>
 
         {/* 📖 어린이 친화적 학습지 책장 넘기기 제어기 (하단) */}
-        <div id="workbook-bottom-pagination" className="bg-amber-100/60 border-2 border-amber-300 rounded-3xl p-4.5 flex flex-col sm:flex-row items-center justify-between shadow-3xs gap-4 mt-1 animate-fade-in">
+        <div id="workbook-bottom-pagination" className={`${theme.wrapper} rounded-3xl p-4.5 flex flex-col sm:flex-row items-center justify-between shadow-3xs gap-4 mt-1 animate-fade-in`}>
           <button
             type="button"
             id="book-prev-btn-bottom"
@@ -871,8 +924,8 @@ export default function App() {
             }}
             className={`w-full sm:w-auto px-5 py-3 rounded-2xl font-black text-sm border-2 transition-all flex items-center justify-center gap-2 cursor-pointer select-none ${
               activeStep === 1
-                ? 'bg-slate-100/80 text-slate-400 border-slate-200 cursor-not-allowed opacity-60'
-                : 'bg-white text-slate-800 border-amber-400 hover:bg-amber-50 shadow-3xs active:scale-95'
+                ? 'bg-slate-150 text-slate-400 border-slate-200 cursor-not-allowed opacity-60'
+                : theme.btnPrev
             }`}
           >
             <span>◀️ 이전 쪽으로</span>
@@ -888,15 +941,11 @@ export default function App() {
                   const element = document.getElementById('workbook-top-pagination');
                   if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }}
-                className={`w-10 h-10 rounded-full font-black text-xs sm:text-sm flex items-center justify-center transition-all cursor-pointer ${
-                  activeStep === 1
-                    ? 'bg-sky-500 text-white shadow-md ring-4 ring-sky-100 scale-110'
-                    : 'bg-white border-2 border-slate-250 text-slate-600 hover:bg-slate-100'
-                }`}
+                className={`w-10 h-10 rounded-full font-black text-xs sm:text-sm flex items-center justify-center transition-all cursor-pointer ${theme.num1}`}
               >
                 1쪽
               </button>
-              <div className="w-5 h-1 bg-slate-300 rounded-full" />
+              <div className={`w-5 h-1 ${theme.lineColor} rounded-full`} />
               <button
                 type="button"
                 id="book-page2-btn-bottom"
@@ -905,15 +954,11 @@ export default function App() {
                   const element = document.getElementById('workbook-top-pagination');
                   if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }}
-                className={`w-10 h-10 rounded-full font-black text-xs sm:text-sm flex items-center justify-center transition-all cursor-pointer ${
-                  activeStep === 2
-                    ? 'bg-amber-500 text-white shadow-md ring-4 ring-amber-100 scale-110'
-                    : 'bg-white border-2 border-slate-250 text-slate-600 hover:bg-slate-100'
-                }`}
+                className={`w-10 h-10 rounded-full font-black text-xs sm:text-sm flex items-center justify-center transition-all cursor-pointer ${theme.num2}`}
               >
                 2쪽
               </button>
-              <div className="w-5 h-1 bg-slate-300 rounded-full" />
+              <div className={`w-5 h-1 ${theme.lineColor} rounded-full`} />
               <button
                 type="button"
                 id="book-page3-btn-bottom"
@@ -922,17 +967,13 @@ export default function App() {
                   const element = document.getElementById('workbook-top-pagination');
                   if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }}
-                className={`w-10 h-10 rounded-full font-black text-xs sm:text-sm flex items-center justify-center transition-all cursor-pointer ${
-                  activeStep === 3
-                    ? 'bg-indigo-500 text-white shadow-md ring-4 ring-indigo-100 scale-110'
-                    : 'bg-white border-2 border-slate-250 text-slate-600 hover:bg-slate-100'
-                }`}
+                className={`w-10 h-10 rounded-full font-black text-xs sm:text-sm flex items-center justify-center transition-all cursor-pointer ${theme.num3}`}
               >
                 3쪽
               </button>
             </div>
             <span className="text-[11px] sm:text-xs font-black text-slate-700 select-none">
-              총 3단계 중 <strong className="text-slate-950 font-black text-xs sm:text-sm underline decoration-amber-500 decoration-2">{activeStep}쪽 ({activeStep === 1 ? '백지도 탐정단' : activeStep === 2 ? '그래프 빌더' : '여행 홍보대사'})</strong>을 학습하는 중이에요!
+              총 3단계 중 <strong className={`text-slate-950 font-black text-xs sm:text-sm underline ${theme.underline} decoration-2`}>{activeStep}쪽 ({activeStep === 1 ? '백지도 탐정단' : activeStep === 2 ? '그래프 빌더' : '여행 홍보대사'})</strong>을 학습하는 중이에요!
             </span>
           </div>
 
@@ -947,8 +988,8 @@ export default function App() {
             }}
             className={`w-full sm:w-auto px-5 py-3 rounded-2xl font-black text-sm border-2 transition-all flex items-center justify-center gap-2 cursor-pointer select-none ${
               activeStep === 3
-                ? 'bg-slate-100/80 text-slate-400 border-slate-200 cursor-not-allowed opacity-60'
-                : 'bg-white text-slate-800 border-indigo-400 hover:bg-indigo-50 shadow-3xs active:scale-95'
+                ? 'bg-slate-150 text-slate-400 border-slate-200 cursor-not-allowed opacity-60'
+                : theme.btnNext
             }`}
           >
             <span>다음 쪽으로 ▶️</span>
@@ -960,9 +1001,9 @@ export default function App() {
           <div className="absolute top-0 right-0 p-6 text-6xl opacity-5 select-none pointer-events-none">
             🎓
           </div>
-          <div className="relative space-y-3.5 max-w-4xl">
-            <h4 className="text-sm font-extrabold flex items-center gap-1.5 text-indigo-300">
-              <BookOpen className="w-4.5 h-4.5 text-indigo-400" />
+          <div className="relative space-y-3.5 max-w-4xl mx-auto">
+            <h4 className="text-sm sm:text-base font-extrabold flex items-center justify-center gap-1.5 text-indigo-300 text-center w-full">
+              <BookOpen className="w-4.5 h-4.5 text-indigo-400 shrink-0" />
               <span>우리가 오늘 배우는 재미있는 지리 수학 이야기 🏫🧭</span>
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-[11px] font-bold leading-relaxed text-slate-300">

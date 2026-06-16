@@ -383,7 +383,7 @@ export const REGIONS: Record<string, RegionInfo> = {
     key: 'all',
     name: '부산광역시 전역 통합 조사',
     emoji: '🧭',
-    description: '부산의 16개 구·군 전체에 걸쳐 넓게 펼쳐진 300대 명소를 골고루 수집 분석해요! (가장 방대함)',
+    description: '부산의 16개 구·군 전체에 넓게 펼쳐진 300대 명소를 골고루 탐색하고 분석해요! (가장 방대함)',
     districts: [
       '강서구', '북구', '사상구', '사하구', '금정구', '동래구', '연제구', '부산진구', 
       '서구', '동구', '중구', '영도구', '남구', '수영구', '해운대구', '기장군'
@@ -393,42 +393,42 @@ export const REGIONS: Record<string, RegionInfo> = {
     key: 'north',
     name: '북부 구역 (생태&관문)',
     emoji: '🦆',
-    description: '강서구, 북구, 사상구 지역으로 낙동강 습지 생태 공원과 하늘길 공항 등 교통의 요충지입니다. 푸른 강과 보트 체험, 수목원의 자연을 조사해 보아요!',
+    description: '강서구, 북구, 사상구 지역으로 아름다운 생태 공원, 낙동강 자연 생태계, 그리고 부산의 소중한 하늘 관문인 김해국제공항이 모여 있습니다. 자연과 하늘길을 조사해 보아요!',
     districts: ['강서구', '북구', '사상구']
   },
   west: {
     key: 'west',
     name: '서부 구역 (노을&예술)',
     emoji: '🌅',
-    description: '사하구, 서구 지역으로 다대포의 명물 낙조, 송도 해수욕장 케이블카, 그리고 비석마을이 모여 있습니다. 바다와 노을, 역사 예술을 조사해 보아요!',
+    description: '사하구, 서구 지역으로 다대포의 명물 노을빛 낙조, 송도 해수욕장 케이블카, 그리고 비석마을이 모여 있습니다. 바다와 함께 감상하는 일몰과 예술을 조사해 보아요!',
     districts: ['사하구', '서구']
   },
   south: {
     key: 'south',
     name: '남부 구역 (역사&원도심)',
     emoji: '⚓',
-    description: '중구, 동구, 영도구, 남구 지역으로 우뚝 솟은 부산타워, 168 피란 계단길, 흰여울마을, 부산항 오륙도 등 생생한 역사가 깃든 원도심과 바다를 함께 탐색합니다.',
+    description: '중구, 동구, 영도구, 남구 지역으로 우뚝 솟은 부산타워, 피란 시절의 이야기를 품은 168 계단, 흰여울문화마을, 그리고 활기찬 자갈치시장이 함께하는 역사 탐험 구역입니다.',
     districts: ['중구', '동구', '영도구', '남구']
   },
   haeundae: {
     key: 'haeundae',
     name: '해운대 구역 (세계&관광)',
     emoji: '🏙️',
-    description: '해운대구 중심 구역으로 메인 해수욕장, 해리단길 카페촌, 블루라인 기찻길, 수족관 등이 집중된 첨단 해상 글로벌 관광지구입니다.',
+    description: '해운대구 중심 구역으로 시원하게 트인 모래사장 해수욕장, 참신한 해리단길 카페촌, 동해선 해변열차, 신비한 아쿠아리움이 모인 오션브릿지 관광 명소 구역입니다.',
     districts: ['해운대구']
   },
   dongnae: {
     key: 'dongnae',
     name: '동래 구역 (전통&교육)',
     emoji: '⛩️',
-    description: '동래구, 금정구, 연제구, 부산진구 지역으로 유서 깊은 동래읍성, 천년사찰 범어사, 서면의 환승 허브, 식생 관찰 백양산 숲이 있는 교육 지대입니다.',
+    description: '동래구, 금정구, 연제구, 부산진구 지역으로 유서 깊은 동래읍성, 고즈넉한 범어사, 가장 북적이는 서면역 환승거리, 맑은 숨이 트이는 백양산이 조화로운 역사 배움 구역입니다.',
     districts: ['동래구', '금정구', '연제구', '부산진구']
   },
   gijang_suyeong: {
     key: 'gijang_suyeong',
     name: '기장·수영 구역 (자연&여가)',
     emoji: '⛵',
-    description: '기장군, 수영구 지역으로 오시리아 테마파크, 기장 해변과 대게거리, 광안리 백사장과 드론쇼 등이 어울린 자연과 레저의 대표 융합 지대입니다.',
+    description: '기장군, 수영구 지역으로 기장의 맛있는 수산물 시장, 거대한 롯데월드 테마파크, 광안리 밤하늘을 수놓는 드론쇼와 멋진 광안대교가 있는 여가 레저 구역입니다.',
     districts: ['기장군', '수영구']
   }
 };
@@ -459,11 +459,11 @@ const QUIZ_PRESETS: Record<number, { funFact: string; question: string; options:
     explanation: "경부고속철도의 중심 관문인 KTX 덕분에 전국의 수많은 관광객들이 부산 바다와 문화를 하루 만에 신속하게 즐길 수 있게 되었습니다."
   },
   72: {
-    funFact: "김해국제공항은 부산 가덕도와 강서구 낙동강 평야 사이에 자리해 외국인들이 하늘을 날아 도착하는 첫 문이에요!",
-    question: "비행기가 안전하게 하늘로 떠오르고 다시 사뿐히 바퀴를 내릴 수 있도록 공항에 기레 닦인 평평한 아스팔트 길은 무엇일까요?",
-    options: ["휴게소", "고속도로 터널", "활주로", "철도 선로"],
+    funFact: "김해국제공항은 부산 강서구의 탁 트인 낙동강 평야 부근에 있으며, 외국인 관광객과 우리나라 사람들이 비행기로 하늘길을 오가는 멋진 대공항이에요!",
+    question: "다른 나라나 아주 먼 지역에서 비행기를 타고 부산에 가려고 할 때, 안전하게 도착해서 내리는 하늘길과 교통의 소중한 문은 어디일까요?",
+    options: ["가득 찬 주차장", "쾌적한 지하철역", "김해국제공항", "동해선 기찻길"],
     answerIndex: 2,
-    explanation: "공항의 활주로(Runway)는 무거운 비행기들이 엄청난 속도로 가속하여 하늘로 이륙하도록 튼튼하고 길게 닦여진 이착륙 특수 도로입니다."
+    explanation: "김해국제공항은 전 세계의 수많은 사람들과 멀리 사는 여행객들이 부산으로 비행기를 타고 간편하고 빠르게 방문할 수 있도록 완성된 하늘 문이랍니다!"
   },
   121: {
     funFact: "기장 오시리아 관광단지에 우뚝 솟은 롯데월드 부산은 완전한 야외 숲속 동화나라 컨셉이에요!",
@@ -488,17 +488,157 @@ const QUIZ_PRESETS: Record<number, { funFact: string; question: string; options:
   }
 };
 
-// 300개 명소를 BusanSpot 규격으로 매핑하여 내보내는 데이터 가공
-export const BUSAN_SPOTS: BusanSpot[] = rawPlacesData.map((place) => {
+// Define region districts map to assign spots to their corresponding region
+const DISTRICT_TO_REGION: Record<string, string> = {
+  '사하구': 'west', '서구': 'west',
+  '강서구': 'north', '북구': 'north', '사상구': 'north',
+  '중구': 'south', '동구': 'south', '영도구': 'south', '남구': 'south',
+  '해운대구': 'haeundae',
+  '동래구': 'dongnae', '금정구': 'dongnae', '연제구': 'dongnae', '부산진구': 'dongnae',
+  '기장군': 'gijang_suyeong', '수영구': 'gijang_suyeong'
+};
+
+const REGION_DISTRICT_LIST: Record<string, string[]> = {
+  north: ['강서구', '북구', '사상구'],
+  west: ['사하구', '서구'],
+  south: ['중구', '동구', '영도구', '남구'],
+  haeundae: ['해운대구'],
+  dongnae: ['동래구', '금정구', '연제구', '부산진구'],
+  gijang_suyeong: ['기장군', '수영구']
+};
+
+const TARGET_COUNTS: Record<string, Record<string, number>> = {
+  north: { food: 12, traffic: 8, play: 10, history: 10, beach: 10 },
+  west: { food: 12, traffic: 8, play: 10, history: 10, beach: 10 },
+  south: { food: 12, traffic: 8, play: 10, history: 10, beach: 10 },
+  haeundae: { food: 12, traffic: 8, play: 10, history: 10, beach: 10 },
+  dongnae: { food: 12, traffic: 8, play: 10, history: 10, beach: 10 },
+  gijang_suyeong: { food: 10, traffic: 10, play: 10, history: 10, beach: 10 }
+};
+
+// Map rawPlacesData with programmatic transformations
+const transformedPlaces = rawPlacesData.map((place) => {
+  let category = place.category;
+  let name = place.name;
+  let desc = place.desc;
+
+  // 1. 김해국제공항 활주로 -> 김해국제공항 (초등 4학년 눈높이 설명)
+  if (place.id === 72) {
+    name = "김해국제공항";
+    desc = "비행기가 하늘로 떠오르고 가뿐하게 내려앉는 장소로, 다른 나라나 먼 도시에서 부산으로 구경 오는 수많은 승객들이 편하게 오갈 수 있는 부산의 소중한 대공항이에요.";
+  }
+
+  // 2. 부평 깡통시장 야시장 (ID 20) -> 'play' (체험 놀거리)
+  if (place.id === 20) {
+    category = 'play' as const;
+    name = "부평깡통시장 야시장 투어체험";
+    desc = "밤이 되면 전 세계 여러 나라의 생생하고 맛있는 길거리 음식들을 구경하면서 다른 나라의 다양한 문화를 눈과 귀로 맛보는 활기찬 야시장 체험터예요.";
+  }
+
+  // 3. 자갈치시장 꼼장어 골목 (ID 10) -> 'play' (체험 놀거리)
+  if (place.id === 10) {
+    category = 'play' as const;
+    name = "자갈치시장 어시장 생생 생활체험";
+    desc = "은빛 물고기와 파란 남해 바다향이 가득하고, 열심히 일하시는 상인 어른들의 목소리가 힘차게 들려 부산 어민들의 부지런함을 배울 수 있는 시장 골목이에요.";
+  }
+
+  // 4. 구포시장 묵자 골목 (ID 23) -> 'play' (체험 놀거리)
+  if (place.id === 23) {
+    category = 'play' as const;
+    name = "구포시장 5일장 전통장터 체험";
+    desc = "낙동강 나루터에서 시작된 유서 깊은 장터로, 5일마다 열리는 시끌벅적 전통 오일장을 직접 둘러보고 옛 수확 도구들과 음식문화를 조사하는 마당이에요.";
+  }
+
+  // 5. 기장시장 대게거리 (ID 15) -> 'play' (체험 놀거리)
+  if (place.id === 15) {
+    category = 'play' as const;
+    name = "기장시장 동해 수산물 거래 체험";
+    desc = "동해 청정바다에서 가공 유통된 튼튼한 대게와 각종 수산물을 관찰하며 어촌마을 명소의 특화된 상업 경제 가치 사슬을 두 눈으로 보며 이해하는 곳입니다.";
+  }
+
+  // 6. ID 55 부평 깡통 삼겹 탕수육 -> 국제시장 역사지대 (체험 놀거리)
+  if (place.id === 55) {
+    category = 'play' as const;
+    name = "국제시장 만물골목 문화체험";
+    desc = "과거 소중한 피란 시절부터 온갖 장난감, 신비한 문구용품, 외국의 수많은 물건이 모여들어 '만물상'이라 불리던 역사 깊은 상업 경제 구경터입니다.";
+  }
+
+  return {
+    ...place,
+    category,
+    name,
+    desc
+  };
+});
+
+// Group transformed spots by category
+const spotsByCategory: Record<string, typeof transformedPlaces> = {
+  food: [], traffic: [], play: [], history: [], beach: []
+};
+transformedPlaces.forEach(p => {
+  spotsByCategory[p.category].push(p);
+});
+
+// For each category, we track how many have been assigned to each region to maintain perfect balances
+const finalSpots: typeof transformedPlaces = [];
+
+Object.keys(spotsByCategory).forEach(catKey => {
+  const catSpots = spotsByCategory[catKey];
+  const regionSlots: Record<string, typeof transformedPlaces> = {
+    north: [], west: [], south: [], haeundae: [], dongnae: [], gijang_suyeong: []
+  };
+
+  // Try to place into their original preferred region first
+  const unplaced: typeof transformedPlaces = [];
+  catSpots.forEach(spot => {
+    const origRegion = DISTRICT_TO_REGION[spot.district] || 'north';
+    const target = TARGET_COUNTS[origRegion][catKey];
+    if (regionSlots[origRegion].length < target) {
+      regionSlots[origRegion].push(spot);
+    } else {
+      unplaced.push(spot);
+    }
+  });
+
+  // For any remaining spots, pack them into regions that still have room
+  unplaced.forEach(spot => {
+    const targetRegion = Object.keys(regionSlots).find(rKey => {
+      return regionSlots[rKey].length < TARGET_COUNTS[rKey][catKey];
+    });
+
+    if (targetRegion) {
+      // Reassign district to a valid district of the foreign region so filters match perfectly!
+      const validDistricts = REGION_DISTRICT_LIST[targetRegion];
+      // Pick a district deterministically
+      const newDistrict = validDistricts[spot.id % validDistricts.length];
+      regionSlots[targetRegion].push({
+        ...spot,
+        district: newDistrict
+      });
+    } else {
+      // Emergency overflow
+      finalSpots.push(spot);
+    }
+  });
+
+  // Push all assigned slots to final list
+  Object.keys(regionSlots).forEach(rKey => {
+    finalSpots.push(...regionSlots[rKey]);
+  });
+});
+
+// Export perfectly balanced structures
+export const BUSAN_SPOTS: BusanSpot[] = finalSpots.map((place) => {
   const preset = QUIZ_PRESETS[place.id];
   
-  // 퀴즈가 누락된 나머지 장소들은 고장 명칭과 행정구역에 걸맞은 교육적 OX 퀴즈로 지능적 대체
   const defaultQuiz = {
     question: `${place.name}은(는) 부산의 "${place.district}"에 자리잡고 있으며, 우리 고장의 빛나는 경제·지리적 소중한 명소 중 하나일까요?`,
     options: ["그렇다 (⭕)", "아니다 (❌)"],
     answerIndex: 0,
     explanation: `맞습니다! ${place.name}은(는) 실제 부산광역시 ${place.district}에 훌륭하게 자리 잡고 있어서 고장의 자랑거리이자 많은 이들이 탐험을 즐기는 핵심 장소입니다.`
   };
+
+  const categoryPreset = CATEGORIES[place.category] || CATEGORIES.food;
 
   return {
     id: `spot-${place.id}`,
@@ -511,7 +651,7 @@ export const BUSAN_SPOTS: BusanSpot[] = rawPlacesData.map((place) => {
     address: `부산광역시 ${place.district} 내 명소`,
     icon: place.icon,
     funFact: preset?.funFact ?? `이곳은 부산 ${place.district}의 기후와 자연 환경, 혹은 상업 소비 인프라가 융복합된 멋진 장소적 자산입니다.`,
-    theme: CATEGORIES[place.category].name,
+    theme: categoryPreset.name,
     quiz: {
       question: preset?.question ?? defaultQuiz.question,
       options: preset?.options ?? defaultQuiz.options,

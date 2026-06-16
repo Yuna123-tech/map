@@ -123,50 +123,9 @@ export default function PresentationAssistant({
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* 왼쪽: 교과 융합 사회 학습 가이드 (5칸) */}
-        <div className="lg:col-span-5 bg-white rounded-3xl p-6 sm:p-8 shadow-xs border border-slate-200 space-y-6">
-          <div className="flex items-center gap-2 border-b border-slate-100 pb-4">
-            <BookOpen className="w-6 h-6 text-indigo-600" />
-            <h4 className="font-bold text-slate-800 text-base sm:text-lg md:text-xl animate-fade-in">🗺️ 초등 지리학자 탐구의 문 🧭</h4>
-          </div>
-
-          {/* 꼬마 도향 안내판 */}
-          <div className="p-5.5 bg-emerald-50 border border-emerald-100 rounded-3xl space-y-3.5">
-            <h5 className="text-sm sm:text-base md:text-lg font-black text-emerald-900 flex items-center gap-1.5 select-none">
-              🎓 지리학자 사회 공부 한마디!
-            </h5>
-            <p className="text-xs sm:text-sm md:text-base text-emerald-950 font-bold leading-relaxed">
-              부산의 명소 분포를 막대그래프로 나타내면 무엇이 가장 많은지, 무엇이 가장 적은지 단번에 보이게 됩니다. <br />
-              가장 많은 부분과 가장 적은 부분을 이용해 소중한 부산이 골고루 이롭게 상생(상호 양보하며 살아가기)하는 법을 모둠 친구들과 직접 의논해 보세요!
-            </p>
-          </div>
-
-          {/* 발표 자세 체크리스트 */}
-          <div className="bg-slate-50 border border-slate-200/80 rounded-3xl p-5.5 space-y-4">
-            <h5 className="font-extrabold text-slate-800 text-sm sm:text-base flex items-center gap-1.5">
-              <span>🎤</span>
-              <span>멋진 발표를 위한 모둠원 행동 약속!</span>
-            </h5>
-            <ul className="space-y-3 text-xs sm:text-sm text-slate-700 font-semibold leading-relaxed">
-              <li className="flex gap-2 items-start">
-                <span className="text-emerald-500 shrink-0">✔</span>
-                <span>막대그래프의 <strong>장소 개수 수치</strong>를 정확하게 소리 내어 읽어요.</span>
-              </li>
-              <li className="flex gap-2 items-start">
-                <span className="text-emerald-500 shrink-0">✔</span>
-                <span>모둠에서 함께 구상한 <strong>홍보 상생 계획</strong>을 당당하고 우렁차게 알려요.</span>
-              </li>
-              <li className="flex gap-2 items-start">
-                <span className="text-emerald-500 shrink-0">✔</span>
-                <span>경청하는 다른 모둠 친구들과 다정하게 눈을 맞추며 이야기해요.</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* 오른쪽: 우리 모둠 전용 Dynamic 발표 예시 대본 (7칸) */}
-        <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 shadow-xs border border-slate-100 flex flex-col justify-between space-y-5">
+      <div className="w-full">
+        {/* 우리 모둠 전용 Dynamic 발표 예시 대본 */}
+        <div className="w-full bg-white rounded-3xl p-6 sm:p-8 shadow-xs border border-slate-100 flex flex-col justify-between space-y-5">
           <div className="space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3.5">
               <div>
@@ -238,11 +197,11 @@ export default function PresentationAssistant({
               <div className="absolute top-0 right-0 p-3 select-none text-rose-500/10 text-9xl">
                 {activeTab === 'max' ? '📣' : '🏡'}
               </div>
-              <p className="text-base sm:text-lg md:text-xl font-black text-indigo-700 tracking-wider uppercase mb-2.5 block select-none">
+              <p className="text-sm sm:text-base font-black text-indigo-700 uppercase mb-3 block select-none">
                 {activeTab === 'max' ? '🌟 [알록달록 발표대본 1] 우리 구역의 넘치는 매력 소개' : '🤝 [알록달록 발표대본 2] 골고루 살아나는 나눔 전략'}
               </p>
               
-              <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-extrabold text-slate-800 leading-relaxed max-h-[850px] overflow-y-auto font-sans whitespace-pre-wrap pr-1">
+              <div className="text-sm sm:text-base md:text-lg font-semibold text-slate-800 leading-loose max-h-[500px] overflow-y-auto font-sans whitespace-pre-wrap pr-1 bg-white/90 p-5 sm:p-6 rounded-2xl border border-slate-205/60 shadow-3xs">
                 {activeTab === 'max' ? maxSpeech : minSpeech}
               </div>
             </div>
