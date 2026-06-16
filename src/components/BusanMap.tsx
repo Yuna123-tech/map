@@ -295,15 +295,15 @@ export default function BusanMap({
         {/* 인터랙티브 줌 & 패닝 축척 정밀 백지도 가든 */}
         <div 
           className={isFullscreen 
-            ? "fixed inset-0 z-50 bg-slate-900/95 flex flex-col justify-center items-center w-screen h-screen overflow-hidden p-4 select-none animate-fade-in" 
+            ? "fixed inset-0 z-50 bg-sky-50/98 backdrop-blur-md flex flex-col justify-center items-center w-screen h-screen overflow-hidden p-4 select-none animate-fade-in" 
             : "relative bg-teal-50/10 rounded-3xl border-4 border-white shadow-md overflow-hidden select-none"
           } 
           onWheel={handleWheel}
         >
           {isFullscreen && (
-            <div className="absolute top-4 left-4 z-30 bg-slate-950/95 text-white px-3 py-2 rounded-2xl flex items-center gap-2 border border-slate-700 shadow-xl select-none">
+            <div className="absolute top-4 left-4 z-30 bg-white/95 text-slate-800 px-4 py-2.5 rounded-2xl flex items-center gap-2 border border-sky-150 shadow-md select-none">
               <span className="text-sm">🧭</span>
-              <span className="text-[10px] sm:text-xs md:text-sm font-black text-slate-100">우리 반 부산 백지도 큰 화면 탐사 모드</span>
+              <span className="text-[10px] sm:text-xs md:text-sm font-black text-slate-800">우리 반 부산 백지도 큰 화면 탐사 모드</span>
             </div>
           )}
 
