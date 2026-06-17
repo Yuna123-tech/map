@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useRef, MouseEvent, TouchEvent, WheelEvent } from 'react';
+import { useState, useRef, useEffect, MouseEvent, TouchEvent, WheelEvent } from 'react';
 import { BusanSpot, CategoryKey, QuizState, RegionKey } from '../types';
 import { BUSAN_SPOTS, CATEGORY_LIST, REGIONS } from '../data/busanData';
 import { Compass, CheckCircle, HelpCircle, AlertCircle, Search, ZoomIn, ZoomOut, Maximize2, Minimize2, RefreshCw } from 'lucide-react';
@@ -50,6 +50,12 @@ export default function BusanMap({
   const [selectedDistrict, setSelectedDistrict] = useState<string | 'all'>('all');
   const [showLabels, setShowLabels] = useState<boolean>(true);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+
+  // 상위의 조사 구역(Region)이 바뀔 경우, 구별 상세 필터와 피드백 팝업을 깔끔히 초기화하여 장소가 누락됨 오해가 없도록 합니다.
+  useEffect(() => {
+    setSelectedDistrict('all');
+    setActiveSpot(null);
+  }, [selectedRegion]);
 
   // 지도의 확대/축소 및 패닝 상태 (축척 제어)
   const [zoom, setZoom] = useState<number>(1);
@@ -219,8 +225,7 @@ export default function BusanMap({
             <div className="flex flex-wrap gap-2 p-2.5 bg-slate-50 rounded-2xl border border-slate-100">
               {districts.map((dist, idx) => {
                 const currentRegion = REGIONS[selectedRegion] || REGIONS['all'];
-                // 모둠 조사 구역 조건에 상관없이 16개 모든 행정구역 필터를 상시 자유롭게 사용 가능하도록 활성화합니다.
-                const isDistInRegion = true;
+                const isDistInRegion = selectedRegion === 'all' || dist === 'all' || currentRegion.districts.includes(dist);
                 return (
                   <button
                     key={idx}
@@ -475,8 +480,7 @@ export default function BusanMap({
               const isCollected = collectedSpots.includes(spot.id);
 
               const currentRegion = REGIONS[selectedRegion] || REGIONS['all'];
-              // 300곳 모든 명소가 지도 상에서 누락 없이 상시 환하게 보이고 터치 수집 가능하도록 항상 온전히 활성화합니다!
-              const isSpotInRegion = true;
+              const isSpotInRegion = selectedRegion === 'all' || currentRegion.districts.includes(spot.district);
 
               return (
                 <button
