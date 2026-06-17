@@ -47,60 +47,69 @@ export default function PresentationAssistant({
     (counts[a] || 0) >= (counts[b] || 0) ? a : b
   , 'food');
 
-  // 2. 가장 적은 테마 카테고리 판정
-  const minCategoryKey = keys.reduce((a, b) => 
-    (counts[a] || 0) <= (counts[b] || 0) ? a : b
-  , 'history');
+  // 2. 가장 적은 테마 카테고리 판정 (자연 지리적 여건상 해당 구역에 실존 개수가 0개인 카테고리는 건의 대본에서 자동으로 제외되도록 보완)
+  const REAL_COUNTS: Record<CategoryKey, number> = {
+    food: regionSpots.filter(s => s.category === 'food').length,
+    traffic: regionSpots.filter(s => s.category === 'traffic').length,
+    play: regionSpots.filter(s => s.category === 'play').length,
+    history: regionSpots.filter(s => s.category === 'history').length,
+    beach: regionSpots.filter(s => s.category === 'beach').length,
+  };
+
+  const validMinKeys = keys.filter(k => (REAL_COUNTS[k] || 0) > 0);
+  const minCategoryKey = validMinKeys.length > 0
+    ? validMinKeys.reduce((a, b) => (counts[a] || 0) <= (counts[b] || 0) ? a : b, validMinKeys[0])
+    : 'history';
 
   const categoryNames: Record<CategoryKey, string> = {
-    food: '블루리본 고장 맛 탐방',
-    traffic: '편리한 교통 거점',
-    play: '체험 놀거리 & 오락',
-    history: '역사 자연 유적지',
-    beach: '해수욕장 랜드마크 바다',
+    food: '탐미 미식 (먹거리)',
+    traffic: '환경 인프라 (교통)',
+    play: '체험 놀거리 (볼거리)',
+    history: '전통 역사 (배움터)',
+    beach: '수평선 바다 (자연관광)',
   };
 
   const categoryEmojis: Record<CategoryKey, string> = {
-    food: '🍰',
-    traffic: '🚌',
+    food: '🍕',
+    traffic: '🚇',
     play: '🎡',
-    history: '🌲',
+    history: '🏛️',
     beach: '🏖️',
   };
 
   // 구역 내 카테고리별 구체적 장소 추천 리스트 (실시간 맵핑)
   const getMaxSpotsList = () => {
     const spots = regionSpots.filter(s => s.category === maxCategoryKey);
-    if (spots.length === 0) return '우리가 발견할 귀여운 장소들';
+    if (spots.length === 0) return '우리가 발견할 고장 명소';
     return spots.slice(0, 3).map(s => s.name.split(' (')[0]).join(', ');
   };
 
   const getMinSpotsList = () => {
     const spots = regionSpots.filter(s => s.category === minCategoryKey);
-    if (spots.length === 0) return '지도의 보석처럼 숨은 장소들';
+    if (spots.length === 0) return '지도의 보석처럼 숨은 골목';
     return spots.slice(0, 3).map(s => s.name.split(' (')[0]).join(', ');
   };
 
   const maxSpotsList = getMaxSpotsList();
   const minSpotsList = getMinSpotsList();
 
-  // 가장 많은 개수를 자랑하기 대본 (진지하고 격조 높은 학술자료형 발표대본)
-  const maxSpeech = `안녕하십니까? 저희는 부산광역시 지역 탐방 통계를 수집하고 분석하여 발표를 맡게 된 《우리 모둠》입니다.
+  // 가장 많은 개수를 자랑하기 대본 (진지하고 격조 높은 4학년 맞춤형 발표대본)
+  const maxSpeech = `안녕하십니까? 저희는 우리 고장의 다양한 명소들을 성실하게 조사하고, 막대그래프 통계 자료를 바탕으로 발표를 준비한 《우리 모둠》입니다.
 
-저희 모둠이 부산 ${currentRegion.name} 구역의 명소들을 조사하고, 이를 친구들과 이웃에게 신뢰성 있게 추천하기 위해 기획한 탐방 코스의 제목은 《${maxSpotsList.split(',')[0] || '부산'} 중심의 핵심 테마 탐구 여행》입니다.
+저희 모둠이 부산 ${currentRegion.name}의 명소들을 깊이 있게 분석하고, 우리 고장을 찾아오는 분들에게 공식적으로 추천하기 위해 정한 발표 주제는 《${maxSpotsList.split(',')[0] || '부산'} 중심의 핵심 테마 탐구 여행》입니다.
 
-저희가 이와 같이 구체적인 탐방 코스를 확정하게 된 수학적·지리적 근거는, 부산 백지도의 풍부한 장소 데이터들을 직접 분류표로 체계화하고 이를 막대그래프로 그려 수치 데이터를 과학적으로 대조해보았기 때문입니다. 그래프를 통해 분포를 판독해본 결과, 우리 구역은 타 분야에 비해 '${categoryEmojis[maxCategoryKey]} ${categoryNames[maxCategoryKey]}' 카테고리에 속하는 장소가 총 ${counts[maxCategoryKey]}곳으로 가장 높은 수치를 보여주며 압도적인 지역적 명소 밀집도를 보였습니다.
+저희가 이러한 주제를 선택하게 된 확실한 지리적·수학적 근거는, 부산 지도 속 장소들을 분류표로 꼼꼼히 정리하고 이를 막대그래프로 나타내어 각 테마별 수량을 정확하게 비교해 보았기 때문입니다. 그래프를 통해 조사한 결과를 분석해 보니, 우리 구역은 다른 테마에 비해 '${categoryEmojis[maxCategoryKey]} ${categoryNames[maxCategoryKey]}' 분야의 장소가 총 ${counts[maxCategoryKey]}곳으로 가장 많은 수치를 나타냈습니다.
 
-따라서 저희 모둠은 이처럼 검증된 통계적 강점을 적극적으로 발휘할 수 있는 테마 탐색 방향이 가장 합리적인 선택이라는 결론에 도달하였습니다. 특히 ${maxSpotsList} 등은 우리 구역을 대표하는 훌륭한 고장의 경제·지리적 자산이므로, 이를 활용한 지속 가능한 보존과 탐방 문화를 발전시킨다면 우리 고장의 경제 활력 증진에도 큰 도움이 될 것입니다. 수치와 지도 분석 결과를 바탕으로 도출된 저희의 탐방 제안에 귀 기울여 주셔서 깊이 감사드립니다. 이상으로 저희 모둠의 발표를 마치겠습니다!`;
+따라서 저희 모둠은 우리 고장의 가장 뛰어난 특징과 장점을 적극적으로 살려 소개하는 계획이 가장 합리적인 선택이라는 결론에 도달하였습니다. 특히 ${maxSpotsList} 등은 우리 고장이 가진 자랑스러운 보물입니다. 이러한 훌륭한 자원들을 아끼고 가꾸며 널리 알린다면, 우리 고장을 더욱 발전시키고 찾아오는 이웃들에게 큰 기쁨을 선사할 것입니다. 통계와 지도를 정성껏 분석하여 도출한 저희 발표를 끝까지 경청해 주셔서 대단히 감사합니다. 이상으로 저희 모둠의 발표를 마치겠습니다.`;
 
-  // 가장 적은 개수를 보완하기 대본 (상생과 균형발전에 초점을 둔 진지한 공공 제안 단상대본)
-  const minSpeech = `안녕하십니까? 저희는 부산광역시 구역별 균형 성장과 상생을 도모하기 위한 우리 고장 발전 기획안의 발표를 맡게 된 《우리 모둠》입니다.
+  // 가장 적은 개수를 보완하기 대본 (상생과 균형발전에 초점을 둔 진지하고 진솔한 4학년 공공 제안 대본)
+  const minSpeech = `안녕하십니까? 저희는 우리 고장의 모든 구역이 조화롭고 균형 있게 발전하기를 바라는 마음으로, 균형 성장 제안을 준비하여 발표하게 된 《우리 모둠》입니다.
 
-저희 모둠이 부산 ${currentRegion.name} 구역의 소외된 자원을 면밀히 분석하고, 이를 조화롭게 가꾸기 위해 고안한 상생 계획의 공식 제목은 《지역의 소중한 가치를 복원하는 ${minSpotsList.split(',')[0] || '부산'} 상생 균형 투어》입니다.
+저희 모둠이 부산 ${currentRegion.name}를 더 살기 좋은 곳으로 만들기 위해 고민하고 마련한 우리 고장 상생 계획의 공식 제목은 《지역의 소중한 가치를 가꾸는 ${minSpotsList.split(',')[0] || '부산'} 균형 투어》입니다.
 
-저희가 이러한 보완 정책을 발의하게 된 명확한 학술적 근거는, 백지도 조사를 통해 추출한 자원 빈도를 정밀히 분류하고, 이를 막대그래프의 기둥 높낮이로 변환하여 고장의 물리적 여건 차이를 시각적·객관적으로 검증했기 때문입니다. 데이터 판독 결과, 우리 구역은 타 가테고리에 비해 상대적으로 '${categoryEmojis[minCategoryKey]} ${categoryNames[minCategoryKey]}' 영역의 관련 거점이 단 ${counts[minCategoryKey]}곳에 그쳐, 지리적 시설 소외 현상이 존재함을 정량적으로 확인하였습니다.
+저희가 이 제안을 올바르게 발의하게 된 명확한 지리적 근거는, 우리 구역의 자원들을 분류표로 꼼꼼히 정리하고 이를 막대그래프의 기둥 높낮이로 비교하여 장소의 여건 차이를 눈으로 직접 분석해보았기 때문입니다. 데이터 분석 결과, 우리 구역은 다른 분야에 비해 상대적으로 '${categoryEmojis[minCategoryKey]} ${categoryNames[minCategoryKey]}' 분야의 관련 장소가 단 ${counts[minCategoryKey]}곳에 머물러 있어, 타 지역에 비해 관련 시설들이 조금 소외되어 있다는 사실을 확인하였습니다.
 
-이에 저희 모둠은 '고장의 모든 주민이 균형 있는 인프라 혜택을 누려야 하며, 동네가 조화롭게 상생해야 한다'는 공익적 관점을 기본 신념으로 삼았습니다. 상대적으로 부족함이 드러난 ${minSpotsList} 주변 환경을 정성스럽게 보강하고 공용 시설을 안전하게 정비 및 홍보함과 동시에 기회비용을 최소화하는 합리적인 투자를 수행할 것을 강력하게 건의합니다. 통계를 바탕으로 지역사회의 조화로운 내일을 여는 저희 모둠의 뜻깊은 제안을 경청해 주셔서 진심으로 고맙습니다. 이상으로 발표를 끝마치겠습니다!`;
+이에 저희 모둠은 '고장의 모든 주민들이 차별 없이 균형 있는 편리와 시설 혜택을 골고루 누리는 것이 정의롭고 이롭다'는 믿음을 가지게 되었습니다. 비록 아직은 숫자가 부족하지만 소중한 ${minSpotsList} 주변 환경을 깨끗하고 안전하게 보강하고 널리 전수하며, 마을을 조화롭게 상생 관리해 달라고 공공기관에 건의합니다. 통계를 바탕으로 지역사회의 아름다운 내일을 고민한 저희 모둠의 발표글을 경청해 주셔서 정말 고맙습니다. 이상으로 발표를 마치겠습니다.`;
 
   return (
     <div className="space-y-6" id="presentation-assistant-section">

@@ -337,28 +337,41 @@ export default function BarChartBuilder({
 
           {/* 그래프 캔버스 그리기 */}
           <div className="relative w-full aspect-[16/10] bg-slate-50/40 rounded-2xl border border-slate-100 p-4">
-            {/* 세로축 가이드 */}
-            <div className="absolute top-4 bottom-14 left-8 right-2 pointer-events-none">
+            {/* 세로축 숫자 라벨 공간 */}
+            <div className="absolute top-6 bottom-16 left-2 w-8 pointer-events-none">
               {yTicks.map((num) => {
                 const shouldShowLabel = yTicks.length <= 15 || num % 5 === 0 || num === maxVal || num === 0;
                 const bottomPercent = (num / maxVal) * 100;
                 return (
                   <div 
                     key={num} 
-                    className="absolute left-0 right-0 flex items-center gap-2 -translate-y-1/2"
+                    className="absolute right-0 flex items-center justify-end -translate-y-1/2"
                     style={{ bottom: `${bottomPercent}%` }}
                   >
-                    <span className="text-xs sm:text-sm font-black text-slate-600 w-5 text-right select-none">
+                    <span className="text-[10px] sm:text-xs font-black text-slate-500 select-none">
                       {shouldShowLabel ? num : ''}
                     </span>
-                    <div className="flex-1 border-t border-dashed border-slate-300" />
                   </div>
                 );
               })}
             </div>
 
+            {/* 세로축 점선 가이드라인 */}
+            <div className="absolute top-6 bottom-16 left-12 right-4 pointer-events-none">
+              {yTicks.map((num) => {
+                const bottomPercent = (num / maxVal) * 100;
+                return (
+                  <div 
+                    key={num} 
+                    className="absolute left-0 right-0 border-t border-dashed border-slate-200 -translate-y-1/2"
+                    style={{ bottom: `${bottomPercent}%` }}
+                  />
+                );
+              })}
+            </div>
+
             {/* 실제 막대 기둥 그리드 */}
-            <div className="absolute top-4 bottom-14 left-16 right-2 grid grid-cols-5 gap-3.5 items-end">
+            <div className="absolute top-6 bottom-16 left-12 right-4 grid grid-cols-5 gap-3.5 items-end">
               {CATEGORY_LIST.map((cat) => {
                 const countVal = counts[cat.key];
                 // 실제 입력 갯수와 Y축 기준값에 따른 높이 퍼센트 (최대 30 기준)
@@ -367,7 +380,7 @@ export default function BarChartBuilder({
                 return (
                   <div key={cat.key} className="h-full flex flex-col justify-end items-center relative">
                     
-                    {/* 상단 펄쩍 뛰는 수치 뱃지 - 막대 바로 위에 동적으로 오도록 고침 */}
+                    {/* 상단 펄쩍 뛰는 수치 뱃지 */}
                     {countVal > 0 && (
                       <div 
                         className="absolute select-none translate-y-[-100%] pb-2 flex justify-center z-10 transition-all duration-300"
@@ -407,17 +420,16 @@ export default function BarChartBuilder({
               })}
             </div>
 
-            {/* 바닥선 - 세로축 눈금에 딱 맞게 정렬 */}
-            <div className="absolute bottom-14 left-8 right-2 border-b-2 border-slate-400" />
+            {/* 바닥선 - 세로축 눈금 및 막대 기둥 바닥에 완벽 매칭 */}
+            <div className="absolute bottom-16 left-12 right-4 border-b-2 border-slate-400" />
 
-            {/* X축 카테고리 레이블 - 캔버스 안으로 넣어 정밀도 100%로 가로정렬 매칭 */}
-            <div className="absolute bottom-0 left-16 right-2 h-12 grid grid-cols-5 gap-3.5 text-center items-start">
+            {/* X축 카테고리 레이블 - 캔버스 바닥 영역에 정렬매칭 */}
+            <div className="absolute bottom-2 left-12 right-4 h-12 grid grid-cols-5 gap-3.5 text-center items-start">
               {CATEGORY_LIST.map((cat) => (
                 <div key={cat.key} className="flex flex-col items-center">
                   <span className="text-sm sm:text-base select-none mb-0.5">{cat.emoji}</span>
-                  <span className="text-[10px] sm:text-xs md:text-sm font-black text-slate-700 block line-clamp-1">
-                    <span className="hidden sm:inline">{cat.name}</span>
-                    <span className="inline sm:hidden">{cat.shortName || cat.name}</span>
+                  <span className="text-[10px] sm:text-xs font-black text-slate-700 block line-clamp-1">
+                    <span>{cat.shortName || cat.name}</span>
                   </span>
                 </div>
               ))}
