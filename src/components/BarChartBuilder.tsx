@@ -367,10 +367,13 @@ export default function BarChartBuilder({
                 return (
                   <div key={cat.key} className="h-full flex flex-col justify-end items-center relative">
                     
-                    {/* 상단 펄쩍 뛰는 수치 뱃지 */}
+                    {/* 상단 펄쩍 뛰는 수치 뱃지 - 막대 바로 위에 동적으로 오도록 고침 */}
                     {countVal > 0 && (
-                      <div className="absolute -top-7 select-none">
-                        <span className={`px-2.5 py-0.5 rounded-full text-xs sm:text-sm font-black text-white shadow-3xs ${
+                      <div 
+                        className="absolute select-none translate-y-[-100%] pb-2 flex justify-center z-10 transition-all duration-300"
+                        style={{ bottom: `${heightPercentage}%` }}
+                      >
+                        <span className={`px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-black text-white shadow-3xs whitespace-nowrap ${
                           cat.key === 'food' ? 'bg-rose-500' : cat.key === 'traffic' ? 'bg-cyan-500' : cat.key === 'play' ? 'bg-amber-500' : cat.key === 'history' ? 'bg-emerald-600' : 'bg-blue-500'
                         }`}>
                           {countVal}개
@@ -404,21 +407,21 @@ export default function BarChartBuilder({
               })}
             </div>
 
-            {/* 바닥선 */}
-            <div className="absolute bottom-13 left-6 right-2 border-b-2 border-slate-400" />
-          </div>
+            {/* 바닥선 - 세로축 눈금에 딱 맞게 정렬 */}
+            <div className="absolute bottom-14 left-8 right-2 border-b-2 border-slate-400" />
 
-          {/* X축 카테고리 레이블 */}
-          <div className="grid grid-cols-5 gap-3.5 left-16 right-2 relative text-center">
-            {CATEGORY_LIST.map((cat) => (
-              <div key={cat.key} className="flex flex-col items-center">
-                <span className="text-sm sm:text-base select-none mb-0.5">{cat.emoji}</span>
-                <span className="text-[10px] sm:text-sm md:text-base font-black text-slate-700 block line-clamp-1">
-                  <span className="hidden sm:inline">{cat.name}</span>
-                  <span className="inline sm:hidden">{cat.shortName || cat.name}</span>
-                </span>
-              </div>
-            ))}
+            {/* X축 카테고리 레이블 - 캔버스 안으로 넣어 정밀도 100%로 가로정렬 매칭 */}
+            <div className="absolute bottom-0 left-16 right-2 h-12 grid grid-cols-5 gap-3.5 text-center items-start">
+              {CATEGORY_LIST.map((cat) => (
+                <div key={cat.key} className="flex flex-col items-center">
+                  <span className="text-sm sm:text-base select-none mb-0.5">{cat.emoji}</span>
+                  <span className="text-[10px] sm:text-xs md:text-sm font-black text-slate-700 block line-clamp-1">
+                    <span className="hidden sm:inline">{cat.name}</span>
+                    <span className="inline sm:hidden">{cat.shortName || cat.name}</span>
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
