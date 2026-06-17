@@ -62,11 +62,11 @@ export default function PresentationAssistant({
     : 'history';
 
   const categoryNames: Record<CategoryKey, string> = {
-    food: '탐미 미식 (먹거리)',
-    traffic: '환경 인프라 (교통)',
-    play: '체험 놀거리 (볼거리)',
-    history: '전통 역사 (배움터)',
-    beach: '자연풍경 (자연관광)',
+    food: '맛있는 음식 (먹거리)',
+    traffic: '편리한 교통 (정거장과 길)',
+    play: '재밌는 놀거리 (체험)',
+    history: '역사와 배움 (박물관과 유적)',
+    beach: '아름다운 자연 (바다와 공원)',
   };
 
   const categoryEmojis: Record<CategoryKey, string> = {
@@ -93,23 +93,24 @@ export default function PresentationAssistant({
   const maxSpotsList = getMaxSpotsList();
   const minSpotsList = getMinSpotsList();
 
-  // 가장 많은 개수를 자랑하기 대본 (진지하고 격조 높은 4학년 맞춤형 발표대본)
-  const maxSpeech = `안녕하십니까? 저희는 우리 고장의 다양한 명소들을 성실하게 조사하고, 막대그래프 통계 자료를 바탕으로 발표를 준비한 《우리 모둠》입니다.
+  // 가장 많은 개수를 자랑하기 대본 (초등학교 4학년 맞춤형 쉬운 발표 대본!)
+  const maxSpeech = `안녕하세요! 저희는 우리 고장을 직접 조사하고 그래프로 공부한 《우리 모둠》입니다. 친구들에게 우리 동네의 멋진 매력을 가득 소개해 드릴게요!
 
-저희 모둠이 부산 ${currentRegion.name}의 명소들을 깊이 있게 분석하고, 우리 고장을 찾아오는 분들에게 공식적으로 추천하기 위해 정한 발표 주제는 《${maxSpotsList.split(',')[0] || '부산'} 중심의 핵심 테마 탐구 여행》입니다.
+우리가 발표할 주제는 《우리 구역에서 가장 으뜸가는 '${categoryNames[maxCategoryKey]}' 탐험 여행!》입니다.
 
-저희가 이러한 주제를 선택하게 된 확실한 지리적·수학적 근거는, 부산 지도 속 장소들을 분류표로 꼼꼼히 정리하고 이를 막대그래프로 나타내어 각 테마별 수량을 정확하게 비교해 보았기 때문입니다. 그래프를 통해 조사한 결과를 분석해 보니, 우리 구역은 다른 테마에 비해 '${categoryEmojis[maxCategoryKey]} ${categoryNames[maxCategoryKey]}' 분야의 장소가 총 ${counts[maxCategoryKey]}곳으로 가장 많은 수치를 나타냈습니다.
+우리가 이 주제를 정한 이유는 수학 시간과 사회 시간에 배운 대로, 지도 속 장소들을 표로 정리하고 막대그래프로 직접 그려보았기 때문이에요. 그래프 기둥을 눈으로 열심히 비교해보니, 우리 구역은 다른 곳보다 '${categoryEmojis[maxCategoryKey]} ${categoryNames[maxCategoryKey]}' 장소가 총 ${counts[maxCategoryKey]}곳으로 제일 많았답니다!
 
-따라서 저희 모둠은 우리 고장의 가장 뛰어난 특징과 장점을 적극적으로 살려 소개하는 계획이 가장 합리적인 선택이라는 결론에 도달하였습니다. 특히 ${maxSpotsList} 등은 우리 고장이 가진 자랑스러운 보물입니다. 이러한 훌륭한 자원들을 아끼고 가꾸며 널리 알린다면, 우리 고장을 더욱 발전시키고 찾아오는 이웃들에게 큰 기쁨을 선사할 것입니다. 통계와 지도를 정성껏 분석하여 도출한 저희 발표를 끝까지 경청해 주셔서 대단히 감사합니다. 이상으로 저희 모둠의 발표를 마치겠습니다.`;
+그래서 저희 모둠은 우리 고장의 가장 큰 자랑거리를 친구들에게 널리 알리기로 결정했습니다. 특히 추천하고 싶은 유명한 곳은 바로 [${maxSpotsList}]에요!
+우리 고장의 멋진 보물들을 더 아끼고 깨끗하게 가꿔서, 더 많은 사람들이 우리 동네에 놀러 와서 행복해지면 좋겠습니다. 저희가 그린 막대그래프와 발표를 들어주셔서 정말 고맙습니다. 지금까지 우리 모둠이었습니다!`;
 
-  // 가장 적은 개수를 보완하기 대본 (상생과 균형발전에 초점을 둔 진지하고 진솔한 4학년 공공 제안 대본)
-  const minSpeech = `안녕하십니까? 저희는 우리 고장의 모든 구역이 조화롭고 균형 있게 발전하기를 바라는 마음으로, 균형 성장 제안을 준비하여 발표하게 된 《우리 모둠》입니다.
+  // 가장 적은 개수를 보완하기 대본 (초등학교 4학년 맞춤형 쉬운 제안 대본!)
+  const minSpeech = `안녕하세요! 저희는 우리 동네 구석구석이 다 함께 사이좋고 골고루 행복해지기를 바라는 마음으로 발표를 준비한 《우리 모둠》입니다.
 
-저희 모둠이 부산 ${currentRegion.name}를 더 살기 좋은 곳으로 만들기 위해 고민하고 마련한 우리 고장 상생 계획의 공식 제목은 《지역의 소중한 가치를 가꾸는 ${minSpotsList.split(',')[0] || '부산'} 균형 투어》입니다.
+우리가 정한 제안 제목은 《동네의 숨은 보물을 함께 지켜요! 아름다운 균형 여행》입니다.
 
-저희가 이 제안을 올바르게 발의하게 된 명확한 지리적 근거는, 우리 구역의 자원들을 분류표로 꼼꼼히 정리하고 이를 막대그래프의 기둥 높낮이로 비교하여 장소의 여건 차이를 눈으로 직접 분석해보았기 때문입니다. 데이터 분석 결과, 우리 구역은 다른 분야에 비해 상대적으로 '${categoryEmojis[minCategoryKey]} ${categoryNames[minCategoryKey]}' 분야의 관련 장소가 단 ${counts[minCategoryKey]}곳에 머물러 있어, 타 지역에 비해 관련 시설들이 조금 소외되어 있다는 사실을 확인하였습니다.
+우리가 이 제안을 하게 된 이유는, 우리 동네 명소들을 분류하고 막대그래프로 그려보면서 기둥 높이가 유독 낮은 곳을 발견했기 때문이에요. 분석해본 결과, 우리 구역에는 '${categoryEmojis[minCategoryKey]} ${categoryNames[minCategoryKey]}' 관련 장소가 단 ${counts[minCategoryKey]}곳밖에 없어서 다른 동네보다 조금 부족하다는 것을 알았답니다.
 
-이에 저희 모둠은 '고장의 모든 주민들이 차별 없이 균형 있는 편리와 시설 혜택을 골고루 누리는 것이 정의롭고 이롭다'는 믿음을 가지게 되었습니다. 비록 아직은 숫자가 부족하지만 소중한 ${minSpotsList} 주변 환경을 깨끗하고 안전하게 보강하고 널리 전수하며, 마을을 조화롭게 상생 관리해 달라고 공공기관에 건의합니다. 통계를 바탕으로 지역사회의 아름다운 내일을 고민한 저희 모둠의 발표글을 경청해 주셔서 정말 고맙습니다. 이상으로 발표를 마치겠습니다.`;
+그래서 저희 모둠은 '우리 동네 어린이들과 주민들 모두가 어디서나 편리하고 재밌게 지낼 수 있어야 한다'고 생각했어요. 비록 지금은 숫자가 적지만, 숨겨진 예쁜 곳인 [${minSpotsList}] 주변을 더 안전하고 깨끗하게 다듬어서 소중하게 지켜나가면 좋겠습니다. 동네가 더 살기 좋게 변할 수 있도록 모두 함께 힘을 모아주세요! 우리 모둠의 따뜻한 꿈이 담긴 발표를 귀 기울여 들어주셔서 고맙습니다!`;
 
   return (
     <div className="space-y-6" id="presentation-assistant-section">
@@ -180,8 +181,8 @@ export default function PresentationAssistant({
               >
                 <span className="text-2xl">📈</span>
                 <span className="flex flex-col items-start leading-none text-left">
-                  <span className="text-base sm:text-lg md:text-xl font-black">가장 많은 곳 홍보 전략</span>
-                  <span className="text-xs sm:text-sm text-slate-505 font-bold mt-1.5">가장 많은 테마를 자랑해요</span>
+                  <span className="text-sm sm:text-base md:text-lg font-black">가장 많은 곳 자랑하기</span>
+                  <span className="text-[11px] sm:text-xs text-slate-500 font-bold mt-1">우리 동네의 자랑거리 발표대본</span>
                 </span>
               </button>
 
@@ -195,8 +196,8 @@ export default function PresentationAssistant({
               >
                 <span className="text-2xl">🌱</span>
                 <span className="flex flex-col items-start leading-none text-left">
-                  <span className="text-base sm:text-lg md:text-xl font-black">가장 적은 곳 발전 전략</span>
-                  <span className="text-xs sm:text-sm text-slate-550 font-bold mt-1.5">개수가 적은 테마를 보완해요</span>
+                  <span className="text-sm sm:text-base md:text-lg font-black">가장 적은 곳 더 채우기</span>
+                  <span className="text-[11px] sm:text-xs text-slate-500 font-bold mt-1">부족한 곳을 아끼는 제안대본</span>
                 </span>
               </button>
             </div>
@@ -206,17 +207,17 @@ export default function PresentationAssistant({
               <div className="absolute top-0 right-0 p-3 select-none text-rose-500/10 text-9xl">
                 {activeTab === 'max' ? '📣' : '🏡'}
               </div>
-              <p className="text-sm sm:text-base font-black text-indigo-700 uppercase mb-3 block select-none">
-                {activeTab === 'max' ? '🌟 [알록달록 발표대본 1] 우리 구역의 넘치는 매력 소개' : '🤝 [알록달록 발표대본 2] 골고루 살아나는 나눔 전략'}
+              <p className="text-sm sm:text-base font-black text-indigo-705 uppercase mb-3 block select-none">
+                {activeTab === 'max' ? '🌟 [알록달록 발표대본 1] 우리 구역의 넘치는 매력 소개' : '🤝 [알록달록 발표대본 2] 골고루 살아나는 상생 전략'}
               </p>
               
-              <div className="text-sm sm:text-base md:text-lg font-semibold text-slate-800 leading-loose max-h-[500px] overflow-y-auto font-sans whitespace-pre-wrap pr-1 bg-white/90 p-5 sm:p-6 rounded-2xl border border-slate-205/60 shadow-3xs">
+              <div className="text-sm sm:text-base md:text-lg font-semibold text-slate-800 leading-loose max-h-[500px] overflow-y-auto font-sans whitespace-pre-wrap pr-1 bg-white/90 p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-3xs">
                 {activeTab === 'max' ? maxSpeech : minSpeech}
               </div>
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-between border-t border-slate-100 pt-4 mt-2 gap-2 text-base font-bold text-slate-600">
+          <div className="flex flex-col sm:flex-row items-center justify-between border-t border-slate-100 pt-4 mt-2 gap-2 text-base font-bold text-slate-650">
             <span>© made by 초등 사회·수학 교재 융합실</span>
             <span className="font-black text-slate-700 text-sm sm:text-base flex items-center gap-1.5">
               <Award className="w-5.5 h-5.5 text-amber-500" />
@@ -226,16 +227,16 @@ export default function PresentationAssistant({
         </div>
       </div>
 
-      {/* 🔬 [사회과 융합 탐구] 우리 자율 모둠의 '합리적 의사결정' 토의판 */}
+      {/* 🔬 [사회과 융합 탐구] 우리 자율 모둠의 '지혜로운 선택' 토의판 */}
       <div className="bg-slate-50/70 border border-indigo-150 rounded-3xl p-6 space-y-6">
         <div className="flex items-center gap-2">
           <span className="text-3xl">🧠</span>
           <div>
-            <h4 className="text-sm md:text-base font-black text-slate-800">
-              [사회 탐구 미션] 우리 모둠의 합리적 의사결정(합리적 선택) 토의지
+            <h4 className="text-sm md:text-base font-black text-slate-850">
+              [사회 공부 요약] 우리 모둠의 똑똑하고 지혜로운 선택 토의판
             </h4>
             <p className="text-xs text-slate-500 font-semibold mt-1">
-              단순히 지도를 관측하고 그리는 것에서 한 걸음 더 나아가 보아요! 무엇이 가장 많고, 무엇이 가장 적은지 눈으로 확인했으니, 가장 지혜롭고 이로운 모둠 선택은 무엇일지 직접 버튼을 누르며 골라보세요.
+              지도 속에서 무엇이 가장 많고 왜 적은지 공부했나요? 우리 동네를 위해 어떤 선택을 하는 것이 가장 지혜롭고 좋을지 모둠 친구들과 직접 버튼을 누르며 의견을 모아보세요!
             </p>
           </div>
         </div>
@@ -248,7 +249,7 @@ export default function PresentationAssistant({
                 📈 가장 수가 많은 테마: {categoryEmojis[maxCategoryKey]} {categoryNames[maxCategoryKey]} ({counts[maxCategoryKey]}곳)
               </span>
               <h5 className="text-xs md:text-sm font-black text-slate-800 pt-1">
-                구역에서 가장 수가 많은 장소를 어떻게 가꾸는 것이 현명할까요?
+                우리 동네에서 가장 많은 이 테마의 장소들을 어떻게 다루는 것이 좋을까요?
               </h5>
             </div>
 
@@ -263,9 +264,9 @@ export default function PresentationAssistant({
               >
                 <span className="text-xl mt-0.5">📢</span>
                 <div>
-                  <h6 className="text-xs md:text-sm font-black">【방안 A: 특색 살리기】 대대적 홍보로 최고 인기 구역 만들기!</h6>
+                  <h6 className="text-xs md:text-sm font-black">【방안 A: 장점 뽐내기】 재미있는 지도나 포스터를 만들어서 널리 자랑하기!</h6>
                   <p className="text-xs mt-1 font-semibold leading-relaxed text-slate-500">
-                    이미 많은 장소와 가게들이 잘 발달해 있으므로, 장점을 한껏 돋보이게 하는 멋진 여행 지도를 만들어 전 세계 친구들에게 널리 알려 지역 활기를 돋웁니다!
+                    우리 동네에서 가장 빛나는 멋진 장소들을 널리 소문내서, 다른 지역 전국의 친구들이 많이 놀러 오게 해요!
                   </p>
                 </div>
               </button>
@@ -280,9 +281,9 @@ export default function PresentationAssistant({
               >
                 <span className="text-xl mt-0.5">🌿</span>
                 <div>
-                  <h6 className="text-xs md:text-sm font-black">【방안 B: 질서 정돈하기】 복잡함과 쓰레기를 예방하고 관리하기!</h6>
+                  <h6 className="text-xs md:text-sm font-black">【방안 B: 질서와 규칙 지키기】 쓰레기 버리지 않기 약속과 길 정돈하기!</h6>
                   <p className="text-xs mt-1 font-semibold leading-relaxed text-slate-500">
-                    장소가 너무 빽빽하고 사람이 많이 온다면 주변 한적한 주택가가 오염되거나 번잡해질 수 있습니다. 질서 지키기 약속 캠페인을 열어 깨끗하고 쾌적하게 한숨 가다듬는 거리를 꾸밉니다.
+                    사람들이 너무 갑자기 몰려와 동네가 어질러지지 않도록, "조용히 아끼며 관람해요" 같은 질서 캠페인을 열어 깨끗하게 지켜요.
                   </p>
                 </div>
               </button>
@@ -296,7 +297,7 @@ export default function PresentationAssistant({
                 🌱 가장 수가 적은 테마: {categoryEmojis[minCategoryKey]} {categoryNames[minCategoryKey]} ({counts[minCategoryKey]}곳)
               </span>
               <h5 className="text-xs md:text-sm font-black text-slate-800 pt-1">
-                구역에서 가장 수가 적고 부족한 테마를 어떻게 다루면 현명할까요?
+                우리 동네에서 가장 개수가 적고 부족한 이 테마는 어떻게 다루는 것이 좋을까요?
               </h5>
             </div>
 
@@ -311,9 +312,9 @@ export default function PresentationAssistant({
               >
                 <span className="text-xl mt-0.5">🏗️</span>
                 <div>
-                  <h6 className="text-xs md:text-sm font-black">【방안 A: 골고루 키우기】 새로운 체험 시설이나 관광지 새로 만들기!</h6>
+                  <h6 className="text-xs md:text-sm font-black">【방안 A: 부족한 곳 채워주기】 안전한 정거장을 만들고 공원 새로 세워주기!</h6>
                   <p className="text-xs mt-1 font-semibold leading-relaxed text-slate-500">
-                    그 구역에 사는 시민들이나 어린이들이 놀거리나 혜택을 받지 못해 소외되지 않도록, 대중교통을 놓아주고 체험 놀이터를 새로 만들어 균형있게 영토를 발달시킵니다.
+                    여기에 사는 친구들과 이웃들이 서운하거나 불편하지 않도록, 시청이나 구청에 예쁜 놀이터나 버스 통학길을 더 지어달라고 편지를 써요.
                   </p>
                 </div>
               </button>
@@ -328,9 +329,9 @@ export default function PresentationAssistant({
               >
                 <span className="text-xl mt-0.5">🦊</span>
                 <div>
-                  <h6 className="text-xs md:text-sm font-black">【방안 B: 그대로 보호하기】 억지로 짓지 않고 본래 자연이나 장점 지키기!</h6>
+                  <h6 className="text-xs md:text-sm font-black">【방안 B: 있는 그대로 소중히 하기】 억지로 짓지 않고, 자연을 지키기!</h6>
                   <p className="text-xs mt-1 font-semibold leading-relaxed text-slate-500">
-                    모든 동네가 똑같은 모양일 필요는 없고 가치가 부족하다면 기회비용이 생깁니다. 푸른 숲과 전통은 그대로 보존하고, 부족한 놀거리는 옆동네 교류를 통해 해결하는 똑똑한 자원절약 방안입니다.
+                    모든 동네가 다 똑같이 시끄러울 필요는 없어요. 멋진 나무와 조용한 바람 소리를 기후변화로부터 지켜주는 것도 훌륭한 사랑이에요.
                   </p>
                 </div>
               </button>
@@ -338,7 +339,7 @@ export default function PresentationAssistant({
           </div>
         </div>
 
-        {/* 종합 모둠 의사결정 선언서 결과지 출력 피드백 */}
+        {/* 모둠 생각 상자 최종 선택 결과지 */}
         <AnimatePresence>
           {maxStrategy && minStrategy && (
             <motion.div
@@ -350,28 +351,28 @@ export default function PresentationAssistant({
               <div className="flex items-center gap-2 border-b border-indigo-100 pb-3">
                 <Sparkles className="w-6 h-6 text-indigo-600 animate-pulse" />
                 <h5 className="text-sm sm:text-base md:text-lg font-black text-indigo-950">
-                  🎉 우리 모둠의 최종 합리적 공공의사결정 보고서가 완성되었습니다!
+                  🎉 우리 모둠의 똑똑한 생각 상자 의사결정 보고서 완성!
                 </h5>
               </div>
 
               <div className="space-y-4 text-xs sm:text-sm md:text-base">
-                <p className="font-bold leading-relaxed text-slate-700">
-                  우리 모둠은 부산 <strong>{currentRegion.name}</strong> 구역의 명소 지도 수량 통계를 적극 조사하여 막대그래프로 개수를 비교해 본 결과, 
-                  가장 장소가 많이 발달된 테마인 <strong className="text-indigo-750">[{categoryNames[maxCategoryKey]}]</strong>({counts[maxCategoryKey]}곳)에 대해 토의를 거쳐{' '}
+                <p className="font-bold leading-relaxed text-slate-705">
+                  우리 모둠은 부산 <strong>{currentRegion.name}</strong> 구역의 재미있는 장소들을 모아서, 막대그래프로 직접 크기를 비교해 보았어요.
+                  그 결과 가장 많이 발달한 <strong className="text-indigo-750">[{categoryNames[maxCategoryKey]}]</strong>({counts[maxCategoryKey]}곳) 테마에 대해서는 마음 편히{' '}
                   <span className="underline decoration-indigo-550 decoration-2 underline-offset-4 font-black text-indigo-950">
-                    {maxStrategy === 'promote' ? '‘홍보 마케팅 특색 살리기’' : '‘생활 질서 정돈 캠페인’'}
+                    {maxStrategy === 'promote' ? '‘방안 A: 재미있는 지도나 포스터를 만들어 더 널리 자랑하기’' : '‘방안 B: 깨끗하고 고요한 길을 함께 꾸미기 위한 약속 캠페인’'}
                   </span>
-                  를 선택하였고, 반대로 가장 장소 개수가 적은 테마인 <strong className="text-purple-750">[{categoryNames[minCategoryKey]}]</strong>({counts[minCategoryKey]}곳)에 대해서는{' '}
+                  를 선택했고, 반대로 개수가 가장 적고 아쉬웠던 <strong className="text-purple-750">[{categoryNames[minCategoryKey]}]</strong>({counts[minCategoryKey]}곳) 테마에 대해서는{' '}
                   <span className="underline decoration-purple-550 decoration-2 underline-offset-4 font-black text-purple-950">
-                    {minStrategy === 'develop' ? '‘생활 놀이터 및 교통거점 새로 골고루 키우기’' : '‘자연의 쉼터와 기회비용 지혜롭게 보존하기’'}
+                    {minStrategy === 'develop' ? '‘방안 A: 편리한 정거장과 놀이터를 새로 세워서 골고루 채워주기’' : '‘방안 B: 무리해서 무언가를 더 짓지 않고 본래의 맑은 자연을 지켜주기’'}
                   </span>
-                  를 과감히 최종 결정하였습니다.
+                  를 하기로 다 함께 최종 결정했답니다!
                 </p>
 
                 <p className="text-xs sm:text-sm md:text-base font-black text-slate-800 leading-relaxed flex items-start gap-2.5 bg-white py-4 px-5 rounded-2xl border border-indigo-100 shadow-3xs">
                   <span className="text-xl shrink-0">📢</span> 
                   <span className="text-indigo-950 font-black">
-                    "우리 모둠은 우리가 조사해서 알게 된 막대그래프 숫자들을 근거 삼아, 아끼는 마음과 더 나은 발전을 지혜롭게 절충한 ‘합리적인 장소 선별 의사결정’을 스케치북 발표지에 멋지게 적어 자랑할 것을 약속합니다!"
+                    "우리가 직접 눈으로 보고 센 막대그래프 숫자를 바탕으로, 아끼는 마음과 더 나은 미래를 함께 생각한 ‘지혜로운 어린이 약속’을 발표 스케치북에 예쁘게 적어 친구들 앞에서 씩씩하게 발표하겠습니다!"
                   </span>
                 </p>
               </div>
