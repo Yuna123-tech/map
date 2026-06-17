@@ -219,7 +219,8 @@ export default function BusanMap({
             <div className="flex flex-wrap gap-2 p-2.5 bg-slate-50 rounded-2xl border border-slate-100">
               {districts.map((dist, idx) => {
                 const currentRegion = REGIONS[selectedRegion] || REGIONS['all'];
-                const isDistInRegion = selectedRegion === 'all' || dist === 'all' || currentRegion.districts.includes(dist);
+                // 모둠 조사 구역 조건에 상관없이 16개 모든 행정구역 필터를 상시 자유롭게 사용 가능하도록 활성화합니다.
+                const isDistInRegion = true;
                 return (
                   <button
                     key={idx}
@@ -474,8 +475,8 @@ export default function BusanMap({
               const isCollected = collectedSpots.includes(spot.id);
 
               const currentRegion = REGIONS[selectedRegion] || REGIONS['all'];
-              // 우리 모둠의 조사구역(Region) 여부
-              const isSpotInRegion = selectedRegion === 'all' || currentRegion.districts.includes(spot.district);
+              // 300곳 모든 명소가 지도 상에서 누락 없이 상시 환하게 보이고 터치 수집 가능하도록 항상 온전히 활성화합니다!
+              const isSpotInRegion = true;
 
               return (
                 <button
@@ -718,7 +719,7 @@ export default function BusanMap({
                 <span className="bg-cyan-50 text-cyan-700 border border-cyan-100 text-[11px] sm:text-[13px] px-3.5 py-1.5 rounded-full font-black">🚌 편리한 교통</span>
                 <span className="bg-amber-50 text-amber-600 border border-amber-100 text-[11px] sm:text-[13px] px-3.5 py-1.5 rounded-full font-black">🎡 놀이 오락 체험</span>
                 <span className="bg-emerald-50 text-emerald-700 border border-emerald-100 text-[11px] sm:text-[13px] px-3.5 py-1.5 rounded-full font-black">🌲 역사 자연 유적</span>
-                <span className="bg-blue-50 text-blue-700 border border-blue-100 text-[11px] sm:text-[13px] px-3.5 py-1.5 rounded-full font-black">🏖️ 해수욕장 명승 바다</span>
+                <span className="bg-blue-50 text-blue-700 border border-blue-100 text-[11px] sm:text-[13px] px-3.5 py-1.5 rounded-full font-black">🌿 자연풍경 수려한 자연</span>
               </div>
             </motion.div>
           )}

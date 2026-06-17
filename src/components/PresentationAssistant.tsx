@@ -66,7 +66,7 @@ export default function PresentationAssistant({
     traffic: '환경 인프라 (교통)',
     play: '체험 놀거리 (볼거리)',
     history: '전통 역사 (배움터)',
-    beach: '수평선 바다 (자연관광)',
+    beach: '자연풍경 (자연관광)',
   };
 
   const categoryEmojis: Record<CategoryKey, string> = {
@@ -74,7 +74,7 @@ export default function PresentationAssistant({
     traffic: '🚇',
     play: '🎡',
     history: '🏛️',
-    beach: '🏖️',
+    beach: '🌿',
   };
 
   // 구역 내 카테고리별 구체적 장소 추천 리스트 (실시간 맵핑)

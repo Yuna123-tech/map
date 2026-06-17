@@ -58,14 +58,14 @@ export const CATEGORIES: Record<CategoryKey, CategoryInfo> = {
   },
   beach: { 
     key: 'beach', 
-    name: '🏖️ 수평선 바다 (자연관광)', 
-    emoji: '🏖️', 
-    stamp: '🏖️', 
-    shortName: '바다', 
-    color: 'text-blue-500', 
-    bgColor: 'bg-blue-50', 
-    borderColor: 'border-blue-100', 
-    description: '모래사장과 몽돌 백사장이 드넓게 트여 바다 동식물 생태와 시원한 파도를 가꾸는 자연이에요.' 
+    name: '🌿 자연풍경 (자연관광)', 
+    emoji: '🌿', 
+    stamp: '🌿', 
+    shortName: '자연', 
+    color: 'text-sky-500', 
+    bgColor: 'bg-sky-50', 
+    borderColor: 'border-sky-100', 
+    description: '산, 강, 수변공원, 습지, 그리고 시원한 해수욕장 바다까지 부산이 자랑하는 수려한 자연 환경과 생태 공간이에요.' 
   }
 };
 
