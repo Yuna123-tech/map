@@ -50,7 +50,7 @@ export default function App() {
   const [showRegionConfirm, setShowRegionConfirm] = useState<RegionKey | null>(null);
   
   // 모둠 협동 가이드 아코디언 상태
-  const [showGuide, setShowGuide] = useState(true);
+  const [showGuide, setShowGuide] = useState(false);
 
   // 로컬 저장소 동기화
   useEffect(() => {
@@ -288,9 +288,9 @@ export default function App() {
                 </p>
               </div>
               <div className="h-8 w-px bg-slate-200 self-center" />
-              <div className="text-center min-w-[90px]">
-                <p className="text-xs sm:text-sm text-slate-500 font-bold leading-none mb-1.5 whitespace-nowrap">골든벨 점수</p>
-                <p className="text-base sm:text-lg md:text-xl font-bold text-emerald-600 whitespace-nowrap">💯 {correctQuizCount} / {quizSolvedCount} <span className="text-xs text-slate-400 font-normal">개</span></p>
+              <div className="text-center min-w-[95px]">
+                <p className="text-xs sm:text-sm text-slate-500 font-bold leading-none mb-1.5 whitespace-nowrap">전체 수집한 명소</p>
+                <p className="text-base sm:text-lg md:text-xl font-bold text-emerald-700 whitespace-nowrap">⭐ <span className="text-emerald-700 font-black">{collectedSpots.length}</span> / {BUSAN_SPOTS.length} <span className="text-xs text-slate-400 font-normal">곳</span></p>
               </div>
             </div>
 
@@ -307,117 +307,13 @@ export default function App() {
       </header>
 
       <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 flex-1 space-y-8">
-        
-        {/* 모둠별 조사 범위(권역) 커스텀 선택 장치 (고민 완벽 해결책) */}
-        <div className="bg-white rounded-2xl p-8 border border-slate-150 shadow-3xs hover:shadow-2xs transition-shadow animate-fade-in animate-once">
-          <div className="flex flex-row items-center justify-between gap-4 border-b border-slate-100 pb-4 mb-5">
-            <div className="space-y-1.5">
-              <h3 className="text-2xl font-black text-slate-900 flex items-center gap-2.5 flex-wrap">
-                <span className="p-1 py-0.5 px-2 bg-indigo-50 text-indigo-750 text-sm rounded-md border border-indigo-150 font-bold shrink-0">활동 1</span>
-                <span>모둠의 부산 탐험 조사 범위 선택하기 🧭</span>
-              </h3>
-              <p className="text-sm text-slate-500 font-bold leading-normal">
-                조사 구역을 변경하면 지도의 명소 목록과 통계 대시보드가 실시간 동기화 교정됩니다.
-              </p>
-            </div>
-          </div>
 
-          {/* 전역 통합 조사 단독 특수 배치 */}
-          {(() => {
-            const allRegion = REGION_LIST.find((rg) => rg.key === 'all');
-            if (!allRegion) return null;
-            const isSelected = selectedRegion === 'all';
-            return (
-              <div className="mb-6">
-                <button
-                  type="button"
-                  onClick={() => handleRegionChange('all')}
-                  className={`w-full p-6 sm:p-7 rounded-3xl border-3 text-left transition-all relative overflow-hidden group cursor-pointer ${
-                    isSelected
-                      ? 'bg-gradient-to-br from-indigo-50/90 to-sky-50 bg-indigo-50 border-indigo-500 ring-4 ring-indigo-200/50 shadow-md'
-                      : 'bg-slate-50/40 border-slate-200 hover:bg-slate-50/90 hover:border-indigo-300 hover:shadow-2xs'
-                  }`}
-                >
-                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div className="flex items-center gap-4.5">
-                      <span className="text-4xl sm:text-5xl select-none group-hover:scale-110 transition-transform shrink-0">🧭</span>
-                      <div>
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <span className="text-lg sm:text-xl font-black text-indigo-950 tracking-tight">{allRegion.name}</span>
-                          <span className="bg-rose-500 text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider animate-pulse">전체 조사권역 ⭐</span>
-                        </div>
-                        <p className="text-xs sm:text-sm md:text-base font-bold text-slate-700 mt-1.5 leading-relaxed">
-                          {allRegion.description}
-                        </p>
-                      </div>
-                    </div>
-                    
-                    {/* 구 표시 장식 */}
-                    <div className="pt-2 md:pt-0 flex flex-wrap gap-1 pointer-events-none self-start md:self-center shrink-0">
-                      <span className="text-xs px-3 py-1 bg-white text-indigo-700 rounded-xl border border-indigo-200 font-extrabold shadow-3xs">
-                        부산 16개 구 · 군 전체 탐험학습용
-                      </span>
-                    </div>
-                  </div>
-                  {isSelected && (
-                    <div className="absolute top-2 right-2 w-3 h-3 rounded-full bg-indigo-600 animate-ping" />
-                  )}
-                </button>
-              </div>
-            );
-          })()}
-
-          {/* 일반 조사 구역들 (3개씩 그리드 배치) */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {REGION_LIST.filter((rg) => rg.key !== 'all').map((rg) => {
-              const isSelected = selectedRegion === rg.key;
-              return (
-                <button
-                  key={rg.key}
-                  type="button"
-                  onClick={() => handleRegionChange(rg.key)}
-                  className={`p-5 rounded-2xl border text-left transition-all relative overflow-hidden group cursor-pointer ${
-                    isSelected
-                      ? 'bg-emerald-50/80 border-emerald-500 ring-4 ring-emerald-100 shadow-md'
-                      : 'bg-slate-50/60 border-slate-200 hover:bg-slate-50/90 hover:shadow-2xs'
-                  }`}
-                >
-                  <div className="flex items-center gap-2">
-                    <span className="text-3xl select-none group-hover:scale-110 transition-transform">{rg.emoji}</span>
-                    <span className="text-lg font-black text-slate-900 tracking-tight">{rg.name}</span>
-                  </div>
-                  <p className="text-sm text-slate-700 font-bold mt-2.5 leading-relaxed line-clamp-3">
-                    {rg.description}
-                  </p>
-                  
-                  {/* 구 표시 장식 */}
-                  <div className="mt-4 pt-2.5 border-t border-slate-200/80 flex flex-wrap gap-1 pointer-events-none">
-                    {rg.districts.slice(0, 3).map((dist, dIdx) => (
-                      <span key={dIdx} className="text-xs px-2 py-0.5 bg-white text-slate-700 rounded-lg border border-slate-305 font-bold">
-                        {dist.replace('구', '').replace('군', '')}
-                      </span>
-                    ))}
-                    {rg.districts.length > 3 && (
-                      <span className="text-xs text-slate-500 font-bold px-1.5 py-0.5 bg-slate-100 rounded-lg">+{rg.districts.length - 3}</span>
-                    )}
-                  </div>
-
-                  {isSelected && (
-                    <div className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-emerald-600 animate-ping" />
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-
-
-        {/* 👥 모둠 협동 미션 흐름 가이드 (아이들이 이해하기 쉬운 접이식 구조) */}
-        <div className="bg-amber-50 border-2 border-amber-300 rounded-2xl p-5 md:p-6 shadow-sm transition-all">
+        {/* 👥 모둠 협동 미션 흐름 가이드 (기본 접힘, 상단 우선 배치) */}
+        <div className="bg-amber-50/70 border border-amber-300 rounded-2xl p-5 md:p-6 shadow-3xs transition-all mb-4">
           <button
+            type="button"
             onClick={() => setShowGuide(!showGuide)}
-            className="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between text-left cursor-pointer focus:outline-none gap-3"
+            className="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between text-left cursor-pointer focus:outline-none gap-3 animate-fade-in"
           >
             <div className="flex items-center gap-3">
               <span className="text-3xl md:text-4xl select-none">👥</span>
@@ -482,7 +378,7 @@ export default function App() {
                         <span className="bg-emerald-500/20 text-emerald-300 text-xs px-2.5 py-0.5 rounded-full font-black select-none">정리 ✍️</span>
                         <strong className="text-xs sm:text-sm font-extrabold text-white">AIDT 형성평가 해결</strong>
                       </div>
-                      <p className="text-[11px] sm:text-xs text-slate-300 font-semibold leading-relaxed mt-2.5">
+                      <p className="text-[11px] sm:text-xs text-slate-305 text-slate-300 font-semibold leading-relaxed mt-2.5">
                         협동 작전을 완벽하게 마친 뒤 AIDT 코너로 이동해 오늘의 형성평가를 해결해요! 빨리 공부를 마친 멋쟁이 대원들은 AI 추천 추가 문제를 한 걸음 더 풀어 봅니다!
                       </p>
                     </div>
@@ -747,6 +643,111 @@ export default function App() {
           </button>
         </div>
 
+        {/* 모둠별 조사 범위(권역) 커스텀 선택 장치 (고민 완벽 해결책) */}
+        {activeStep === 1 && (
+          <div className="bg-white rounded-2xl p-8 border border-slate-150 shadow-3xs hover:shadow-2xs transition-shadow animate-fade-in animate-once">
+          <div className="flex flex-row items-center justify-between gap-4 border-b border-slate-100 pb-4 mb-5">
+            <div className="space-y-1.5">
+              <h3 className="text-2xl font-black text-slate-900 flex items-center gap-2.5 flex-wrap">
+                <span className="p-1 py-0.5 px-2 bg-indigo-50 text-indigo-750 text-sm rounded-md border border-indigo-150 font-bold shrink-0">활동 1</span>
+                <span>모둠의 부산 탐험 조사 범위 선택하기 🧭</span>
+              </h3>
+              <p className="text-sm text-slate-500 font-bold leading-normal">
+                조사 구역을 변경하면 지도의 명소 목록과 통계 대시보드가 실시간 동기화 교정됩니다.
+              </p>
+            </div>
+          </div>
+
+          {/* 전역 통합 조사 단독 특수 배치 */}
+          {(() => {
+            const allRegion = REGION_LIST.find((rg) => rg.key === 'all');
+            if (!allRegion) return null;
+            const isSelected = selectedRegion === 'all';
+            return (
+              <div className="mb-6">
+                <button
+                  type="button"
+                  onClick={() => handleRegionChange('all')}
+                  className={`w-full p-6 sm:p-7 rounded-3xl border-3 text-left transition-all relative overflow-hidden group cursor-pointer ${
+                    isSelected
+                      ? 'bg-gradient-to-br from-indigo-50/90 to-sky-50 bg-indigo-50 border-indigo-500 ring-4 ring-indigo-200/50 shadow-md'
+                      : 'bg-slate-50/40 border-slate-200 hover:bg-slate-50/90 hover:border-indigo-300 hover:shadow-2xs'
+                  }`}
+                >
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div className="flex items-center gap-4.5">
+                      <span className="text-4xl sm:text-5xl select-none group-hover:scale-110 transition-transform shrink-0">🧭</span>
+                      <div>
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="text-lg sm:text-xl font-black text-indigo-950 tracking-tight">{allRegion.name}</span>
+                          <span className="bg-rose-500 text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider animate-pulse">전체 조사권역 ⭐</span>
+                        </div>
+                        <p className="text-xs sm:text-sm md:text-base font-bold text-slate-700 mt-1.5 leading-relaxed">
+                          {allRegion.description}
+                        </p>
+                      </div>
+                    </div>
+                    
+                    {/* 구 표시 장식 */}
+                    <div className="pt-2 md:pt-0 flex flex-wrap gap-1 pointer-events-none self-start md:self-center shrink-0">
+                      <span className="text-xs px-3 py-1 bg-white text-indigo-700 rounded-xl border border-indigo-200 font-extrabold shadow-3xs">
+                        부산 16개 구 · 군 전체 탐험학습용
+                      </span>
+                    </div>
+                  </div>
+                  {isSelected && (
+                    <div className="absolute top-2 right-2 w-3 h-3 rounded-full bg-indigo-600 animate-ping" />
+                  )}
+                </button>
+              </div>
+            );
+          })()}
+
+          {/* 일반 조사 구역들 (3개씩 그리드 배치) */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {REGION_LIST.filter((rg) => rg.key !== 'all').map((rg) => {
+              const isSelected = selectedRegion === rg.key;
+              return (
+                <button
+                  key={rg.key}
+                  type="button"
+                  onClick={() => handleRegionChange(rg.key)}
+                  className={`p-5 rounded-2xl border text-left transition-all relative overflow-hidden group cursor-pointer ${
+                    isSelected
+                      ? 'bg-emerald-50/80 border-emerald-500 ring-4 ring-emerald-100 shadow-md'
+                      : 'bg-slate-50/60 border-slate-200 hover:bg-slate-50/90 hover:shadow-2xs'
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="text-3xl select-none group-hover:scale-110 transition-transform">{rg.emoji}</span>
+                    <span className="text-lg font-black text-slate-900 tracking-tight">{rg.name}</span>
+                  </div>
+                  <p className="text-sm text-slate-700 font-bold mt-2.5 leading-relaxed line-clamp-3">
+                    {rg.description}
+                  </p>
+                  
+                  {/* 구 표시 장식 */}
+                  <div className="mt-4 pt-2.5 border-t border-slate-200/80 flex flex-wrap gap-1 pointer-events-none">
+                    {rg.districts.slice(0, 3).map((dist, dIdx) => (
+                      <span key={dIdx} className="text-xs px-2 py-0.5 bg-white text-slate-700 rounded-lg border border-slate-305 font-bold">
+                        {dist.replace('구', '').replace('군', '')}
+                      </span>
+                    ))}
+                    {rg.districts.length > 3 && (
+                      <span className="text-xs text-slate-500 font-bold px-1.5 py-0.5 bg-slate-100 rounded-lg">+{rg.districts.length - 3}</span>
+                    )}
+                  </div>
+
+                  {isSelected && (
+                    <div className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-emerald-600 animate-ping" />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+        )}
+
         {/* 렌더러 전환 */}
         <div className="transition-all duration-200">
           <AnimatePresence mode="wait">
@@ -996,48 +997,12 @@ export default function App() {
           </button>
         </div>
 
-        {/* 교육적 배움 팁 상자 */}
-        <div className="bg-gradient-to-br from-indigo-950 to-slate-900 text-white rounded-3xl p-5 shadow-sm relative overflow-hidden">
-          <div className="absolute top-0 right-0 p-6 text-6xl opacity-5 select-none pointer-events-none">
-            🎓
-          </div>
-          <div className="relative space-y-3.5 max-w-4xl mx-auto">
-            <h4 className="text-sm sm:text-base font-extrabold flex items-center justify-center gap-1.5 text-indigo-300 text-center w-full">
-              <BookOpen className="w-4.5 h-4.5 text-indigo-400 shrink-0" />
-              <span>우리가 오늘 배우는 재미있는 지리 수학 이야기 🏫🧭</span>
-            </h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-[11px] font-bold leading-relaxed text-slate-300">
-              <div className="bg-white/5 p-3.5 rounded-2xl border border-white/5 space-y-1.5">
-                <h5 className="font-extrabold text-white flex items-center gap-1">
-                  <span>🗺️</span>
-                  <span>지도의 명소를 왜 종류별로 함께 분류해서 셀까요?</span>
-                </h5>
-                <p>
-                  부산의 맛집, 교통 명소, 역사지와 놀이터 등 테마별로 따로 묶어 세어보면 어느 행정구역에 어떤 매력(특산물이나 관광지)이 많이 몰려 있는지 한눈에 쉽게 알 수 있기 때문이에요!
-                </p>
-              </div>
-
-              <div className="bg-white/5 p-3.5 rounded-2xl border border-white/5 space-y-1.5">
-                <h5 className="font-extrabold text-white flex items-center gap-1">
-                  <span>📊</span>
-                  <span>개별 숫자를 왜 세로 막대그래프로 직접 그릴까요?</span>
-                </h5>
-                <p>
-                  그냥 숫자 표만 볼 때보다, 키가 훌쩍 크고 작음이 한눈에 확실한 막대 기둥으로 그리면 어느 종류가 가장 많고 적은지 힘들이지 않고 곧바로 알 수 있어요! 그래서 최고의 여행 추천 보드를 구상할 때 큰 도움이 된답니다.
-                </p>
-              </div>
-            </div>
-            <p className="text-[10px] text-sky-250 italic font-black text-center mt-2.5">
-              &quot;우리는 부산을 탐험하는 똑똑한 어린이 지리학자이자 통계 분석가입니다! 재미있게 지도를 탐험해 볼까요? 🏖️🎒&quot;
-            </p>
-          </div>
-        </div>
       </main>
 
       {/* 푸터 (메이드 윤아 기재) */}
       <footer className="bg-white border-t border-slate-150 py-6 text-center text-slate-500 text-xs sm:text-sm font-bold">
         <div className="w-[98%] max-w-[2100px] mx-auto px-4 space-y-1.5">
-          <p>© 2026 made by 윤아 · 초등 4학년 사회 · 수학 융합 교재</p>
+          <p>© 2026 made by 윤아 · 초등 4학년 사회 · 수학 융합 탐구 활동</p>
           <p className="text-slate-450 font-semibold">
             아름다운 부산을 찾은 전 세계 모든 방문객 친구들의 기분 좋은 발자국을 응원합니다 🏖️🧭
           </p>

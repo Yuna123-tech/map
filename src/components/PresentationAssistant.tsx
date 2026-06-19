@@ -218,7 +218,7 @@ export default function PresentationAssistant({
           </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-between border-t border-slate-100 pt-4 mt-2 gap-2 text-base font-bold text-slate-650">
-            <span>© made by 초등 사회·수학 교재 융합실</span>
+            <span>© made by 초등 사회·수학 융합 탐구실</span>
             <span className="font-black text-slate-700 text-sm sm:text-base flex items-center gap-1.5">
               <Award className="w-5.5 h-5.5 text-amber-500" />
               <span>우수 관광 어린이 홍보대사 선정위원회 🏅</span>

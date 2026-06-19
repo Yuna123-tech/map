@@ -29,6 +29,41 @@ const DISTRICT_WATERMARKS = [
   { name: '기장군 🌊', x: 86, y: 24 },
 ];
 
+// 지리적 특징을 더 상세화된 텍스트로 보강하여 풍부한 사회 교육 설명을 제공합니다.
+function getGeographicValue(spot: BusanSpot): string {
+  switch (spot.category) {
+    case 'beach':
+      return `${spot.name}은(는) 낙동강 및 동해·남해의 바다 흐름이 만나 빚어낸 독특한 해안 퇴적 또는 침식 지형입니다. 풍부한 일조량과 해양성 기후 덕분에 온난한 생태계를 보존하고 있으며, 사구, 바위섬, 천연 모래사장이 잘 보완된 부산의 대표적인 생태지리 공간입니다.`;
+    case 'history':
+      return `${spot.name}은(는) 산과 바다가 맞닿아 있는 부산 고유의 배산임수 형세와 근현대 역사가 기하학적으로 엮여 있는 지리적 거점입니다. 독특한 산비탈 경사 대지의 계단식 생활 공간과 오래도록 잘 보존되어 온 고유 주거 흔적들이 어우러져 역사와 삶을 잇는 살아있는 박물관 역할을 수행합니다.`;
+    case 'traffic':
+      return `${spot.name}은(는) 부산 도심의 혼잡 구역들을 단숨에 중계하거나 외곽 거점을 촘촘하게 가로지르는 인프라의 최고 핵지점입니다. 지형적 한계(산과 항만)를 지혜로운 터널, 고가 도로, 교량 등으로 극복하면서 물류와 사람의 지리학적 이동 시간 및 편의를 극대화해 주는 공간입니다.`;
+    case 'play':
+      return `${spot.name}은(는) 복합 도심 자연 지리와 풍요로운 대규모 편의 녹지 설계가 모범적으로 융합된 친환경 복복합 체험형 랜드마크 공간입니다. 시민들과 국내외 탐방객들이 계절의 흐름과 다채로운 생태 정서를 골고루 만끽하며 여가를 즐길 수 있어 보존 가치가 높습니다.`;
+    case 'food':
+      return `${spot.name}은(는) 옛날부터 해상 물류와 주변 전통 어시장이 교차하는 항구·시장 연접 지리로 발달해 온 명소입니다. 풍부한 해저 어족 자원과 신선한 식자재 유통이 가장 주효하게 일어나는 공간으로, 부산 특유의 역동적인 식문화 역사를 오롯이 대변합니다.`;
+    default:
+      return `${spot.name}은(는) 부산만이 가진 자연환경적 강점과 사람들의 유구한 생활 개척 정신이 공존하여 역사적, 인문지리적 고유 가치가 매우 드높은 지역 자산 공간입니다.`;
+  }
+}
+
+function getEconomicValue(spot: BusanSpot): string {
+  switch (spot.category) {
+    case 'beach':
+      return `연중 수만 명의 외국인 관광 유입과 해양 마이스(MICE), 스포츠 산업 등 굵직한 신산업 기회의 요람이 되어 부산의 글로벌 경제 소득 성장을 강력하게 이끕니다. 청년 로컬 크리에이터와 복합 테마 상가들이 고르게 동반 성장하며 막대한 관광 유발 낙수효과를 체감하게 합니다.`;
+    case 'history':
+      return `전통의 가치를 허물지 않고 활용하는 똑똑한 '도시 재생 활성화 사업'과 로컬 콘텐츠 기획을 통해 청장년층 인구 유입 및 개성 넘치는 이색 상권을 부흥시켰습니다. 문화 해설사 채용, 수공예 예술 장터 등 주민 주도형 사회적 일자리 창출의 성공적인 표준을 제시합니다.`;
+    case 'traffic':
+      return `낙동강 벨트와 대형 항만 물류 이동 경로의 가동 한계를 뚫고 원가를 획기적으로 낮춰주어 영남권 전체 제조업 및 수출입 무역 기업들의 경제적 경쟁력을 비약적으로 끌어올렸습니다. 역세권과 가교 주변 상권의 자산 가치를 제고하며 지속 가능한 인구 분산의 경제 축을 이룹니다.`;
+    case 'play':
+      return `연중 다채롭게 열리는 국제적 축제, 대형 관광 설비 유수, 가상 오락 플랫폼 등을 성공적으로 유치함으로써 숙박업, 식음료업, 문화예술 창작 업종을 풍부하게 살찌우며, 부산의 브랜드 가치를 글로벌 TOP 랜드마크 수준으로 환산 불가할 만큼 널리 증대시키는 원천입니다.`;
+    case 'food':
+      return `바다 고유의 영양과 어민의 정성에서 탄생한 로컬 고유 미식 브랜드 상품이 국내 우수 외식 프랜차이즈, 첨단 즉석조리(HMR) 식품 가공 유통망으로 확장되는 튼튼한 토대가 되었습니다. 특산품 지정 및 마케팅을 통해 소상공인과 골목길 소규모 맛 상권에 단비 같은 지속 가능 경제 수익을 공급해 줍니다.`;
+    default:
+      return `지역 주민들의 안정적인 일자리 보장과 소득 기회 확대에 조용하지만 핵심적인 경제 바퀴축을 이룩하고 있어, 부산 전역의 자원 선순환 및 국가 균형 경쟁력을 다지는 데 커다란 혜택을 줍니다.`;
+  }
+}
+
 interface BusanMapProps {
   onCollectSpot: (spotId: string) => void;
   collectedSpots: string[];
@@ -295,56 +330,6 @@ export default function BusanMap({
               }}
               className="w-full pl-13 pr-5 py-4 bg-slate-50 border border-slate-150 rounded-2xl text-xs sm:text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-sky-400 focus:bg-white transition-all text-slate-700 font-bold placeholder:text-slate-400"
             />
-          </div>
-        </div>
-
-        {/* 전체 300곳 지리 데이터 팩트 검증 및 줌인 설명 패널 */}
-        <div className="bg-gradient-to-br from-indigo-50/70 via-sky-50/50 to-emerald-50/40 rounded-3xl p-5 sm:p-6 shadow-3xs border border-sky-100/60 space-y-3">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3.5">
-            <div className="flex items-start md:items-center gap-3">
-              <span className="text-2xl sm:text-3xl shrink-0">📊</span>
-              <div>
-                <h4 className="text-xs sm:text-sm md:text-base font-extrabold text-slate-950 flex items-center gap-2">
-                  <span>300곳 명승 지리 전수 검증 및 안심 카운터</span>
-                  <span className="bg-indigo-550 bg-indigo-600 text-white text-[9px] px-2.5 py-0.5 rounded-full font-black animate-pulse">
-                    데이터 100% 완벽 검증
-                  </span>
-                </h4>
-                <p className="text-[11px] sm:text-xs md:text-[13px] text-slate-650 mt-1 font-semibold leading-relaxed">
-                  부산의 16개 구·군을 고르게 기치 반영한 총 <strong className="text-indigo-600">300곳의 독창적 백지도 명소</strong>가 누락이나 왜곡 없이 지도상에 100% 무결하게 구현되었습니다.
-                </p>
-              </div>
-            </div>
-            
-            {/* 요약 뱃지 모음 */}
-            <div className="bg-white/90 backdrop-blur-3xs border border-sky-100 px-4 py-2.5 rounded-2xl flex items-center gap-4 shrink-0 shadow-3xs self-start md:self-auto">
-              <div className="text-center">
-                <span className="block text-[9px] font-black text-slate-400 tracking-tighter uppercase">MAP 핀 표시</span>
-                <span className="text-sm sm:text-base font-black text-sky-600">{filteredSpots.length} / 300곳</span>
-              </div>
-              <div className="h-6 w-px bg-slate-200" />
-              <div className="text-center">
-                <span className="block text-[9px] font-black text-slate-400 tracking-tighter uppercase">수집 진행도</span>
-                <span className="text-sm sm:text-base font-black text-emerald-600">
-                  {((collectedSpots.length / 300) * 100).toFixed(0)}%
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white/80 border border-slate-100/70 p-3 sm:p-4 rounded-2xl text-[11px] sm:text-xs md:text-[13px] leading-relaxed text-slate-600 font-medium space-y-1.5 shadow-3xs">
-            <p className="flex items-start gap-1.5">
-              <span className="text-sky-500 shrink-0">💡</span>
-              <span>
-                <strong>핀 겹침 현상 안내:</strong> 수영역 대환승 거점, 남천동 삼익비치 벚꽃 제과길, 초량동 계단처럼 역사/체험 명소나 유동인구가 집중된 도심 구간은 <strong>여러 개의 핀이 매우 조밀한 자리에 밀집해 있어 서로를 살짝 가리며 겹쳐</strong> 보일 수 있습니다.
-              </span>
-            </p>
-            <p className="flex items-start gap-1.5 pl-5 text-slate-500">
-              <span className="shrink-0">👉</span>
-              <span>
-                이때는 마우스 휠 스크롤이나 두 손가락 핀치 액션, 혹은 지도 상단에 있는 <strong className="text-slate-800">[🔍 지도 확대 슬라이더]</strong>를 부드럽게 당겨 <strong>2배 ~ 최대 4배까지 지형을 줌 인(Zoom In)</strong>해 보세요! 밀집 배치된 핀들이 시원시원하게 넓게 펼쳐지며 <strong>300곳 단 한 곳의 누락도 없이 모든 장소를 완전하게 직접 수집</strong>하실 수 있습니다.
-              </span>
-            </p>
           </div>
         </div>
 
@@ -646,111 +631,81 @@ export default function BusanMap({
                 </h3>
 
                 {/* 지리적 경제 정보 설명 상자 */}
-                <div className="p-4.5 bg-slate-50 rounded-2xl border border-slate-200">
-                  <p className="text-sm sm:text-base md:text-lg text-slate-700 font-medium leading-relaxed">
+                <div className="p-5 bg-gradient-to-br from-slate-50 to-slate-100/60 rounded-2xl border border-slate-200">
+                  <p className="text-sm sm:text-base md:text-lg text-slate-850 font-extrabold leading-relaxed">
                     {activeSpot.description}
                   </p>
                 </div>
 
-                {/* 꼬마 탐정 꿀팁 상자 */}
-                {activeSpot.funFact && (
-                  <div className="p-4 bg-amber-50/70 border border-amber-200 rounded-2xl space-y-1">
-                    <h5 className="text-xs sm:text-sm md:text-base font-bold text-amber-900 flex items-center gap-1.5">
+                {/* 지리적·경제적 보충 심층 가치 분석 가이드 */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3 bg-slate-50/40 p-1 rounded-2xl border border-slate-100">
+                  <div className="p-4 bg-sky-50/40 border border-sky-100 rounded-xl flex flex-col justify-between">
+                    <div>
+                      <h5 className="text-xs sm:text-sm font-black text-sky-900 flex items-center gap-1.5 mb-2 shrink-0">
+                        🌏 지리적 공간 특징
+                      </h5>
+                      <p className="text-xs sm:text-sm text-slate-755 leading-relaxed font-semibold">
+                        {getGeographicValue(activeSpot)}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="p-4 bg-emerald-50/35 border border-emerald-100 rounded-xl flex flex-col justify-between">
+                    <div>
+                      <h5 className="text-xs sm:text-sm font-black text-emerald-950 flex items-center gap-1.5 mb-2 shrink-0">
+                        💰 핵심 경제 가치
+                      </h5>
+                      <p className="text-xs sm:text-sm text-slate-755 leading-relaxed font-semibold">
+                        {getEconomicValue(activeSpot)}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 꼬마 탐정 꿀팁 상자 (커스텀 정보가 있을 때만 표시) */}
+                {activeSpot.funFact && !activeSpot.funFact.includes('융복합된 멋진 장소적 자산') && (
+                  <div className="p-4 bg-amber-50/60 border border-amber-200 rounded-2xl space-y-1">
+                    <h5 className="text-xs sm:text-sm md:text-base font-black text-amber-950 flex items-center gap-1.5">
                       💡 똑똑한 탐험가를 위한 비법!
                     </h5>
-                    <p className="text-xs sm:text-sm md:text-base text-amber-900 leading-relaxed font-medium">
+                    <p className="text-xs sm:text-sm md:text-base text-amber-900 leading-relaxed font-semibold">
                       {activeSpot.funFact}
+                    </p>
+                  </div>
+                )}
+
+                {/* 깊어지는 탐험 돋보기 퀴즈 지식 -> 깔끔한 심층 탐구 지식 설명 카드 */}
+                {activeSpot.quiz && (
+                  <div className="p-4.5 bg-emerald-50/40 border border-emerald-150 rounded-2xl space-y-2">
+                    <h5 className="text-xs sm:text-sm md:text-base font-black text-emerald-950 flex items-center gap-1.5">
+                      📖 한 걸음 더! 깊이 있는 탐구 이야기
+                    </h5>
+                    <p className="text-slate-700 leading-relaxed font-semibold text-xs sm:text-sm md:text-base">
+                      {activeSpot.quiz.explanation.startsWith('맞습니다!') 
+                        ? `${activeSpot.name}은(는) 부산광역시 ${activeSpot.district}를 빛내는 대표적인 지리·경제적 명소입니다. 지역 주민들의 소중한 생활 터전이자, 많은 사람들이 방문하고 아끼는 소중한 장소 유산이랍니다.`
+                        : activeSpot.quiz.explanation
+                      }
                     </p>
                   </div>
                 )}
               </div>
 
-              {/* 퀴즈 섹션 */}
-              {activeSpot.quiz && (
-                <div className="border-t border-slate-100 pt-5 mt-3 space-y-4">
-                  <div className="flex items-center justify-between">
-                    <h4 className="text-sm sm:text-base md:text-lg font-black text-slate-800 flex items-center gap-2">
-                      <HelpCircle className="w-5 h-5 text-sky-500" />
-                      <span>도전! 골든벨 퀴즈</span>
-                    </h4>
-                    {quizState[activeSpot.id]?.solved && (
-                      <span className={`text-xs sm:text-sm font-black px-3 py-1 rounded border ${
-                        quizState[activeSpot.id].isCorrect 
-                          ? 'bg-emerald-50 border-emerald-200 text-emerald-800' 
-                          : 'bg-rose-50 border-rose-200 text-rose-850'
-                      }`}>
-                        {quizState[activeSpot.id].isCorrect ? '⭕ 정답 통과!' : '❌ 오답 복습'}
-                      </span>
-                    )}
+              {/* 장소 탐험 가이드 보드 */}
+              <div className="border-t border-slate-100 pt-5 mt-3 space-y-4">
+                <div className="flex flex-col gap-3 font-semibold text-slate-800">
+                  <div className="flex items-center gap-2 text-slate-700 text-xs sm:text-sm">
+                    <span className="bg-sky-50 text-sky-800 border border-sky-150 px-3.5 py-1.5 rounded-xl font-black flex items-center gap-1">
+                      🌳 지리·경제 테마: {activeSpot.theme || '부산의 가치 있는 지역 자원 보존 및 발전'}
+                    </span>
                   </div>
-
-                  <p className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-slate-800 leading-relaxed bg-sky-50/70 p-3.5 rounded-xl border border-sky-150">
-                    Q. {activeSpot.quiz.question}
-                  </p>
-
-                  <div className="space-y-2">
-                    {activeSpot.quiz.options.map((option, idx) => {
-                      const spotQuiz = activeSpot.quiz!;
-                      const isSolved = quizState[activeSpot.id]?.solved;
-                      const selectedIdx = quizState[activeSpot.id]?.selectedOption;
-                      const isCorrectOption = idx === spotQuiz.answerIndex;
-                      const isSelected = selectedIdx === idx;
-
-                      let btnClass = 'bg-slate-50 border-slate-150 hover:bg-slate-100 text-slate-700 font-extrabold';
-                      let statusIcon = null;
-
-                      if (isSolved) {
-                        if (isCorrectOption) {
-                          btnClass = 'bg-emerald-50 border-emerald-300 text-emerald-800 font-extrabold';
-                          statusIcon = <CheckCircle className="w-5 h-5 text-emerald-600 inline ml-auto shrink-0" />;
-                        } else if (isSelected) {
-                          btnClass = 'bg-rose-50 border-rose-300 text-rose-800 font-extrabold';
-                          statusIcon = <AlertCircle className="w-5 h-5 text-rose-600 inline ml-auto shrink-0" />;
-                        } else {
-                          btnClass = 'bg-slate-50 border-slate-100 text-slate-400 opacity-60';
-                        }
-                      }
-
-                      return (
-                        <button
-                          key={idx}
-                          id={`quiz-option-${activeSpot.id}-${idx}`}
-                          disabled={isSolved}
-                          onClick={() => handleQuizAnswer(activeSpot, idx)}
-                          className={`w-full text-left p-3.5 rounded-xl text-xs sm:text-sm md:text-base border transition-all flex items-center justify-start gap-2.5 ${btnClass} ${
-                            !isSolved ? 'cursor-pointer hover:translate-x-1' : 'cursor-default'
-                          }`}
-                        >
-                          <span className="font-black flex items-center justify-center w-5 h-5 rounded-full bg-white/60 text-xs text-slate-600 border shrink-0">
-                            {idx + 1}
-                          </span>
-                          <span className="flex-1 truncate">{option}</span>
-                          {statusIcon}
-                        </button>
-                      );
-                    })}
-                  </div>
-
-                  {/* 퀴즈 정 오답에 대한 친근 명료 설명 */}
-                  {quizState[activeSpot.id]?.solved && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      className="p-3.5 bg-emerald-50/50 text-emerald-900 border border-emerald-200 rounded-xl"
-                    >
-                      <div className="font-black text-xs sm:text-sm flex items-center gap-1.5 mb-1">
-                        <span>📢 풀이 주머니:</span>
-                        <span className={quizState[activeSpot.id].isCorrect ? 'text-emerald-700 font-black' : 'text-rose-600 font-black'}>
-                          {quizState[activeSpot.id].isCorrect ? '훌륭한 탐험가네요! 🎉' : '괜찮아요, 알아가는 중이에요!'}
-                        </span>
-                      </div>
-                      <p className="text-xs sm:text-sm md:text-base leading-relaxed font-bold">
-                        {activeSpot.quiz.explanation}
-                      </p>
-                    </motion.div>
+                  {activeSpot.address && (
+                    <div className="bg-slate-50 border border-slate-150 p-3.5 rounded-xl text-xs sm:text-sm md:text-base leading-relaxed text-slate-600 flex items-center gap-2">
+                      <span className="font-extrabold text-slate-800 shrink-0">📍 상세 주소:</span>
+                      <span className="font-bold text-slate-705">{activeSpot.address}</span>
+                    </div>
                   )}
                 </div>
-              )}
+              </div>
             </motion.div>
           ) : (
             <motion.div
@@ -766,7 +721,7 @@ export default function BusanMap({
               </div>
               <h3 className="text-lg sm:text-xl md:text-2xl font-black text-slate-800">지도의 마커를 터치해 가이드해 볼까요?</h3>
               <p className="text-xs sm:text-sm md:text-base text-slate-500 mt-3 max-w-sm leading-relaxed font-extrabold">
-                부산 전역에 흩어진 300대 명소 핀을 클릭하면 실제 지리·경제 가치 이야기와 퀴즈 챌린지가 펼쳐집니다!
+                부산 전역에 흩어진 300대 명소 핀을 클릭하면 실제 지리·경제 가치와 상세 가이드 탐험 설명이 펼쳐집니다!
               </p>
               <div className="mt-10 flex flex-wrap gap-2.5 justify-center max-w-sm">
                 <span className="bg-rose-50 text-rose-600 border border-rose-100 text-[11px] sm:text-[13px] px-3.5 py-1.5 rounded-full font-black">🍰 블루리본 고장 맛</span>
