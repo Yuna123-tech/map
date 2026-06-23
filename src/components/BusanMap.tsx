@@ -508,67 +508,109 @@ export default function BusanMap({
               </div>
             ))}
 
-            {/* 지도 핀 렌더링 */}
-            {filteredSpots.map((spot) => {
-              const cat = CATEGORY_LIST.find((c) => c.key === spot.category)!;
-              const isSelected = activeSpot?.id === spot.id;
-              const isCollected = collectedSpots.includes(spot.id);
+            {/* 지도 핀 렌더링 (겹치지 않게 하는 동적 분산 처리 적용) */}
+            {(() => {
+              // 복사본 생성 후 겹침 방지 변위 알고리즘 적용
+              const minSpacing = 2.4; // 2.4% 이내로 근접한 핀은 밀어냄 (학생들이 세기 편하도록 구조화)
+              const adjusted = filteredSpots.map((spot) => ({
+                ...spot,
+                displayX: spot.mapX,
+                displayY: spot.mapY,
+              }));
 
-              const currentRegion = REGIONS[selectedRegion] || REGIONS['all'];
-              const isSpotInRegion = selectedRegion === 'all' || currentRegion.districts.includes(spot.district);
+              // 최대 15회 반복하여 핀들 간의 겹침 현상을 완만하게 밀어냄
+              for (let step = 0; step < 15; step++) {
+                let changed = false;
+                for (let i = 0; i < adjusted.length; i++) {
+                  for (let j = i + 1; j < adjusted.length; j++) {
+                    const dx = adjusted[i].displayX - adjusted[j].displayX;
+                    const dy = adjusted[i].displayY - adjusted[j].displayY;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
 
-              return (
-                <button
-                  key={spot.id}
-                  id={`map-pin-${spot.id}`}
-                  style={{ left: `${spot.mapX}%`, top: `${spot.mapY}%` }}
-                  onClick={() => isSpotInRegion && handleSpotClick(spot)}
-                  disabled={!isSpotInRegion}
-                  className={`absolute -translate-x-1/2 -translate-y-1/2 focus:outline-none transition-all duration-300 ${
-                    isSpotInRegion
-                      ? `cursor-pointer ${isSelected ? 'z-40' : 'z-20 hover:z-30'}`
-                      : 'opacity-15 pointer-events-none scale-65 grayscale z-0'
-                  }`}
-                >
-                  <div className="relative flex flex-col items-center group">
-                    {/* 본래의 마커 핀 구 (이것이 중심점의 위치에 오도록 배치) */}
-                    <div className="relative z-20">
-                      {/* 파도형 후광 장식 */}
-                      <span className={`absolute -inset-1 rounded-full blur-xs opacity-55 animate-ping pointer-events-none ${
-                        spot.category === 'food' ? 'bg-rose-400' : spot.category === 'traffic' ? 'bg-cyan-400' : spot.category === 'play' ? 'bg-amber-400' : spot.category === 'history' ? 'bg-emerald-400' : 'bg-blue-400'
-                      }`} style={{ animationDuration: isSelected ? '1.2s' : '4s' }} />
+                    if (dist < minSpacing) {
+                      changed = true;
+                      const curDist = dist === 0 ? 0.1 : dist;
+                      // 반비례하는 벡터 힘 계산
+                      const forceX = (dx / curDist) * (minSpacing - dist) * 0.55;
+                      const forceY = (dy / curDist) * (minSpacing - dist) * 0.55;
 
-                      {/* 본래의 마커 핀 구 */}
-                      <div className={`w-6 h-6 rounded-full flex items-center justify-center border transition-all duration-200 shadow-sm ${
-                        isSelected
-                          ? `${spot.category === 'food' ? 'bg-rose-500 border-rose-600 ring-2 ring-rose-200' : spot.category === 'traffic' ? 'bg-cyan-500 border-cyan-600 ring-2 ring-cyan-200' : spot.category === 'play' ? 'bg-amber-500 border-amber-600 ring-2 ring-amber-200' : spot.category === 'history' ? 'bg-emerald-600 border-emerald-700 ring-2 ring-emerald-200' : 'bg-blue-500 border-blue-600 ring-2 ring-blue-200'}`
-                          : `bg-white ${spot.category === 'food' ? 'border-rose-300 text-rose-500' : spot.category === 'traffic' ? 'border-cyan-300 text-cyan-500' : spot.category === 'play' ? 'border-amber-300 text-amber-500' : spot.category === 'history' ? 'border-emerald-400 text-emerald-600' : 'border-blue-300 text-blue-500'}`
-                      }`}>
-                        <span className="text-xs leading-none select-none">{cat.emoji}</span>
+                      adjusted[i].displayX += forceX;
+                      adjusted[i].displayY += forceY;
+                      adjusted[j].displayX -= forceX;
+                      adjusted[j].displayY -= forceY;
+
+                      // 지도 테두리 바깥으로 튕겨 나가지 않도록 고정
+                      adjusted[i].displayX = Math.max(1.5, Math.min(98.5, adjusted[i].displayX));
+                      adjusted[i].displayY = Math.max(1.5, Math.min(98.5, adjusted[i].displayY));
+                      adjusted[j].displayX = Math.max(1.5, Math.min(98.5, adjusted[j].displayX));
+                      adjusted[j].displayY = Math.max(1.5, Math.min(98.5, adjusted[j].displayY));
+                    }
+                  }
+                }
+                if (!changed) break;
+              }
+
+              return adjusted.map((spot) => {
+                const cat = CATEGORY_LIST.find((c) => c.key === spot.category)!;
+                const isSelected = activeSpot?.id === spot.id;
+                const isCollected = collectedSpots.includes(spot.id);
+
+                const currentRegion = REGIONS[selectedRegion] || REGIONS['all'];
+                const isSpotInRegion = selectedRegion === 'all' || currentRegion.districts.includes(spot.district);
+
+                return (
+                  <button
+                    key={spot.id}
+                    id={`map-pin-${spot.id}`}
+                    style={{ left: `${spot.displayX}%`, top: `${spot.displayY}%` }}
+                    onClick={() => isSpotInRegion && handleSpotClick(spot)}
+                    disabled={!isSpotInRegion}
+                    className={`absolute -translate-x-1/2 -translate-y-1/2 focus:outline-none transition-all duration-300 ${
+                      isSpotInRegion
+                        ? `cursor-pointer ${isSelected ? 'z-40' : 'z-20 hover:z-30'}`
+                        : 'opacity-15 pointer-events-none scale-65 grayscale z-0'
+                    }`}
+                  >
+                    <div className="relative flex flex-col items-center group">
+                      {/* 본래의 마커 핀 구 (이것이 중심점의 위치에 오도록 배치) */}
+                      <div className="relative z-20">
+                        {/* 파도형 후광 장식 */}
+                        <span className={`absolute -inset-1 rounded-full blur-xs opacity-55 animate-ping pointer-events-none ${
+                          spot.category === 'food' ? 'bg-rose-400' : spot.category === 'traffic' ? 'bg-cyan-400' : spot.category === 'play' ? 'bg-amber-400' : spot.category === 'history' ? 'bg-emerald-400' : 'bg-blue-400'
+                        }`} style={{ animationDuration: isSelected ? '1.2s' : '4s' }} />
+
+                        {/* 본래의 마커 핀 구 */}
+                        <div className={`w-6 h-6 rounded-full flex items-center justify-center border transition-all duration-200 shadow-sm ${
+                          isSelected
+                            ? `${spot.category === 'food' ? 'bg-rose-500 border-rose-600 ring-2 ring-rose-200' : spot.category === 'traffic' ? 'bg-cyan-500 border-cyan-600 ring-2 ring-cyan-200' : spot.category === 'play' ? 'bg-amber-500 border-amber-600 ring-2 ring-amber-200' : spot.category === 'history' ? 'bg-emerald-600 border-emerald-700 ring-2 ring-emerald-200' : 'bg-blue-500 border-blue-600 ring-2 ring-blue-200'}`
+                            : `bg-white ${spot.category === 'food' ? 'border-rose-300 text-rose-500' : spot.category === 'traffic' ? 'border-cyan-300 text-cyan-500' : spot.category === 'play' ? 'border-amber-300 text-amber-500' : spot.category === 'history' ? 'border-emerald-400 text-emerald-600' : 'border-blue-300 text-blue-500'}`
+                        }`}>
+                          <span className="text-xs leading-none select-none">{cat.emoji}</span>
+                        </div>
+
+                        {/* 수집 완료 도장 뱃지 */}
+                        {isCollected && (
+                          <div className="absolute -top-1.5 -right-1.5 bg-yellow-400 border border-slate-900 text-slate-900 rounded-full w-4 h-4 flex items-center justify-center p-0 font-black text-[9px] sm:text-xs" title="획득!">
+                            ✓
+                          </div>
+                        )}
                       </div>
 
-                      {/* 수집 완료 도장 뱃지 */}
-                      {isCollected && (
-                        <div className="absolute -top-1.5 -right-1.5 bg-yellow-400 border border-slate-900 text-slate-900 rounded-full w-4 h-4 flex items-center justify-center p-0 font-black text-[9px] sm:text-xs" title="획득!">
-                          ✓
-                        </div>
-                      )}
+                      {/* 확대/마커명 표시 - 절대 좌표로 띄워서 아이콘 중심 정렬 유지 및 가시성 개선 */}
+                      <div className={`absolute bottom-full mb-1 left-1/2 -translate-x-1/2 px-1.5 py-0.5 rounded-md text-[8.5px] sm:text-[10px] font-bold shadow-3xs whitespace-nowrap border select-none pointer-events-none transition-all duration-200 ${
+                        isSelected
+                          ? 'bg-slate-900 text-white border-slate-950 scale-105 opacity-100 z-30'
+                          : showLabels
+                            ? 'bg-white text-slate-800 border-slate-200 opacity-95 group-hover:opacity-100 group-hover:scale-102 group-hover:z-30'
+                            : 'opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 group-hover:bg-white group-hover:text-slate-850 group-hover:border-slate-200 group-hover:z-30'
+                      }`}>
+                        {spot.name.split(' (')[0]}
+                      </div>
                     </div>
-
-                    {/* 확대/마커명 표시 - 절대 좌표로 띄워서 아이콘 중심 정렬 유지 및 가시성 개선 */}
-                    <div className={`absolute bottom-full mb-1 left-1/2 -translate-x-1/2 px-1.5 py-0.5 rounded-md text-[8.5px] sm:text-[10px] font-bold shadow-3xs whitespace-nowrap border select-none pointer-events-none transition-all duration-200 ${
-                      isSelected
-                        ? 'bg-slate-900 text-white border-slate-950 scale-105 opacity-100 z-30'
-                        : showLabels
-                          ? 'bg-white text-slate-800 border-slate-200 opacity-95 group-hover:opacity-100 group-hover:scale-102 group-hover:z-30'
-                          : 'opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 group-hover:bg-white group-hover:text-slate-850 group-hover:border-slate-200 group-hover:z-30'
-                    }`}>
-                      {spot.name.split(' (')[0]}
-                    </div>
-                  </div>
-                </button>
-              );
-            })}
+                  </button>
+                );
+              });
+            })()}
           </div>
 
           {/* 왼쪽 아래의 미니 고정 가이드 나침반 (지도와 함께 움직이지 않음) */}
