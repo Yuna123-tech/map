@@ -12,6 +12,82 @@ import PresentationAssistant from './components/PresentationAssistant';
 import { BookOpen, Sparkles, Compass, BarChart3, Award, RefreshCw, CheckCircle, MapPin } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
+// Safe localStorage wrapper for protected or sandboxed environment
+const createSafeLocalStorage = () => {
+  const memoryStorage: Record<string, string> = {};
+  let hasLocalStorage = false;
+  try {
+    hasLocalStorage = typeof window !== 'undefined' && 'localStorage' in window && window.localStorage !== null;
+  } catch (e) {
+    hasLocalStorage = false;
+  }
+
+  return {
+    getItem(key: string): string | null {
+      if (hasLocalStorage) {
+        try {
+          return window.localStorage.getItem(key);
+        } catch (e) {
+          // Fall back
+        }
+      }
+      return Object.prototype.hasOwnProperty.call(memoryStorage, key) ? memoryStorage[key] : null;
+    },
+    setItem(key: string, value: string): void {
+      if (hasLocalStorage) {
+        try {
+          window.localStorage.setItem(key, value);
+          return;
+        } catch (e) {
+          // Fall back
+        }
+      }
+      memoryStorage[key] = String(value);
+    },
+    removeItem(key: string): void {
+      if (hasLocalStorage) {
+        try {
+          window.localStorage.removeItem(key);
+          return;
+        } catch (e) {
+          // Fall back
+        }
+      }
+      delete memoryStorage[key];
+    },
+    clear(): void {
+      if (hasLocalStorage) {
+        try {
+          window.localStorage.clear();
+          return;
+        } catch (e) {
+          // Fall back
+        }
+      }
+      for (const k in memoryStorage) {
+        if (Object.prototype.hasOwnProperty.call(memoryStorage, k)) {
+          delete memoryStorage[k];
+        }
+      }
+    }
+  };
+};
+
+const safeLocalStorage = createSafeLocalStorage();
+
+const safeScrollIntoView = (id: string) => {
+  try {
+    if (typeof document !== 'undefined') {
+      const element = document.getElementById(id);
+      if (element && typeof element.scrollIntoView === 'function') {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  } catch (err) {
+    console.warn('Scroll into view not supported/allowed in this environment:', err);
+  }
+};
+
 export default function App() {
   // 활성 단계: 1(지도 탐색), 2(그래프 가설), 3(발표 보드)
   const [activeStep, setActiveStep] = useState<1 | 2 | 3>(1);
@@ -52,28 +128,39 @@ export default function App() {
   // 모둠 협동 가이드 아코디언 상태
   const [showGuide, setShowGuide] = useState(false);
 
-  // 로컬 저장소 동기화
-  useEffect(() => {
-    const savedRegion = localStorage.getItem('busan_selected_region') as RegionKey;
-    const savedCollected = localStorage.getItem('busan_collected_spots');
-    const savedQuiz = localStorage.getItem('busan_quiz_state');
-    const savedCounts = localStorage.getItem('busan_verified_counts');
-    const savedTableCounts = localStorage.getItem('busan_table_counts');
-    const savedTableMemos = localStorage.getItem('busan_table_memos');
-    const savedPresentation = localStorage.getItem('busan_presentation_state');
+    // 로컬 저장소 동기화
+    useEffect(() => {
+      try {
+        const savedRegion = safeLocalStorage.getItem('busan_selected_region') as RegionKey;
+        const savedCollected = safeLocalStorage.getItem('busan_collected_spots');
+        const savedQuiz = safeLocalStorage.getItem('busan_quiz_state');
+        const savedCounts = safeLocalStorage.getItem('busan_verified_counts');
+        const savedTableCounts = safeLocalStorage.getItem('busan_table_counts');
+        const savedTableMemos = safeLocalStorage.getItem('busan_table_memos');
+        const savedPresentation = safeLocalStorage.getItem('busan_presentation_state');
 
-    if (savedRegion && REGIONS[savedRegion]) {
-      setSelectedRegion(savedRegion);
-    } else {
-      setSelectedRegion('all');
-    }
-    if (savedCollected) setCollectedSpots(JSON.parse(savedCollected));
-    if (savedQuiz) setQuizState(JSON.parse(savedQuiz));
-    if (savedCounts) setVerifiedCounts(JSON.parse(savedCounts));
-    if (savedTableCounts) setTableCounts(JSON.parse(savedTableCounts));
-    if (savedTableMemos) setTableMemos(JSON.parse(savedTableMemos));
-    if (savedPresentation) setPresentation(JSON.parse(savedPresentation));
-  }, []);
+        if (savedRegion && REGIONS[savedRegion]) {
+          setSelectedRegion(savedRegion);
+        } else {
+          setSelectedRegion('all');
+        }
+        if (savedCollected) setCollectedSpots(JSON.parse(savedCollected));
+        if (savedQuiz) setQuizState(JSON.parse(savedQuiz));
+        if (savedCounts) setVerifiedCounts(JSON.parse(savedCounts));
+        
+        if (savedTableCounts) {
+          const parsedCounts = JSON.parse(savedTableCounts);
+          setTableCounts(prev => ({ ...prev, ...parsedCounts }));
+        }
+        if (savedTableMemos) {
+          const parsedMemos = JSON.parse(savedTableMemos);
+          setTableMemos(prev => ({ ...prev, ...parsedMemos }));
+        }
+        if (savedPresentation) setPresentation(JSON.parse(savedPresentation));
+      } catch (e) {
+        console.error("Local storage sync error:", e);
+      }
+    }, []);
 
   const handleRegionChange = (region: RegionKey) => {
     setShowRegionConfirm(region);
@@ -81,16 +168,16 @@ export default function App() {
 
   const executeRegionChange = (region: RegionKey) => {
     setSelectedRegion(region);
-    localStorage.setItem('busan_selected_region', region);
+    safeLocalStorage.setItem('busan_selected_region', region);
     // 수치 검증 상태 및 테이블 입력 상태 초기화
     setVerifiedCounts(null);
-    localStorage.removeItem('busan_verified_counts');
+    safeLocalStorage.removeItem('busan_verified_counts');
     const resetCounts = { food: 0, traffic: 0, play: 0, history: 0, beach: 0 };
     setTableCounts(resetCounts);
-    localStorage.setItem('busan_table_counts', JSON.stringify(resetCounts));
+    safeLocalStorage.setItem('busan_table_counts', JSON.stringify(resetCounts));
     const resetMemos = { food: '', traffic: '', play: '', history: '', beach: '' };
     setTableMemos(resetMemos);
-    localStorage.setItem('busan_table_memos', JSON.stringify(resetMemos));
+    safeLocalStorage.setItem('busan_table_memos', JSON.stringify(resetMemos));
     setTableChecked(false);
     setTableCorrect(false);
     setShowRegionConfirm(null);
@@ -100,7 +187,7 @@ export default function App() {
     if (!collectedSpots.includes(spotId)) {
       const nextSpots = [...collectedSpots, spotId];
       setCollectedSpots(nextSpots);
-      localStorage.setItem('busan_collected_spots', JSON.stringify(nextSpots));
+      safeLocalStorage.setItem('busan_collected_spots', JSON.stringify(nextSpots));
     }
   };
 
@@ -110,7 +197,7 @@ export default function App() {
       [spotId]: { solved: true, isCorrect, selectedOption: answerIndex },
     };
     setQuizState(nextQuiz);
-    localStorage.setItem('busan_quiz_state', JSON.stringify(nextQuiz));
+    safeLocalStorage.setItem('busan_quiz_state', JSON.stringify(nextQuiz));
     
     // 퀴즈를 맞추거나 풀면 자동으로 해당 spot 수집 인정
     handleCollectSpot(spotId);
@@ -118,23 +205,23 @@ export default function App() {
 
   const handleUpdateTableCounts = (newCounts: Record<CategoryKey, number>) => {
     setTableCounts(newCounts);
-    localStorage.setItem('busan_table_counts', JSON.stringify(newCounts));
+    safeLocalStorage.setItem('busan_table_counts', JSON.stringify(newCounts));
   };
 
   const handleUpdateTableMemos = (key: CategoryKey, text: string) => {
     const nextMemos = { ...tableMemos, [key]: text };
     setTableMemos(nextMemos);
-    localStorage.setItem('busan_table_memos', JSON.stringify(nextMemos));
+    safeLocalStorage.setItem('busan_table_memos', JSON.stringify(nextMemos));
   };
 
   const handleCompleteCounts = (counts: Record<CategoryKey, number>) => {
     setVerifiedCounts(counts);
-    localStorage.setItem('busan_verified_counts', JSON.stringify(counts));
+    safeLocalStorage.setItem('busan_verified_counts', JSON.stringify(counts));
   };
 
   const handleSavePresentation = (state: PresentationState) => {
     setPresentation(state);
-    localStorage.setItem('busan_presentation_state', JSON.stringify(state));
+    safeLocalStorage.setItem('busan_presentation_state', JSON.stringify(state));
   };
 
   // 탐험 상태 초기화
@@ -152,7 +239,7 @@ export default function App() {
     setTableCorrect(false);
     setPresentation(null);
     setActiveStep(1);
-    localStorage.clear();
+    safeLocalStorage.clear();
     setShowResetConfirm(false);
   };
 
@@ -566,8 +653,7 @@ export default function App() {
             disabled={activeStep === 1}
             onClick={() => {
               setActiveStep((prev) => Math.max(1, prev - 1) as any);
-              const element = document.getElementById('workbook-top-pagination');
-              if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              safeScrollIntoView('workbook-top-pagination');
             }}
             className={`w-full sm:w-auto px-5 py-3 rounded-2xl font-black text-sm border-2 transition-all flex items-center justify-center gap-2 cursor-pointer select-none ${
               activeStep === 1
@@ -585,8 +671,7 @@ export default function App() {
                 id="book-page1-btn-top"
                 onClick={() => {
                   setActiveStep(1);
-                  const element = document.getElementById('workbook-top-pagination');
-                  if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  safeScrollIntoView('workbook-top-pagination');
                 }}
                 className={`w-10 h-10 rounded-full font-black text-xs sm:text-sm flex items-center justify-center transition-all cursor-pointer ${theme.num1}`}
               >
@@ -598,8 +683,7 @@ export default function App() {
                 id="book-page2-btn-top"
                 onClick={() => {
                   setActiveStep(2);
-                  const element = document.getElementById('workbook-top-pagination');
-                  if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  safeScrollIntoView('workbook-top-pagination');
                 }}
                 className={`w-10 h-10 rounded-full font-black text-xs sm:text-sm flex items-center justify-center transition-all cursor-pointer ${theme.num2}`}
               >
@@ -611,8 +695,7 @@ export default function App() {
                 id="book-page3-btn-top"
                 onClick={() => {
                   setActiveStep(3);
-                  const element = document.getElementById('workbook-top-pagination');
-                  if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  safeScrollIntoView('workbook-top-pagination');
                 }}
                 className={`w-10 h-10 rounded-full font-black text-xs sm:text-sm flex items-center justify-center transition-all cursor-pointer ${theme.num3}`}
               >
@@ -630,8 +713,7 @@ export default function App() {
             disabled={activeStep === 3}
             onClick={() => {
               setActiveStep((prev) => Math.min(3, prev + 1) as any);
-              const element = document.getElementById('workbook-top-pagination');
-              if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              safeScrollIntoView('workbook-top-pagination');
             }}
             className={`w-full sm:w-auto px-5 py-3 rounded-2xl font-black text-sm border-2 transition-all flex items-center justify-center gap-2 cursor-pointer select-none ${
               activeStep === 3
@@ -920,8 +1002,7 @@ export default function App() {
             disabled={activeStep === 1}
             onClick={() => {
               setActiveStep((prev) => Math.max(1, prev - 1) as any);
-              const element = document.getElementById('workbook-top-pagination');
-              if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              safeScrollIntoView('workbook-top-pagination');
             }}
             className={`w-full sm:w-auto px-5 py-3 rounded-2xl font-black text-sm border-2 transition-all flex items-center justify-center gap-2 cursor-pointer select-none ${
               activeStep === 1
@@ -939,8 +1020,7 @@ export default function App() {
                 id="book-page1-btn-bottom"
                 onClick={() => {
                   setActiveStep(1);
-                  const element = document.getElementById('workbook-top-pagination');
-                  if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  safeScrollIntoView('workbook-top-pagination');
                 }}
                 className={`w-10 h-10 rounded-full font-black text-xs sm:text-sm flex items-center justify-center transition-all cursor-pointer ${theme.num1}`}
               >
@@ -952,8 +1032,7 @@ export default function App() {
                 id="book-page2-btn-bottom"
                 onClick={() => {
                   setActiveStep(2);
-                  const element = document.getElementById('workbook-top-pagination');
-                  if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  safeScrollIntoView('workbook-top-pagination');
                 }}
                 className={`w-10 h-10 rounded-full font-black text-xs sm:text-sm flex items-center justify-center transition-all cursor-pointer ${theme.num2}`}
               >
@@ -965,8 +1044,7 @@ export default function App() {
                 id="book-page3-btn-bottom"
                 onClick={() => {
                   setActiveStep(3);
-                  const element = document.getElementById('workbook-top-pagination');
-                  if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  safeScrollIntoView('workbook-top-pagination');
                 }}
                 className={`w-10 h-10 rounded-full font-black text-xs sm:text-sm flex items-center justify-center transition-all cursor-pointer ${theme.num3}`}
               >
@@ -984,8 +1062,7 @@ export default function App() {
             disabled={activeStep === 3}
             onClick={() => {
               setActiveStep((prev) => Math.min(3, prev + 1) as any);
-              const element = document.getElementById('workbook-top-pagination');
-              if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              safeScrollIntoView('workbook-top-pagination');
             }}
             className={`w-full sm:w-auto px-5 py-3 rounded-2xl font-black text-sm border-2 transition-all flex items-center justify-center gap-2 cursor-pointer select-none ${
               activeStep === 3

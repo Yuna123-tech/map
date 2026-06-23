@@ -183,7 +183,11 @@ export default function BusanMap({
 
   const handleTouchMove = (e: TouchEvent<HTMLDivElement>) => {
     if (e.touches.length === 2 && touchStartDist.current !== null) {
-      if (e.cancelable) e.preventDefault();
+      try {
+        if (e.cancelable) e.preventDefault();
+      } catch (err) {
+        // Safe fallback for passive listeners in restricted/iframe environments
+      }
       const dist = Math.hypot(
         e.touches[0].clientX - e.touches[1].clientX,
         e.touches[0].clientY - e.touches[1].clientY

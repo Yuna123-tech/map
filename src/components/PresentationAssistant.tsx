@@ -22,14 +22,43 @@ export default function PresentationAssistant({
 
   const handleCopy = () => {
     const textToCopy = activeTab === 'max' ? maxSpeech : minSpeech;
-    navigator.clipboard.writeText(textToCopy)
-      .then(() => {
+    if (navigator && navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+      navigator.clipboard.writeText(textToCopy)
+        .then(() => {
+          setCopied(true);
+          setTimeout(() => setCopied(false), 2000);
+        })
+        .catch((err) => {
+          console.error('Failed to copy text: ', err);
+          // Fallback copy method
+          try {
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = textToCopy;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+          } catch (fallbackErr) {
+            console.error('Fallback copy method failed: ', fallbackErr);
+          }
+        });
+    } else {
+      // Fallback if clipboard API is blocked or forbidden
+      try {
+        const tempTextArea = document.createElement('textarea');
+        tempTextArea.value = textToCopy;
+        document.body.appendChild(tempTextArea);
+        tempTextArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempTextArea);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
-      })
-      .catch((err) => {
-        console.error('Failed to copy text: ', err);
-      });
+      } catch (fallbackErr) {
+        console.error('Fallback copy method failed: ', fallbackErr);
+      }
+    }
   };
 
   // 합리적 의사결정 전략 토의판 선택 상태
@@ -159,7 +188,13 @@ export default function PresentationAssistant({
                   <span>{copied ? '복사 성공!' : '스피치 복사'}</span>
                 </button>
                 <button
-                  onClick={() => window.print()}
+                  onClick={() => {
+                    try {
+                      window.print();
+                    } catch (err) {
+                      console.warn("Printing is not permitted or supported in this workspace environment.", err);
+                    }
+                  }}
                   className="px-5 py-3 bg-indigo-50 hover:bg-indigo-120 text-indigo-800 rounded-xl text-sm sm:text-base font-black transition-all cursor-pointer flex items-center gap-1.5 border border-indigo-100 shadow-3xs"
                   title="발표 가이드 인쇄"
                 >

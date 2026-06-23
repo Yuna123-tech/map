@@ -50,11 +50,11 @@ export default function BarChartBuilder({
   // 부모의 tableCounts가 바뀌거나 구역이 바뀌었을 때 counts 상태 초기화 연동
   useEffect(() => {
     setCounts({
-      food: tableCounts.food,
-      traffic: tableCounts.traffic,
-      play: tableCounts.play,
-      history: tableCounts.history,
-      beach: tableCounts.beach,
+      food: tableCounts.food || 0,
+      traffic: tableCounts.traffic || 0,
+      play: tableCounts.play || 0,
+      history: tableCounts.history || 0,
+      beach: tableCounts.beach || 0,
     });
   }, [tableCounts]);
 
@@ -126,7 +126,7 @@ export default function BarChartBuilder({
   }, [stepSize, selectedRegion]);
 
   // 눈금 크기(1, 2, 5)에 따라 세로 눈금 및 가장 많은 값을 유연하게 자동 설계
-  const stepValue = Number(stepSize);
+  const stepValue = Math.max(1, Number(stepSize) || 2);
   const maxCountVal = Math.max(...(Object.values(counts) as number[]), 1);
   
   // maxVal은 세로축 눈금에 딱 맞게 떨어지는 가장 큰 값

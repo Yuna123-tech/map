@@ -15,6 +15,64 @@
     <link rel="apple-touch-icon" href="/icon.svg" />
     
     <title>막대그래프 부산 여행 지도 - 초등 4학년 사회-수학 융합 지리학습</title>
+    <!-- Script Error Guard for sandboxed/cross-origin environments -->
+    <script>
+      (function() {
+        var handler = function(event) {
+          if (!event) return;
+          var msg = event.message || (event.reason && event.reason.message) || "";
+          
+          // Check for cross-origin script noise, extensions, or sandboxed iframe environment policies
+          if (
+            msg === "Script error." || 
+            (typeof msg === 'string' && (
+              msg.indexOf("Script error") !== -1 ||
+              msg.indexOf("cross-origin") !== -1 ||
+              msg.indexOf("ResizeObserver") !== -1
+            )) ||
+            !event.filename || 
+            event.filename.indexOf("http") !== 0
+          ) {
+            console.warn('Intercepted and bypassed sandboxed script error:', msg);
+            try {
+              event.preventDefault();
+              event.stopPropagation();
+              if (typeof event.stopImmediatePropagation === 'function') {
+                event.stopImmediatePropagation();
+              }
+            } catch(e) {}
+            return true;
+          }
+        };
+        window.addEventListener('error', handler, true);
+        window.addEventListener('unhandledrejection', function(event) {
+          if (!event) return;
+          var msg = (event.reason && (event.reason.message || event.reason)) || "";
+          if (msg === "Script error." || (typeof msg === 'string' && msg.indexOf("Script error") !== -1)) {
+            try {
+              event.preventDefault();
+              event.stopPropagation();
+              if (typeof event.stopImmediatePropagation === 'function') {
+                event.stopImmediatePropagation();
+              }
+            } catch(e) {}
+          }
+        }, true);
+        
+        // Also capture window.onerror directly
+        var oldOnError = window.onerror;
+        window.onerror = function(message, source, lineno, colno, error) {
+          if (message === "Script error." || !source || source.indexOf("http") !== 0) {
+            console.warn("Directly caught window.onerror script error: ", message);
+            return true;
+          }
+          if (oldOnError) {
+            return oldOnError.apply(this, arguments);
+          }
+          return false;
+        };
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
@@ -22,16 +80,47 @@
     
     <!-- PWA Service Worker Registration -->
     <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js')
-            .then((registration) => {
-              console.log('PWA Service Worker registered with scope:', registration.scope);
-            })
-            .catch((error) => {
-              console.error('PWA Service Worker registration failed:', error);
+      try {
+        const isDevOrFrame = (() => {
+          try {
+            if (window.self !== window.parent || window.self !== window.top) {
+              return true;
+            }
+          } catch (e) {
+            return true;
+          }
+          try {
+            const host = window.location.hostname;
+            if (!host || host.includes('localhost') || host.includes('127.0.0.1') || host.includes('ais-dev') || host.includes('ais-pre') || host.includes('run.app')) {
+              return true;
+            }
+          } catch (e) {
+            return true;
+          }
+          return false;
+        })();
+
+        if (!isDevOrFrame) {
+          if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+              try {
+                navigator.serviceWorker.register('/sw.js')
+                  .then((registration) => {
+                    console.log('PWA Service Worker registered with scope:', registration.scope);
+                  })
+                  .catch((error) => {
+                    console.warn('PWA Service Worker registration skipped/failed:', error);
+                  });
+              } catch (innerErr) {
+                console.warn('Service worker registration blocked in this environment:', innerErr);
+              }
             });
-        });
+          }
+        } else {
+          console.log('Service worker bypassed because app is in dev, preview, or sandboxed iframe.');
+        }
+      } catch (outerErr) {
+        console.warn('Service worker access blocked:', outerErr);
       }
     </script>
   </body>
