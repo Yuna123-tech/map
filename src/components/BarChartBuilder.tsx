@@ -64,6 +64,10 @@ export default function BarChartBuilder({
   const [stepSize, setStepSize] = useState<string>('2');
   const [stepFeedback, setStepFeedback] = useState<string>('');
 
+  // 실시간 합계 계산용 명확한 타입 정의 변수
+  const targetTotal = (Object.values(CURRENT_REAL_COUNTS) as number[]).reduce((a, b) => a + b, 0);
+  const enteredTotal = (Object.values(counts) as number[]).reduce((a, b) => a + b, 0);
+
   // 개수 직접/증감 입력 핸들러 - 입력 변경 시 즉시 상위 표 상태와도 동기화
   const handleCountChange = (key: CategoryKey, val: number) => {
     const nextVal = Math.min(Math.max(val, 0), 35); // 가장 많은 값 35로 상향 조정
@@ -260,6 +264,29 @@ export default function BarChartBuilder({
                 </div>
               );
             })}
+          </div>
+
+          {/* 🧮 실시간 입력 합계 정보 안내 추가 */}
+          <div className="bg-slate-50/85 p-3.5 rounded-2xl border border-slate-200/80 space-y-1.5 animate-fade-in">
+            <div className="flex items-center justify-between text-xs sm:text-sm font-black text-slate-800">
+              <span className="flex items-center gap-1">
+                <span>🧮</span> 입력값 총합 대조
+              </span>
+              <span className="text-slate-500">
+                목표: {targetTotal}개
+              </span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-slate-500 font-bold">우리가 입력한 합계:</span>
+              <span className={`text-sm sm:text-base font-black ${enteredTotal === targetTotal ? "text-emerald-600 animate-pulse" : "text-rose-600"}`}>
+                {enteredTotal} 개
+              </span>
+            </div>
+            {enteredTotal === targetTotal ? (
+              <p className="text-[10.5px] text-emerald-800 font-bold">✅ 개수 총합이 {targetTotal}개로 딱 들어맞습니다! 아래 채점 버튼을 눌러보세요.</p>
+            ) : (
+              <p className="text-[10.5px] text-amber-750 font-bold">⚠️ 각 구역별 명소 개수의 총합은 반드시 {targetTotal}개여야 합니다.</p>
+            )}
           </div>
 
           <div className="pt-2 space-y-3">

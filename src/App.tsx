@@ -934,6 +934,40 @@ export default function App() {
                             </tr>
                           );
                         })}
+                        {/* 📊 실시간 합계 행 추가로 수학적 정합성 직관 제공 */}
+                        <tr className="bg-slate-100/80 font-black text-slate-900 border-t-2 border-slate-300">
+                          <td className="py-4 px-5 flex items-center gap-3">
+                            <span className="text-2xl select-none">🧮</span>
+                            <span className="font-extrabold text-slate-900 text-sm sm:text-base">합계 (전체 개수 대조)</span>
+                          </td>
+                          <td className="py-4 px-5 text-center text-xs text-slate-500">모든 테마</td>
+                          <td className="py-4 px-5 text-center">
+                            <div className="inline-flex flex-col items-center gap-1">
+                              <span className="text-sm sm:text-base font-black text-slate-900">
+                                우리가 세어본 합: <span className={(tableCounts.food || 0) + (tableCounts.traffic || 0) + (tableCounts.play || 0) + (tableCounts.history || 0) + (tableCounts.beach || 0) === currentRegionSpots.length ? "text-emerald-600" : "text-rose-600"}>{(tableCounts.food || 0) + (tableCounts.traffic || 0) + (tableCounts.play || 0) + (tableCounts.history || 0) + (tableCounts.beach || 0)}</span> 개
+                              </span>
+                              <span className="text-[10.5px] text-slate-500 font-bold">
+                                (목표 구역 총 명소: {currentRegionSpots.length}개)
+                              </span>
+                              {(tableCounts.food || 0) + (tableCounts.traffic || 0) + (tableCounts.play || 0) + (tableCounts.history || 0) + (tableCounts.beach || 0) === currentRegionSpots.length ? (
+                                <span className="bg-emerald-100 text-emerald-800 text-[10px] font-black px-2 py-0.5 rounded-full mt-1 border border-emerald-300 animate-pulse">
+                                  ✅ 합계 일치 완료! ({currentRegionSpots.length}개)
+                                </span>
+                              ) : (
+                                <span className="bg-amber-100 text-amber-800 text-[10px] font-black px-2 py-0.5 rounded-full mt-1 border border-amber-300">
+                                  ⚠️ 아직 {currentRegionSpots.length}개가 아니에요! ({(tableCounts.food || 0) + (tableCounts.traffic || 0) + (tableCounts.play || 0) + (tableCounts.history || 0) + (tableCounts.beach || 0)}/{currentRegionSpots.length}개)
+                                </span>
+                              )}
+                            </div>
+                          </td>
+                          <td className="py-4 px-5">
+                            <p className="text-xs text-slate-500 font-bold leading-relaxed">
+                              {(tableCounts.food || 0) + (tableCounts.traffic || 0) + (tableCounts.play || 0) + (tableCounts.history || 0) + (tableCounts.beach || 0) === currentRegionSpots.length 
+                                ? "🎉 와! 우리 구역의 명소 전체 개수와 완벽하게 일치해요! 이제 2단계에서 완벽한 막대그래프를 시각화해 봅시다."
+                                : `💡 힌트: 우리 구역 [${currentRegion.name}] 전체에 흩어진 진짜 명소의 총합은 꼭 ${currentRegionSpots.length}개여야 합니다. 지도를 보고 꼼꼼히 세어서 채워 보세요!`}
+                            </p>
+                          </td>
+                        </tr>
                       </tbody>
                     </table>
                   </div>
