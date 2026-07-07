@@ -183,12 +183,20 @@ export default function App() {
     setShowRegionConfirm(null);
   };
 
-  const handleCollectSpot = (spotId: string) => {
-    if (!collectedSpots.includes(spotId)) {
-      const nextSpots = [...collectedSpots, spotId];
-      setCollectedSpots(nextSpots);
-      safeLocalStorage.setItem('busan_collected_spots', JSON.stringify(nextSpots));
-    }
+  const handleCollectSpot = (spotId: string, forceAdd: boolean = false) => {
+    setCollectedSpots((prev) => {
+      const isIncluded = prev.includes(spotId);
+      if (isIncluded && !forceAdd) {
+        const next = prev.filter((id) => id !== spotId);
+        safeLocalStorage.setItem('busan_collected_spots', JSON.stringify(next));
+        return next;
+      } else if (!isIncluded) {
+        const next = [...prev, spotId];
+        safeLocalStorage.setItem('busan_collected_spots', JSON.stringify(next));
+        return next;
+      }
+      return prev;
+    });
   };
 
   const handleSolveQuiz = (spotId: string, answerIndex: number, isCorrect: boolean) => {
@@ -199,8 +207,8 @@ export default function App() {
     setQuizState(nextQuiz);
     safeLocalStorage.setItem('busan_quiz_state', JSON.stringify(nextQuiz));
     
-    // 퀴즈를 맞추거나 풀면 자동으로 해당 spot 수집 인정
-    handleCollectSpot(spotId);
+    // 퀴즈를 맞추거나 풀면 자동으로 해당 spot 수집 인정 (forceAdd = true)
+    handleCollectSpot(spotId, true);
   };
 
   const handleUpdateTableCounts = (newCounts: Record<CategoryKey, number>) => {
